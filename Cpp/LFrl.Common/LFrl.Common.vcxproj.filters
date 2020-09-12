@@ -129,6 +129,9 @@
     </ClInclude>
     <ClInclude Include="src\QuickRng.h" />
     <ClInclude Include="src\Container.h" />
+    <ClInclude Include="src\utils\math.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Stopwatch.cpp" />

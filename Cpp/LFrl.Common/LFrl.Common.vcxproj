@@ -43,6 +43,7 @@
     <ClInclude Include="src\utils\is_passed_by_const_ref.h" />
     <ClInclude Include="src\utils\is_process_32bit.h" />
     <ClInclude Include="src\utils\is_process_64bit.h" />
+    <ClInclude Include="src\utils\math.h" />
     <ClInclude Include="src\utils\move_if.h" />
     <ClInclude Include="src\utils\not_all.h" />
     <ClInclude Include="src\utils\not_all_traits.h" />
