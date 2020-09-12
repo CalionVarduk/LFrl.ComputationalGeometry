@@ -127,6 +127,7 @@
     <ClInclude Include="src\logging\ConsoleLoggerListener.h">
       <Filter>logging</Filter>
     </ClInclude>
+    <ClInclude Include="src\QuickRng.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Stopwatch.cpp" />
@@ -142,5 +143,6 @@
     <ClCompile Include="src\logging\StreamLoggerListener.cpp">
       <Filter>logging</Filter>
     </ClCompile>
+    <ClCompile Include="src\QuickRng.cpp" />
   </ItemGroup>
 </Project>

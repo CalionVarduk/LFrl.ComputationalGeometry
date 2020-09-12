@@ -27,6 +27,7 @@
     <ClInclude Include="src\logging\LogMessage.h" />
     <ClInclude Include="src\logging\StreamLoggerListener.h" />
     <ClInclude Include="src\memory\array_ptr.h" />
+    <ClInclude Include="src\QuickRng.h" />
     <ClInclude Include="src\Stopwatch.h" />
     <ClInclude Include="src\utils\all.h" />
     <ClInclude Include="src\utils\all_traits.h" />
@@ -63,6 +64,7 @@
     <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\logging\LogMessage.cpp" />
     <ClCompile Include="src\logging\StreamLoggerListener.cpp" />
+    <ClCompile Include="src\QuickRng.cpp" />
     <ClCompile Include="src\Stopwatch.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
