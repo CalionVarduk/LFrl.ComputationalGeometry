@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTest.NET
+namespace LFrl.Console.NET
 {
     class Program
     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ConsoleTest.NET")]
+[assembly: AssemblyTitle("LFrl.Console.NET")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ConsoleTest.NET")]
+[assembly: AssemblyProduct("LFrl.Console.NET")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c7fba984-2be1-4e83-b401-40e4b48eb576")]
+[assembly: Guid("77db2e31-8b1c-46e9-a8fe-561c8c6397b5")]
 
 // Version information for an assembly consists of the following four values:
 //
