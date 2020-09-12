@@ -118,6 +118,15 @@
     <ClInclude Include="src\logging\LogMessage.h">
       <Filter>logging</Filter>
     </ClInclude>
+    <ClInclude Include="src\logging\FileLoggerListener.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\StreamLoggerListener.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\ConsoleLoggerListener.h">
+      <Filter>logging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Stopwatch.cpp" />
@@ -125,6 +134,12 @@
       <Filter>logging</Filter>
     </ClCompile>
     <ClCompile Include="src\logging\LogMessage.cpp">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logging\FileLoggerListener.cpp">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logging\StreamLoggerListener.cpp">
       <Filter>logging</Filter>
     </ClCompile>
   </ItemGroup>

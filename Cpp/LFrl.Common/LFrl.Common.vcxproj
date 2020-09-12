@@ -20,9 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\logging\ConsoleLoggerListener.h" />
+    <ClInclude Include="src\logging\FileLoggerListener.h" />
     <ClInclude Include="src\logging\ILoggerListener.h" />
     <ClInclude Include="src\logging\Logger.h" />
     <ClInclude Include="src\logging\LogMessage.h" />
+    <ClInclude Include="src\logging\StreamLoggerListener.h" />
     <ClInclude Include="src\memory\array_ptr.h" />
     <ClInclude Include="src\Stopwatch.h" />
     <ClInclude Include="src\utils\all.h" />
@@ -56,8 +59,10 @@
     <ClInclude Include="src\utils\union_cast.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\logging\FileLoggerListener.cpp" />
     <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\logging\LogMessage.cpp" />
+    <ClCompile Include="src\logging\StreamLoggerListener.cpp" />
     <ClCompile Include="src\Stopwatch.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
