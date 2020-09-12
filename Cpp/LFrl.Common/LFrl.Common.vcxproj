@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Container.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
     <ClInclude Include="src\logging\ConsoleLoggerListener.h" />
     <ClInclude Include="src\logging\FileLoggerListener.h" />
@@ -60,6 +61,7 @@
     <ClInclude Include="src\utils\union_cast.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Container.cpp" />
     <ClCompile Include="src\logging\FileLoggerListener.cpp" />
     <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\logging\LogMessage.cpp" />

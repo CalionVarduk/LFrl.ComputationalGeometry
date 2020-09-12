@@ -128,6 +128,7 @@
       <Filter>logging</Filter>
     </ClInclude>
     <ClInclude Include="src\QuickRng.h" />
+    <ClInclude Include="src\Container.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Stopwatch.cpp" />
@@ -144,5 +145,6 @@
       <Filter>logging</Filter>
     </ClCompile>
     <ClCompile Include="src\QuickRng.cpp" />
+    <ClCompile Include="src\Container.cpp" />
   </ItemGroup>
 </Project>
