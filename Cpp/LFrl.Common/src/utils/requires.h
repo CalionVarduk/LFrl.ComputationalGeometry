@@ -7,7 +7,8 @@
 
 BEGIN_LFRLCOMMON_NAMESPACE
 
-namespace __detail {
+namespace __detail
+{
 	typedef std::nullptr_t enabling_type;
 }
 

@@ -10,7 +10,8 @@ struct static_ctor
 {
 	static_assert(ctor != nullptr, "static_ctor<void(*)()>: provided ctor function can't be null.");
 
-	static struct __ctor_impl {
+	static struct __ctor_impl
+	{
 		__ctor_impl() { ctor(); }
 	} setup;
 };

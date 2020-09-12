@@ -6,7 +6,8 @@
 BEGIN_LFRLCOMMON_NAMESPACE
 
 template <class T>
-struct is_any_char {
+struct is_any_char
+{
 	typedef T type;
 	static constexpr bool value =
 		any_traits<std::is_same<T, char>, std::is_same<T, signed char>, std::is_same<T, unsigned char>,

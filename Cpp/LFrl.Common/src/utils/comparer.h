@@ -10,10 +10,7 @@ struct comparer final
 {
 	typedef T type;
 	typedef param<T> param_type;
-
-	bool operator()(param_type o1, param_type o2) const {
-		return o1 < o2;
-	}
+	bool operator()(param_type o1, param_type o2) const { return o1 < o2; }
 };
 
 template <class T, class TComparer = comparer<T>>
@@ -22,10 +19,7 @@ struct reverse_comparer final
 	typedef T type;
 	typedef param<T> param_type;
 	typedef TComparer comparer_type;
-
-	bool operator()(param_type o1, param_type o2) const {
-		return !comparer_type()(o1, o2);
-	}
+	bool operator()(param_type o1, param_type o2) const { return !comparer_type()(o1, o2); }
 };
 
 END_LFRLCOMMON_NAMESPACE

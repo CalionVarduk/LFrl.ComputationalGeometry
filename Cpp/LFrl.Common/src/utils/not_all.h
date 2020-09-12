@@ -1,24 +1,28 @@
 #ifndef __LFRL_COMMON_NOT_ALL_GUARD__
 #define __LFRL_COMMON_NOT_ALL_GUARD__
 
-#include "not.h"
+#include <type_traits>
+#include "../internal/namespace_macros.h"
 
 BEGIN_LFRLCOMMON_NAMESPACE
 
 template <bool... tests> struct not_all;
 
 template <bool test, bool... tests>
-struct not_all<test, tests...> {
-	static constexpr bool value = not<test> || not_all<tests...>::value;
+struct not_all<test, tests...>
+{
+	static constexpr bool value = !test || not_all<tests...>::value;
 };
 
 template <bool test>
-struct not_all<test> {
-	static constexpr bool value = not<test>;
+struct not_all<test>
+{
+	static constexpr bool value = !test;
 };
 
 template <>
-struct not_all<> {
+struct not_all<>
+{
 	static constexpr bool value = false;
 };
 

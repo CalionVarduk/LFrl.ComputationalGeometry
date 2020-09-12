@@ -6,7 +6,8 @@
 
 BEGIN_LFRLCOMMON_NAMESPACE
 
-struct is_process_32bit {
+struct is_process_32bit
+{
 	static constexpr bool value = sizeof(char*) * CHAR_BIT == 32;
 };
 

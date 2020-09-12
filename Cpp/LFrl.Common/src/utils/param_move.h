@@ -10,7 +10,8 @@ template <class T>
 constexpr typename std::conditional<std::is_const<typename std::remove_reference<T>::type>::value,
 typename std::remove_reference<T>::type const&,
 typename std::remove_reference<T>::type&&>::type
-	param_move(T&& x) {
+	param_move(T&& x)
+{
 	return static_cast<typename std::conditional<std::is_const<typename std::remove_reference<T>::type>::value,
 		typename std::remove_reference<T>::type const&,
 		typename std::remove_reference<T>::type&&>::type>(x);

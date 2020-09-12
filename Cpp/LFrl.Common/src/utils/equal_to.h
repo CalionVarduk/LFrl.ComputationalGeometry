@@ -7,8 +7,10 @@
 BEGIN_LFRLCOMMON_NAMESPACE
 
 template <class T>
-struct ptr_equal_to {
-	bool operator()(T const* lhs, T const* rhs) const {
+struct ptr_equal_to
+{
+	bool operator()(T const* lhs, T const* rhs) const
+	{
 		return lhs == rhs || (lhs != nullptr && rhs != nullptr && std::equal_to<T>()(*lhs, *rhs));
 	}
 };

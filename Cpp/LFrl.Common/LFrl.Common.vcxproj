@@ -18,6 +18,48 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\logging\ILoggerListener.h" />
+    <ClInclude Include="src\logging\Logger.h" />
+    <ClInclude Include="src\logging\LogMessage.h" />
+    <ClInclude Include="src\memory\array_ptr.h" />
+    <ClInclude Include="src\Stopwatch.h" />
+    <ClInclude Include="src\utils\all.h" />
+    <ClInclude Include="src\utils\all_traits.h" />
+    <ClInclude Include="src\utils\any.h" />
+    <ClInclude Include="src\utils\any_traits.h" />
+    <ClInclude Include="src\utils\comparer.h" />
+    <ClInclude Include="src\utils\dynamic_buffer.h" />
+    <ClInclude Include="src\utils\equal_to.h" />
+    <ClInclude Include="src\utils\hash.h" />
+    <ClInclude Include="src\utils\is_any_char.h" />
+    <ClInclude Include="src\utils\is_function_pointer.h" />
+    <ClInclude Include="src\utils\is_passed_by_const_ref.h" />
+    <ClInclude Include="src\utils\is_process_32bit.h" />
+    <ClInclude Include="src\utils\is_process_64bit.h" />
+    <ClInclude Include="src\utils\move_if.h" />
+    <ClInclude Include="src\utils\not_all.h" />
+    <ClInclude Include="src\utils\not_all_traits.h" />
+    <ClInclude Include="src\utils\not_any.h" />
+    <ClInclude Include="src\utils\not_any_traits.h" />
+    <ClInclude Include="src\utils\not_trait.h" />
+    <ClInclude Include="src\utils\param.h" />
+    <ClInclude Include="src\utils\param_move.h" />
+    <ClInclude Include="src\utils\param_pack_type.h" />
+    <ClInclude Include="src\utils\pass_by_mode.h" />
+    <ClInclude Include="src\utils\product.h" />
+    <ClInclude Include="src\utils\requires.h" />
+    <ClInclude Include="src\utils\static_ctor.h" />
+    <ClInclude Include="src\utils\sum.h" />
+    <ClInclude Include="src\utils\typedefs.h" />
+    <ClInclude Include="src\utils\union_cast.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\logging\Logger.cpp" />
+    <ClCompile Include="src\logging\LogMessage.cpp" />
+    <ClCompile Include="src\Stopwatch.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{116336F6-7273-4490-8107-6E182303C843}</ProjectGuid>

@@ -8,7 +8,8 @@ BEGIN_LFRLCOMMON_NAMESPACE
 
 template <bool test, class T>
 constexpr typename std::conditional<test, typename std::remove_reference<T>::type&&, T>::type
-	move_if(T&& x) {
+	move_if(T&& x)
+{
 	return static_cast<typename std::conditional<test, typename std::remove_reference<T>::type&&, T>::type>(x);
 }
 

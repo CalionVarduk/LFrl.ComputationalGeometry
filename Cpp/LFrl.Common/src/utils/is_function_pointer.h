@@ -6,7 +6,8 @@
 BEGIN_LFRLCOMMON_NAMESPACE
 
 template <class T>
-struct is_function_pointer {
+struct is_function_pointer
+{
 	typedef T type;
 	static constexpr bool value = all_traits<std::is_pointer<T>, std::is_function<typename std::remove_pointer<T>::type>>::value;
 };

@@ -69,43 +69,53 @@ private:
 
 template <class T>
 array_ptr<T>::array_ptr(typename array_ptr<T>::pointer begin, typename array_ptr<T>::pointer end) noexcept
-	: _begin(begin), _end(end) {}
+	: _begin(begin), _end(end)
+{}
 
 template <class T>
 array_ptr<T>::array_ptr(typename array_ptr<T>::pointer begin, typename array_ptr<T>::size_type size) noexcept
-	: _begin(begin), _end(begin + size) {}
+	: _begin(begin), _end(begin + size)
+{}
 
 template <class T>
-typename array_ptr<T>::reference array_ptr<T>::at(typename array_ptr<T>::size_type i) noexcept(false) {
+typename array_ptr<T>::reference array_ptr<T>::at(typename array_ptr<T>::size_type i) noexcept(false)
+{
 	if (i >= size())
 		throw std::out_of_range("index is out of range");
+
 	return _begin[i];
 }
 
 template <class T>
-typename array_ptr<T>::const_reference array_ptr<T>::at(typename array_ptr<T>::size_type i) const noexcept(false) {
+typename array_ptr<T>::const_reference array_ptr<T>::at(typename array_ptr<T>::size_type i) const noexcept(false)
+{
 	if (i >= size())
 		throw std::out_of_range("index is out of range");
+
 	return _begin[i];
 }
 
 template <class T>
-array_ptr<T> make_array_ptr(typename array_ptr<T>::pointer begin, typename array_ptr<T>::pointer end) noexcept {
+array_ptr<T> make_array_ptr(typename array_ptr<T>::pointer begin, typename array_ptr<T>::pointer end) noexcept
+{
 	return array_ptr<T>(begin, end);
 }
 
 template <class T>
-array_ptr<T> make_array_ptr(typename array_ptr<T>::pointer begin, typename array_ptr<T>::size_type size) noexcept {
+array_ptr<T> make_array_ptr(typename array_ptr<T>::pointer begin, typename array_ptr<T>::size_type size) noexcept
+{
 	return array_ptr<T>(begin, size);
 }
 
 template <class T>
-array_ptr<const T> make_const_array_ptr(typename array_ptr<const T>::pointer begin, typename array_ptr<const T>::pointer end) noexcept {
+array_ptr<const T> make_const_array_ptr(typename array_ptr<const T>::pointer begin, typename array_ptr<const T>::pointer end) noexcept
+{
 	return array_ptr<const T>(begin, end);
 }
 
 template <class T>
-array_ptr<const T> make_const_array_ptr(typename array_ptr<const T>::pointer begin, typename array_ptr<const T>::size_type size) noexcept {
+array_ptr<const T> make_const_array_ptr(typename array_ptr<const T>::pointer begin, typename array_ptr<const T>::size_type size) noexcept
+{
 	return array_ptr<const T>(begin, size);
 }
 

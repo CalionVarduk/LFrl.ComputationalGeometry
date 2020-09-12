@@ -6,7 +6,8 @@
 BEGIN_LFRLCOMMON_NAMESPACE
 
 template <class... Traits>
-struct not_any_traits {
+struct not_any_traits
+{
 	static constexpr bool value = not_any<(Traits::value)...>::value;
 };
 

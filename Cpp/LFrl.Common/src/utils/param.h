@@ -7,7 +7,8 @@
 BEGIN_LFRLCOMMON_NAMESPACE
 
 template <class T>
-struct param_type {
+struct param_type
+{
 	typedef typename std::conditional<is_passed_by_const_ref<T>::value, T const&, T>::type type;
 	static constexpr pass_by_mode mode = is_passed_by_const_ref<T>::mode;
 };

@@ -5,7 +5,8 @@
 
 BEGIN_LFRLCOMMON_NAMESPACE
 
-enum struct pass_by_mode {
+enum struct pass_by_mode
+{
     value = 0,
     cref = 1
 };

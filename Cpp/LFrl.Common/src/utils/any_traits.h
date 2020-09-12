@@ -6,7 +6,8 @@
 BEGIN_LFRLCOMMON_NAMESPACE
 
 template <class... Traits>
-struct any_traits {
+struct any_traits
+{
 	static constexpr bool value = any<(Traits::value)...>::value;
 };
 

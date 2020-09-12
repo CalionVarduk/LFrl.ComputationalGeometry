@@ -6,7 +6,8 @@
 
 BEGIN_LFRLCOMMON_NAMESPACE
 
-struct is_process_64bit {
+struct is_process_64bit
+{
 	static constexpr bool value = sizeof(char*) * CHAR_BIT == 64;
 };
 

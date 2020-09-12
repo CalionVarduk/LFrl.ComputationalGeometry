@@ -9,17 +9,20 @@ BEGIN_LFRLCOMMON_NAMESPACE
 template <bool... tests> struct all;
 
 template <bool test, bool... tests>
-struct all<test, tests...> {
+struct all<test, tests...>
+{
 	static constexpr bool value = test && all<tests...>::value;
 };
 
 template <bool test>
-struct all<test> {
+struct all<test>
+{
 	static constexpr bool value = test;
 };
 
 template <>
-struct all<> {
+struct all<>
+{
 	static constexpr bool value = true;
 };
 
