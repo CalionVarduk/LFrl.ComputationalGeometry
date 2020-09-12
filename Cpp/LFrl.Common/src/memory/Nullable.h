@@ -31,6 +31,7 @@ public:
 	bool HasValue() const noexcept { return _ptr != nullptr; }
 	reference GetValue() const noexcept(false) { return *_ptr; }
 	pointer Get() const noexcept { return _ptr; }
+	UIntPtr GetAddress() const noexcept { return (UIntPtr)_ptr; }
 
 	void Set(pointer ptr) noexcept { _ptr = ptr; }
 	void Set(reference value) noexcept { Set(&value); }
@@ -81,6 +82,7 @@ public:
 	bool HasValue() const noexcept { return _ptr != nullptr; }
 	reference GetValue() const noexcept(false) { return *_ptr; }
 	pointer Get() const noexcept { return _ptr; }
+	UIntPtr GetAddress() const noexcept { return (UIntPtr)_ptr; }
 
 	void Set(pointer ptr);
 	void Set(WeakNullable<T> const& other) { Set(other.Get()); }
@@ -96,7 +98,7 @@ public:
 	reference operator*() const noexcept(false) { return GetValue(); }
 	pointer operator->() const noexcept { return Get(); }
 
-	operator pointer() const noexcept { return Get(); }
+	explicit operator pointer() const noexcept { return Get(); }
 	explicit operator reference() const noexcept(false) { return GetValue(); }
 	operator WeakNullable<T>() const noexcept { return WeakNullable<T>(_ptr); }
 
