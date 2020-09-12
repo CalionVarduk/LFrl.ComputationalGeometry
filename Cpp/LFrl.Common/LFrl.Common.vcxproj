@@ -28,6 +28,7 @@
     <ClInclude Include="src\logging\LogMessage.h" />
     <ClInclude Include="src\logging\StreamLoggerListener.h" />
     <ClInclude Include="src\memory\array_ptr.h" />
+    <ClInclude Include="src\memory\Nullable.h" />
     <ClInclude Include="src\QuickRng.h" />
     <ClInclude Include="src\Stopwatch.h" />
     <ClInclude Include="src\utils\all.h" />

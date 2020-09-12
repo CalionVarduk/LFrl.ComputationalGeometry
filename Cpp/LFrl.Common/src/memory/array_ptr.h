@@ -14,7 +14,7 @@ struct array_ptr final
 	typedef value_type const* const_pointer;
 	typedef value_type& reference;
 	typedef value_type const& const_reference;
-	typedef std::size_t size_type;
+	typedef sz size_type;
 	typedef pointer iterator;
 	typedef const_pointer const_iterator;
 	typedef std::reverse_iterator<iterator> reverse_iterator;
@@ -32,7 +32,7 @@ struct array_ptr final
 
 	array_ptr<const T> to_const() const noexcept { return array_ptr<const T>(_begin, _end); }
 
-	size_type size() const noexcept { return (size_type)(_end - _begin) }
+	size_type size() const noexcept { return (size_type)(_end - _begin); }
 	bool empty() const noexcept { return _end <= _begin; }
 
 	iterator begin() noexcept { return _begin; }

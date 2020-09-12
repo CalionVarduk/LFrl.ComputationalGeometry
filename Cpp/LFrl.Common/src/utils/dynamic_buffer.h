@@ -14,7 +14,7 @@ struct dynamic_buffer final
 	typedef value_type const* const_pointer;
 	typedef value_type& reference;
 	typedef value_type const& const_reference;
-	typedef std::size_t size_type;
+	typedef sz size_type;
 	typedef pointer iterator;
 	typedef const_pointer const_iterator;
 	typedef std::reverse_iterator<iterator> reverse_iterator;

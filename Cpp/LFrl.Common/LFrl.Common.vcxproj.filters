@@ -132,6 +132,9 @@
     <ClInclude Include="src\utils\math.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\memory\Nullable.h">
+      <Filter>memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Stopwatch.cpp" />

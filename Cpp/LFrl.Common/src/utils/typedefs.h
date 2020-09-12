@@ -31,6 +31,8 @@ typedef intptr_t iPtr;
 typedef intptr_t IntPtr;
 typedef uintptr_t uPtr;
 typedef uintptr_t UIntPtr;
+typedef size_t sz;
+typedef size_t Size;
 typedef bool Bool;
 typedef bool Boolean;
 typedef char Char;
@@ -43,6 +45,7 @@ typedef double Double;
 typedef long double LongDouble;
 typedef float f32;
 typedef double f64;
+typedef std::nullptr_t Null;
 
 END_LFRLCOMMON_NAMESPACE
 

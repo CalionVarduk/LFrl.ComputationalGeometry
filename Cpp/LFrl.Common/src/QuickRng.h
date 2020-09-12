@@ -45,7 +45,7 @@ public:
 	f64 NextDouble() noexcept;
 
 	void NextByteRange(array_ptr<u8> buffer);
-	void NextByteRange(u8* buffer, u32 count);
+	void NextByteRange(u8* buffer, sz count);
 
 private:
 	u32 _seed;

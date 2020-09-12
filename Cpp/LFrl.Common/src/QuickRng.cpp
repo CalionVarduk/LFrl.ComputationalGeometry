@@ -114,10 +114,10 @@ f64 QuickRng::NextDouble() noexcept
 
 void QuickRng::NextByteRange(array_ptr<u8> buffer)
 {
-	return NextByteRange(buffer.begin(), buffer.size());
+	NextByteRange(buffer.begin(), buffer.size());
 }
 
-void QuickRng::NextByteRange(u8* buffer, u32 count)
+void QuickRng::NextByteRange(u8* buffer, sz count)
 {
 	if (buffer == nullptr || count <= 0)
 		return;
@@ -125,7 +125,7 @@ void QuickRng::NextByteRange(u8* buffer, u32 count)
 	auto full_block_count = count >> 2;
 	auto last_block_size = count & 3;
 
-	for (u32 i = 0; i < full_block_count; ++i)
+	for (sz i = 0; i < full_block_count; ++i)
 	{
 		auto v = _Next();
 		memcpy(buffer, &v, 4);
