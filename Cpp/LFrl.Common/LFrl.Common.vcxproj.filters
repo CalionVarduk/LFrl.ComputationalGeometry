@@ -1,4 +1,202 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+  <ItemGroup>
+    <Filter Include="utils">
+      <UniqueIdentifier>{01c1bcb7-f88c-4372-ab13-bf72b0fe2e5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="internal">
+      <UniqueIdentifier>{b725f138-ccf0-4c4c-b269-6fac091b7e79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="memory">
+      <UniqueIdentifier>{adf628e1-3bab-4832-b019-7e203335375b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logging">
+      <UniqueIdentifier>{25e727d6-3f30-456d-8981-9eeae6f1a6c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collections">
+      <UniqueIdentifier>{391d3b35-47ab-4827-8a14-bd5ce7a05335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="diagnostics">
+      <UniqueIdentifier>{818fb127-4ab8-451c-b76f-206f80ebb1f2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\internal\namespace_macros.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\all.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\all_traits.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\any.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\any_traits.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\comparer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\dynamic_buffer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\equal_to.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\hash.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\is_any_char.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\is_function_pointer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\is_passed_by_const_ref.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\is_process_32bit.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\is_process_64bit.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\move_if.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\not_all.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\not_all_traits.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\not_any.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\not_any_traits.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\not_trait.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\param.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\param_move.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\param_pack_type.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\pass_by_mode.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\product.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\requires.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\static_ctor.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\sum.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\typedefs.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\union_cast.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\memory\array_ptr.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\logger.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\ILoggerListener.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\LogMessage.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\FileLoggerListener.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\StreamLoggerListener.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\ConsoleLoggerListener.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QuickRng.h" />
+    <ClInclude Include="src\Container.h" />
+    <ClInclude Include="src\utils\math.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\memory\Nullable.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collections\Store.h">
+      <Filter>collections</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\Stopwatch.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\IMeasurable.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\duration_snapshot.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\duration_calculator.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\IRepeatMeasurable.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\convertible_duration.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\logging\logger.cpp">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logging\LogMessage.cpp">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logging\FileLoggerListener.cpp">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logging\StreamLoggerListener.cpp">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QuickRng.cpp" />
+    <ClCompile Include="src\Container.cpp" />
+    <ClCompile Include="src\diagnostics\Stopwatch.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\duration_snapshot.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\duration_calculator.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\IMeasurable.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\IRepeatMeasurable.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\convertible_duration.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collections\Store.cpp">
+      <Filter>collections</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

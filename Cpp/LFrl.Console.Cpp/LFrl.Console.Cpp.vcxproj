@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{983A496C-8322-4D69-82C7-690E66E743E8}</ProjectGuid>
-	<Keyword>Win32Proj</Keyword>
+    <Keyword>Win32Proj</Keyword>
     <RootNamespace>LFrlConsoleCpp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -179,6 +179,9 @@
     <ProjectReference Include="..\LFrl.CG.Core\LFrl.CG.Core.vcxproj">
       <Project>{8DBF5068-5D82-471A-BEAC-E5CF9A1EB7AA}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
