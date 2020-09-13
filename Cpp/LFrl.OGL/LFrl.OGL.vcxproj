@@ -145,6 +145,9 @@
     <ProjectReference Include="..\include\glew\glew.vcxproj">
       <Project>{8d153fa0-0206-4346-b975-bdafbca580f4}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\include\glm\glm.vcxproj">
+      <Project>{4f87c130-9e47-4e77-8148-5e7cfd5ef5ff}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\LFrl.Common\LFrl.Common.vcxproj">
       <Project>{116336F6-7273-4490-8107-6E182303C843}</Project>
     </ProjectReference>
