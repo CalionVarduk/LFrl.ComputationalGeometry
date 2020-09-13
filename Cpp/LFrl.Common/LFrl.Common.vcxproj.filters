@@ -13,6 +13,12 @@
     <Filter Include="logging">
       <UniqueIdentifier>{25e727d6-3f30-456d-8981-9eeae6f1a6c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="collections">
+      <UniqueIdentifier>{391d3b35-47ab-4827-8a14-bd5ce7a05335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="diagnostics">
+      <UniqueIdentifier>{818fb127-4ab8-451c-b76f-206f80ebb1f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\internal\namespace_macros.h">
@@ -111,7 +117,6 @@
     <ClInclude Include="src\logging\logger.h">
       <Filter>logging</Filter>
     </ClInclude>
-    <ClInclude Include="src\Stopwatch.h" />
     <ClInclude Include="src\logging\ILoggerListener.h">
       <Filter>logging</Filter>
     </ClInclude>
@@ -135,9 +140,29 @@
     <ClInclude Include="src\memory\Nullable.h">
       <Filter>memory</Filter>
     </ClInclude>
+    <ClInclude Include="src\collections\Store.h">
+      <Filter>collections</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\Stopwatch.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\IMeasurable.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\duration_snapshot.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\duration_calculator.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\IRepeatMeasurable.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\diagnostics\convertible_duration.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Stopwatch.cpp" />
     <ClCompile Include="src\logging\logger.cpp">
       <Filter>logging</Filter>
     </ClCompile>
@@ -152,5 +177,23 @@
     </ClCompile>
     <ClCompile Include="src\QuickRng.cpp" />
     <ClCompile Include="src\Container.cpp" />
+    <ClCompile Include="src\diagnostics\Stopwatch.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\duration_snapshot.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\duration_calculator.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\IMeasurable.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\IRepeatMeasurable.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\diagnostics\convertible_duration.cpp">
+      <Filter>diagnostics</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

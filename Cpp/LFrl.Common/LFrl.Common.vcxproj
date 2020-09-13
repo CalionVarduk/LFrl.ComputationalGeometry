@@ -19,7 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\collections\Store.h" />
     <ClInclude Include="src\Container.h" />
+    <ClInclude Include="src\diagnostics\duration_calculator.h" />
+    <ClInclude Include="src\diagnostics\convertible_duration.h" />
+    <ClInclude Include="src\diagnostics\duration_snapshot.h" />
+    <ClInclude Include="src\diagnostics\IMeasurable.h" />
+    <ClInclude Include="src\diagnostics\IRepeatMeasurable.h" />
+    <ClInclude Include="src\diagnostics\Stopwatch.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
     <ClInclude Include="src\logging\ConsoleLoggerListener.h" />
     <ClInclude Include="src\logging\FileLoggerListener.h" />
@@ -30,7 +37,6 @@
     <ClInclude Include="src\memory\array_ptr.h" />
     <ClInclude Include="src\memory\Nullable.h" />
     <ClInclude Include="src\QuickRng.h" />
-    <ClInclude Include="src\Stopwatch.h" />
     <ClInclude Include="src\utils\all.h" />
     <ClInclude Include="src\utils\all_traits.h" />
     <ClInclude Include="src\utils\any.h" />
@@ -64,12 +70,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Container.cpp" />
+    <ClCompile Include="src\diagnostics\convertible_duration.cpp" />
+    <ClCompile Include="src\diagnostics\duration_calculator.cpp" />
+    <ClCompile Include="src\diagnostics\duration_snapshot.cpp" />
+    <ClCompile Include="src\diagnostics\IMeasurable.cpp" />
+    <ClCompile Include="src\diagnostics\IRepeatMeasurable.cpp" />
+    <ClCompile Include="src\diagnostics\Stopwatch.cpp" />
     <ClCompile Include="src\logging\FileLoggerListener.cpp" />
     <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\logging\LogMessage.cpp" />
     <ClCompile Include="src\logging\StreamLoggerListener.cpp" />
     <ClCompile Include="src\QuickRng.cpp" />
-    <ClCompile Include="src\Stopwatch.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

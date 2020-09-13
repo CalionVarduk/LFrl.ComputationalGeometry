@@ -6,7 +6,7 @@
 #include <vector>
 #include <sstream>
 #include "LogMessage.h"
-#include "../stopwatch.h"
+#include "../diagnostics/Stopwatch.h"
 
 BEGIN_LFRLCOMMON_NAMESPACE
 
