@@ -31,7 +31,7 @@ public:
 	bool HasValue() const noexcept { return _ptr != nullptr; }
 	reference GetValue() const noexcept(false) { return *_ptr; }
 	pointer Get() const noexcept { return _ptr; }
-	UIntPtr GetAddress() const noexcept { return (UIntPtr)_ptr; }
+	uPtr GetAddress() const noexcept { return (uPtr)_ptr; }
 
 	void Set(pointer ptr) noexcept { _ptr = ptr; }
 	void Set(reference value) noexcept { Set(&value); }
@@ -60,8 +60,6 @@ private:
 template <class T>
 struct Nullable final
 {
-	friend void Swap(Nullable<T>&, Nullable<T>&);
-
 	Nullable(Nullable<T> const&) = delete;
 	Nullable<T>& operator=(Nullable<T> const&) = delete;
 
@@ -82,7 +80,7 @@ public:
 	bool HasValue() const noexcept { return _ptr != nullptr; }
 	reference GetValue() const noexcept(false) { return *_ptr; }
 	pointer Get() const noexcept { return _ptr; }
-	UIntPtr GetAddress() const noexcept { return (UIntPtr)_ptr; }
+	uPtr GetAddress() const noexcept { return (uPtr)_ptr; }
 
 	void Set(pointer ptr);
 	void Set(WeakNullable<T> const& other) { Set(other.Get()); }
@@ -90,6 +88,7 @@ public:
 	void Set(Null);
 	void Clear() { Set(nullptr); }
 	void RenounceOwnership() noexcept { _ptr = nullptr; }
+	void Swap(Nullable<T>& other) noexcept;
 
 	Nullable<T>& operator=(pointer ptr);
 	Nullable<T>& operator=(WeakNullable<T> const& other);
@@ -212,6 +211,14 @@ void Nullable<T>::Set(Null)
 }
 
 template <class T>
+void Nullable<T>::Swap(Nullable<T>& other) noexcept
+{
+	auto temp = _ptr;
+	_ptr = other._ptr;
+	other._ptr = temp;
+}
+
+template <class T>
 Nullable<T>& Nullable<T>::operator=(typename Nullable<T>::pointer ptr)
 {
 	Set(ptr);
@@ -248,14 +255,6 @@ template <class T>
 Nullable<T> MakeNullable(typename Nullable<T>::pointer ptr) noexcept
 {
 	return Nullable<T>(ptr);
-}
-
-template <class T>
-void Swap(Nullable<T>& first, Nullable<T>& second) noexcept
-{
-	auto temp = first._ptr;
-	first._ptr = second._ptr;
-	second._ptr = temp;
 }
 
 END_LFRLCOMMON_NAMESPACE

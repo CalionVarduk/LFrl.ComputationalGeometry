@@ -195,5 +195,8 @@
     <ClCompile Include="src\diagnostics\convertible_duration.cpp">
       <Filter>diagnostics</Filter>
     </ClCompile>
+    <ClCompile Include="src\collections\Store.cpp">
+      <Filter>collections</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -69,6 +69,7 @@
     <ClInclude Include="src\utils\union_cast.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\collections\Store.cpp" />
     <ClCompile Include="src\Container.cpp" />
     <ClCompile Include="src\diagnostics\convertible_duration.cpp" />
     <ClCompile Include="src\diagnostics\duration_calculator.cpp" />
