@@ -1,6 +1,6 @@
 #include "duration_calculator.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 duration_calculator duration_calculator::zero()
 {
@@ -35,4 +35,4 @@ u64 duration_calculator::get_elapsed_ns(typename duration_calculator::time_point
 	return calculate(end).get_ns();
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE

@@ -3,13 +3,18 @@
 
 #include "LogMessage.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 class Logger;
 
 struct ILoggerListener
 {
 	friend class Logger;
+
+	ILoggerListener(ILoggerListener const&) = delete;
+	ILoggerListener(ILoggerListener&&) = delete;
+	ILoggerListener& operator=(ILoggerListener const&) = delete;
+	ILoggerListener& operator=(ILoggerListener&&) = delete;
 
 	virtual ~ILoggerListener() = default;
 	virtual void Invoke(LogMessage const& message) = 0;
@@ -21,15 +26,13 @@ struct ILoggerListener
 	Logger const* GetLogger() const noexcept { return _logger; }
 
 protected:
-	ILoggerListener() noexcept
-		: _isEnabled(true), _logger(nullptr)
-	{}
+	ILoggerListener() noexcept;
 
 private:
 	bool _isEnabled;
 	Logger const* _logger;
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

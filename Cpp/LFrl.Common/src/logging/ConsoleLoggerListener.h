@@ -4,7 +4,7 @@
 #include <iostream>
 #include "StreamLoggerListener.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 class ConsoleLoggerListener : public StreamLoggerListener
 {
@@ -22,6 +22,6 @@ public:
 	virtual ~ConsoleLoggerListener() = default;
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

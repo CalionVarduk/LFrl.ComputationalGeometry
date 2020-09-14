@@ -3,7 +3,7 @@
 
 #include "not_any.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class... Traits>
 struct not_any_traits
@@ -11,6 +11,6 @@ struct not_any_traits
 	static constexpr bool value = not_any<(Traits::value)...>::value;
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

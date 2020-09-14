@@ -4,7 +4,7 @@
 #include <atomic>
 #include "duration_snapshot.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 class StopWatch
 {
@@ -61,6 +61,6 @@ Rep StopWatch::GetElapsedTimeAs() const
 	return _duration.get_elapsed_time_as<Rep, Period>(GetEndPoint());
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

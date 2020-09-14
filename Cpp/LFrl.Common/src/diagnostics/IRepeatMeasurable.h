@@ -5,7 +5,7 @@
 #include <atomic>
 #include "duration_snapshot.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 struct measurement_result final
 {
@@ -35,9 +35,9 @@ struct measurement_range_result final
 struct IRepeatMeasurable
 {
 	IRepeatMeasurable(IRepeatMeasurable const&) = delete;
-	IRepeatMeasurable(IRepeatMeasurable&&) = delete;
+	IRepeatMeasurable(IRepeatMeasurable&&) = default;
 	IRepeatMeasurable& operator=(IRepeatMeasurable const&) = delete;
-	IRepeatMeasurable& operator=(IRepeatMeasurable&&) = delete;
+	IRepeatMeasurable& operator=(IRepeatMeasurable&&) = default;
 
 	virtual ~IRepeatMeasurable() = default;
 
@@ -57,6 +57,6 @@ private:
 	std::atomic_bool _isRunning;
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

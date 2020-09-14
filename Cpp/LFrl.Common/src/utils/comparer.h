@@ -3,7 +3,7 @@
 
 #include "param.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class T>
 struct comparer final
@@ -22,13 +22,13 @@ struct reverse_comparer final
 	bool operator()(param_type o1, param_type o2) const { return !comparer_type()(o1, o2); }
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #define LFRL_COMMON_SPECIALIZE_COMPARER(TYPE, BODY)\
-template <> struct LFRLCOMMON::comparer<TYPE> {\
+template <> struct LFRL_COMMON::comparer<TYPE> {\
 typedef TYPE type;\
-typedef LFRLCOMMON::param<TYPE> param_type;\
-bool operator()(LFRLCOMMON::param<TYPE> o1, LFRLCOMMON::param<TYPE> o2) const {\
+typedef LFRL_COMMON::param<TYPE> param_type;\
+bool operator()(LFRL_COMMON::param<TYPE> o1, LFRL_COMMON::param<TYPE> o2) const {\
 BODY;\
 }\
 };

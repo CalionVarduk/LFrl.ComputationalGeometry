@@ -4,7 +4,7 @@
 #include <cstring>
 #include "typedefs.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class T>
 struct dynamic_buffer final
@@ -90,6 +90,6 @@ void dynamic_buffer<T>::reset()
 		std::memset(_data, 0, _size);
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

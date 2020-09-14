@@ -4,7 +4,7 @@
 #include <iterator>
 #include "../utils/typedefs.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class T>
 struct array_ptr final
@@ -119,6 +119,6 @@ array_ptr<const T> make_const_array_ptr(typename array_ptr<const T>::pointer beg
 	return array_ptr<const T>(begin, size);
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

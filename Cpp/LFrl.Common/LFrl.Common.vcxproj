@@ -78,6 +78,7 @@
     <ClCompile Include="src\diagnostics\IRepeatMeasurable.cpp" />
     <ClCompile Include="src\diagnostics\Stopwatch.cpp" />
     <ClCompile Include="src\logging\FileLoggerListener.cpp" />
+    <ClCompile Include="src\logging\ILoggerListener.cpp" />
     <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\logging\LogMessage.cpp" />
     <ClCompile Include="src\logging\StreamLoggerListener.cpp" />

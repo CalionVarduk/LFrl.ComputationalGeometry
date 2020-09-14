@@ -3,7 +3,7 @@
 
 #include "duration_calculator.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 struct duration_snapshot final
 {
@@ -51,6 +51,6 @@ Rep duration_snapshot::get_elapsed_time_as() const
 	return _calculator.get_elapsed_time_as<Rep, Period>(_end);
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

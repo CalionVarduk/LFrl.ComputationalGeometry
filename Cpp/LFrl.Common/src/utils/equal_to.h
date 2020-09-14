@@ -4,7 +4,7 @@
 #include <functional>
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class T>
 struct ptr_equal_to
@@ -15,6 +15,6 @@ struct ptr_equal_to
 	}
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

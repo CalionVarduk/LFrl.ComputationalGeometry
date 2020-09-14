@@ -152,6 +152,11 @@
       <Project>{116336F6-7273-4490-8107-6E182303C843}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\context\DeviceContext.h" />
+    <ClInclude Include="src\context\IRenderingContext.h" />
+    <ClInclude Include="src\internal\namespace_macros.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

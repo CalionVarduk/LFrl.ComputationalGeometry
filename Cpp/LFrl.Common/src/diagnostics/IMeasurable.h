@@ -5,14 +5,14 @@
 #include <stdexcept>
 #include "convertible_duration.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 struct IMeasurable
 {
 	IMeasurable(IMeasurable const&) = delete;
-	IMeasurable(IMeasurable&&) = delete;
+	IMeasurable(IMeasurable&&) = default;
 	IMeasurable& operator=(IMeasurable const&) = delete;
-	IMeasurable& operator=(IMeasurable&&) = delete;
+	IMeasurable& operator=(IMeasurable&&) = default;
 
 	virtual ~IMeasurable() = default;
 
@@ -28,6 +28,6 @@ private:
 	std::atomic_bool _isRunning;
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

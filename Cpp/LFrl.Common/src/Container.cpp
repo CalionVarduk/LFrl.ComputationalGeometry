@@ -1,6 +1,6 @@
 #include "Container.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 Container::Container() noexcept
 	: _map(), _keyedMap()
@@ -44,4 +44,4 @@ void* Container::GetKeyed(std::pair<std::type_index, u32> key) const
 	return it == _keyedMap.end() ? nullptr : it->second.get();
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE

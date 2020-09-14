@@ -1,6 +1,6 @@
 #include "IMeasurable.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 convertible_duration IMeasurable::Measure() noexcept(false)
 {
@@ -16,4 +16,4 @@ IMeasurable::IMeasurable() noexcept
 	: _isRunning(false)
 {}
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE

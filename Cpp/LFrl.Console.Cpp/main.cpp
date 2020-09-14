@@ -5,7 +5,7 @@
 #include "LFrl.Common/src/diagnostics/IRepeatMeasurable.h"
 #include "LFrl.Common/src/diagnostics/Stopwatch.h"
 
-using namespace LFRLCOMMON;
+using namespace LFRL_COMMON;
 
 u64 ans = 0;
 

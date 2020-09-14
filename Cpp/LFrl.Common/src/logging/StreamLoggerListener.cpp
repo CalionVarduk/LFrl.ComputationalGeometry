@@ -1,6 +1,6 @@
 #include "StreamLoggerListener.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 StreamLoggerListener::StreamLoggerListener(std::ostream& stream)
 	: stream(stream)
@@ -11,4 +11,4 @@ void StreamLoggerListener::Invoke(LogMessage const& message)
 	stream << message.message << '\n' << std::endl;
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE

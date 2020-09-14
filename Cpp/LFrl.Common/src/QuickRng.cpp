@@ -1,6 +1,6 @@
 #include "QuickRng.h"
 
-using namespace LFRLCOMMON;
+using namespace LFRL_COMMON;
 
 QuickRng::QuickRng() noexcept
 	: _seed(0)

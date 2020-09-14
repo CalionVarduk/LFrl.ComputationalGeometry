@@ -1,4 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+  <ItemGroup>
+    <Filter Include="primitives">
+      <UniqueIdentifier>{32fa2967-0ca5-4345-9fb0-91670a3da220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="internal">
+      <UniqueIdentifier>{ef8a95f9-365d-4f44-920d-ded0d82d24e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="context">
+      <UniqueIdentifier>{bbeffeb9-e7d1-4a5a-89a9-6ca967af0a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wnd">
+      <UniqueIdentifier>{2e71de69-56a5-4802-97a1-6e5af303087d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{6c2e5e81-e766-493c-8e8c-10d583bd748b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\internal\namespace_macros.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\IRenderingContext.h">
+      <Filter>context</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\DeviceContext.h">
+      <Filter>context</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
