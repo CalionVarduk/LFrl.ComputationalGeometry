@@ -1,20 +1,28 @@
 #ifndef __LFRL_OGL_DEVICE_CONTEXT_GUARD__
 #define __LFRL_OGL_DEVICE_CONTEXT_GUARD__
 
+#include <array>
 #include "../internal/namespace_macros.h"
 #include "LFrl.Common/src/utils/typedefs.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 
-struct PixelFormatAttributes
+struct PixelFormatAttributes final
 {
+	bool drawToWindow;
+	bool supportOpenGL;
+	bool doubleBuffer;
+	LFRL_COMMON::u32 sampleCount;
+	LFRL_COMMON::u32 pixelType;
+	LFRL_COMMON::u32 colorBits;
+	LFRL_COMMON::u32 depthBits;
+	LFRL_COMMON::u32 stencilBits;
 
+	PixelFormatAttributes() noexcept;
+
+	std::array<int, 19> encode() const noexcept;
 };
 
-// represents HDC, created from HWND
-// pixel format is set for it
-// can be linked directly to a concrete HWND, since they will always be paired
-// main ctx will have to be able to create a new HDC instance on the fly (factory)
 struct DeviceContext final
 {
 	enum struct ActionResult
@@ -32,10 +40,12 @@ struct DeviceContext final
 	enum struct State
 	{
 		CREATED = 0,
-		READY = 1,
-		INIT_FAILURE = 2,
+		INIT_FAILURE = 1,
+		READY = 2,
 		DISPOSED = 3
 	};
+
+	static const PIXELFORMATDESCRIPTOR DEFAULT_PIXEL_FORMAT_DESCRIPTOR;
 
 	DeviceContext() = delete;
 	DeviceContext(DeviceContext const&) = delete;
@@ -57,8 +67,9 @@ struct DeviceContext final
 	ActionResult Initialize(PixelFormatAttributes attributes);
 	ActionResult Initialize(PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
 
-	bool SwapBuffers() const;
-	bool Validate(RECT const* rect = NULL) const;
+	bool IsActive() const;
+	bool SwapBuffers();
+	bool Validate(RECT const* rect = NULL);
 
 	ActionResult Dispose();
 

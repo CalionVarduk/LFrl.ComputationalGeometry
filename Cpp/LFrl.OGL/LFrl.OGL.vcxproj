@@ -154,8 +154,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\context\DeviceContext.h" />
-    <ClInclude Include="src\context\IRenderingContext.h" />
+    <ClInclude Include="src\context\RenderingContext.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\utils\rendering_context_swapper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\context\DeviceContext.cpp" />
+    <ClCompile Include="src\context\RenderingContext.cpp" />
+    <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

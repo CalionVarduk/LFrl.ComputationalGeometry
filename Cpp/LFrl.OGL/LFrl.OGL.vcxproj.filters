@@ -21,11 +21,25 @@
     <ClInclude Include="src\internal\namespace_macros.h">
       <Filter>internal</Filter>
     </ClInclude>
-    <ClInclude Include="src\context\IRenderingContext.h">
-      <Filter>context</Filter>
-    </ClInclude>
     <ClInclude Include="src\context\DeviceContext.h">
       <Filter>context</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\rendering_context_swapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\RenderingContext.h">
+      <Filter>context</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\context\DeviceContext.cpp">
+      <Filter>context</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\rendering_context_swapper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context\RenderingContext.cpp">
+      <Filter>context</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
