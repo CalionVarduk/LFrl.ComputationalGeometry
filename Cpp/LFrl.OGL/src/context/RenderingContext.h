@@ -40,6 +40,8 @@ struct RenderingContext final
 		DISPOSED = 3
 	};
 
+	static bool Deactivate();
+
 	RenderingContext(RenderingContext const&) = delete;
 	RenderingContext(RenderingContext&&) = delete;
 	RenderingContext& operator=(RenderingContext const&) = delete;
@@ -48,19 +50,15 @@ struct RenderingContext final
 	RenderingContext();
 	~RenderingContext() { Dispose(); }
 
-	DeviceContext const* GetDeviceContext() const noexcept { return _dc; }
 	HGLRC GetHglrc() const noexcept { return _hglrc; }
+	DeviceContext const* GetDeviceContext() const noexcept { return _dc; }
 	RenderingAttributes const& GetAttributes() const noexcept { return _attributes; }
 	State GetState() const noexcept { return _state; }
 
 	ActionResult Initialize(DeviceContext const& dc, RenderingAttributes attributes);
 
 	bool Activate();
-	bool Deactivate();
 	bool IsActive() const;
-
-	void SetViewport(GLsizei width, GLsizei height) { SetViewport(0, 0, width, height); }
-	void SetViewport(GLint x, GLint y, GLsizei width, GLsizei height);
 
 	ActionResult Dispose();
 
@@ -74,8 +72,8 @@ struct RenderingContext final
 	char const* GetGLslVersion() const;
 
 private:
-	DeviceContext const* _dc;
 	HGLRC _hglrc;
+	DeviceContext const* _dc;
 	RenderingAttributes _attributes;
 	State _state;
 };

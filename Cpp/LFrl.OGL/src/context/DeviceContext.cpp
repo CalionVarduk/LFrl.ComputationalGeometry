@@ -37,30 +37,31 @@ std::array<int, 19> PixelFormatAttributes::encode() const noexcept
 
 const PIXELFORMATDESCRIPTOR DeviceContext::DEFAULT_PIXEL_FORMAT_DESCRIPTOR = __create_default_pxf_descriptor();
 
-DeviceContext::DeviceContext(HWND handle) noexcept
-	: _handle(handle), _hdc(NULL), _pxfDescriptor(), _pxfAttributes(), _pxf(0), _state(State::CREATED)
+DeviceContext::DeviceContext() noexcept
+	: _hdc(NULL), _handle(NULL), _pxfDescriptor(), _pxfAttributes(), _pxf(0), _state(State::CREATED)
 {
 	std::memset(&_pxfDescriptor, 0, sizeof(_pxfDescriptor));
 }
 
-HWND DeviceContext::GetParentHandle() const
-{
-	return ::GetParent(_handle);
-}
-
-DeviceContext::ActionResult DeviceContext::Initialize(PixelFormatAttributes attributes)
+DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes)
 {
 	PIXELFORMATDESCRIPTOR descriptor;
 	std::memcpy(&descriptor, &DEFAULT_PIXEL_FORMAT_DESCRIPTOR, sizeof(descriptor));
-	return Initialize(attributes, descriptor);
+	return Initialize(handle, attributes, descriptor);
 }
 
-DeviceContext::ActionResult DeviceContext::Initialize(PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor)
+DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor)
 {
 	if (_state == State::READY || _state == State::DISPOSED)
 		return ActionResult::ALREADY_INITIALIZED;
 
-	auto hdc = ::GetDC(_handle);
+	if (handle.GetState() != Wnd::Handle::State::READY)
+	{
+		_state = State::INIT_FAILURE;
+		return ActionResult::INVALID_HANDLE;
+	}
+
+	auto hdc = ::GetDC(handle.GetHwnd());
 	if (hdc == NULL)
 	{
 		_state = State::INIT_FAILURE;
@@ -79,19 +80,20 @@ DeviceContext::ActionResult DeviceContext::Initialize(PixelFormatAttributes attr
 		pxf = ::ChoosePixelFormat(hdc, &descriptor);
 		if (pxf == 0)
 		{
-			::ReleaseDC(_handle, hdc);
+			::ReleaseDC(handle.GetHwnd(), hdc);
 			_state = State::INIT_FAILURE;
 			return ActionResult::PIXEL_FORMAT_CHOICE_FAILURE;
 		}
 	}
 	if (!::SetPixelFormat(hdc, pxf, &descriptor))
 	{
-		::ReleaseDC(_handle, hdc);
+		::ReleaseDC(handle.GetHwnd(), hdc);
 		_state = State::INIT_FAILURE;
 		return ActionResult::PIXEL_FORMAT_INIT_FAILURE;
 	}
 
 	_hdc = hdc;
+	_handle = &handle;
 	_pxfDescriptor = descriptor;
 	_pxfAttributes = attributes;
 	_pxf = pxf;
@@ -109,11 +111,6 @@ bool DeviceContext::SwapBuffers()
 	return ::SwapBuffers(_hdc);
 }
 
-bool DeviceContext::Validate(RECT const* rect)
-{
-	return ::ValidateRect(_handle, rect);
-}
-
 DeviceContext::ActionResult DeviceContext::Dispose()
 {
 	if (_state == State::DISPOSED)
@@ -122,9 +119,11 @@ DeviceContext::ActionResult DeviceContext::Dispose()
 	if (_state != State::READY)
 		return ActionResult::NOT_READY;
 
-	if (!::ReleaseDC(_handle, _hdc))
+	if (!::ReleaseDC(_handle->GetHwnd(), _hdc))
 		return ActionResult::HDC_DISPOSAL_FAILURE;
 
+	_hdc = NULL;
+	_state = State::DISPOSED;
 	return ActionResult::OK;
 }
 

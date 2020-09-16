@@ -30,6 +30,16 @@
     <ClInclude Include="src\context\RenderingContext.h">
       <Filter>context</Filter>
     </ClInclude>
+    <ClInclude Include="src\Initialize.h" />
+    <ClInclude Include="src\wnd\Handle.h">
+      <Filter>wnd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wnd\Class.h">
+      <Filter>wnd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\ViewContext.h">
+      <Filter>context</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -40,6 +50,13 @@
     </ClCompile>
     <ClCompile Include="src\context\RenderingContext.cpp">
       <Filter>context</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Initialize.cpp" />
+    <ClCompile Include="src\wnd\Class.cpp">
+      <Filter>wnd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wnd\Handle.cpp">
+      <Filter>wnd</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

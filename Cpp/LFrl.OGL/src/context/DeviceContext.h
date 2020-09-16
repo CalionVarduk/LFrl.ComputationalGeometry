@@ -2,8 +2,7 @@
 #define __LFRL_OGL_DEVICE_CONTEXT_GUARD__
 
 #include <array>
-#include "../internal/namespace_macros.h"
-#include "LFrl.Common/src/utils/typedefs.h"
+#include "../wnd/Handle.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 
@@ -29,12 +28,13 @@ struct DeviceContext final
 	{
 		OK = 0,
 		ALREADY_INITIALIZED = 1,
-		HDC_INIT_FAILURE = 2,
-		PIXEL_FORMAT_CHOICE_FAILURE = 3,
-		PIXEL_FORMAT_INIT_FAILURE = 4,
-		NOT_READY = 5,
-		HDC_DISPOSAL_FAILURE = 6,
-		ALREADY_DISPOSED = 7
+		INVALID_HANDLE = 2,
+		HDC_INIT_FAILURE = 3,
+		PIXEL_FORMAT_CHOICE_FAILURE = 4,
+		PIXEL_FORMAT_INIT_FAILURE = 5,
+		NOT_READY = 6,
+		HDC_DISPOSAL_FAILURE = 7,
+		ALREADY_DISPOSED = 8
 	};
 
 	enum struct State
@@ -47,35 +47,32 @@ struct DeviceContext final
 
 	static const PIXELFORMATDESCRIPTOR DEFAULT_PIXEL_FORMAT_DESCRIPTOR;
 
-	DeviceContext() = delete;
 	DeviceContext(DeviceContext const&) = delete;
 	DeviceContext(DeviceContext&&) = delete;
 	DeviceContext& operator=(DeviceContext const&) = delete;
 	DeviceContext& operator=(DeviceContext&&) = delete;
 
-	DeviceContext(HWND handle) noexcept;
+	DeviceContext() noexcept;
 	~DeviceContext() { Dispose(); }
 
-	HWND GetParentHandle() const;
-	HWND GetHandle() const noexcept { return _handle; }
 	HDC GetHdc() const noexcept { return _hdc; }
+	Wnd::Handle const* GetHandle() const noexcept { return _handle; }
 	PIXELFORMATDESCRIPTOR const& GetPixelFormatDescriptor() const noexcept { return _pxfDescriptor; }
 	PixelFormatAttributes const& GetPixelFormatAttributes() const noexcept { return _pxfAttributes; }
 	LFRL_COMMON::i32 GetPixelFormat() const noexcept { return _pxf; }
 	State GetState() const noexcept { return _state; }
 
-	ActionResult Initialize(PixelFormatAttributes attributes);
-	ActionResult Initialize(PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
+	ActionResult Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes);
+	ActionResult Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
 
 	bool IsActive() const;
 	bool SwapBuffers();
-	bool Validate(RECT const* rect = NULL);
 
 	ActionResult Dispose();
 
 private:
-	const HWND _handle;
 	HDC _hdc;
+	Wnd::Handle const* _handle;
 	PIXELFORMATDESCRIPTOR _pxfDescriptor;
 	PixelFormatAttributes _pxfAttributes;
 	LFRL_COMMON::i32 _pxf;

@@ -41,8 +41,13 @@ std::array<int, 11> RenderingAttributes::encode() const noexcept
 	0 };
 }
 
+bool RenderingContext::Deactivate()
+{
+	return wglMakeCurrent(NULL, NULL);
+}
+
 RenderingContext::RenderingContext()
-	: _dc(NULL), _hglrc(NULL), _attributes(), _state(State::CREATED)
+	: _hglrc(NULL), _dc(NULL), _attributes(), _state(State::CREATED)
 {}
 
 RenderingContext::ActionResult RenderingContext::Initialize(DeviceContext const& dc, RenderingAttributes attributes)
@@ -57,7 +62,7 @@ RenderingContext::ActionResult RenderingContext::Initialize(DeviceContext const&
 	}
 
 	auto attribs = attributes.encode();
-	auto hglrc = wglCreateContextAttribsARB != NULL ? wglCreateContextAttribsARB(dc.GetHdc(), NULL, attribs.data()) : NULL;
+	auto hglrc = wglCreateContextAttribsARB(dc.GetHdc(), NULL, attribs.data());
 
 	if (hglrc == NULL)
 	{
@@ -77,19 +82,9 @@ bool RenderingContext::Activate()
 	return wglMakeCurrent(_dc->GetHdc(), _hglrc);
 }
 
-bool RenderingContext::Deactivate()
-{
-	return wglMakeCurrent(NULL, NULL);
-}
-
 bool RenderingContext::IsActive() const
 {
 	return wglGetCurrentContext() == _hglrc;
-}
-
-void RenderingContext::SetViewport(GLint x, GLint y, GLsizei width, GLsizei height)
-{
-	glViewport(x, y, width, height);
 }
 
 RenderingContext::ActionResult RenderingContext::Dispose()
@@ -103,6 +98,8 @@ RenderingContext::ActionResult RenderingContext::Dispose()
 	if ((IsActive() && !Deactivate()) || !wglDeleteContext(_hglrc))
 		return ActionResult::HGLRC_DISPOSAL_FAILURE;
 
+	_hglrc = NULL;
+	_state = State::DISPOSED;
 	return ActionResult::OK;
 }
 
