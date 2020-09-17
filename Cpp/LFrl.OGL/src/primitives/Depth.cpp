@@ -19,6 +19,18 @@ void Depth::MakeReadonly() noexcept
 	glDepthMask(GL_FALSE);
 }
 
+GLdouble Depth::GetClearValue() noexcept
+{
+	GLdouble result;
+	glGetDoublev(GL_DEPTH_CLEAR_VALUE, &result);
+	return result;
+}
+
+void Depth::SetClearValue(GLdouble value) noexcept
+{
+	glClearDepth(value);
+}
+
 bool Depth::Test::IsEnabled() noexcept
 {
 	return glIsEnabled(GL_DEPTH_TEST);

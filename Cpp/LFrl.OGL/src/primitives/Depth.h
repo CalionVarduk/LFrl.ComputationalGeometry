@@ -12,6 +12,9 @@ namespace Depth
 	void MakeWritable() noexcept;
 	void MakeReadonly() noexcept;
 
+	GLdouble GetClearValue() noexcept;
+	void SetClearValue(GLdouble value) noexcept;
+
 	namespace Test
 	{
 		bool IsEnabled() noexcept;
