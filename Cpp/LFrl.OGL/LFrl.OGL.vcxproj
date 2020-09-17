@@ -160,6 +160,7 @@
     <ClInclude Include="src\capacities\Lines.h" />
     <ClInclude Include="src\capacities\Points.h" />
     <ClInclude Include="src\capacities\Polygons.h" />
+    <ClInclude Include="src\capacities\Sampling.h" />
     <ClInclude Include="src\context\DeviceContext.h" />
     <ClInclude Include="src\context\RenderingContext.h" />
     <ClInclude Include="src\context\ViewContext.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="src\capacities\Lines.cpp" />
     <ClCompile Include="src\capacities\Points.cpp" />
     <ClCompile Include="src\capacities\Polygons.cpp" />
+    <ClCompile Include="src\capacities\Sampling.cpp" />
     <ClCompile Include="src\context\DeviceContext.cpp" />
     <ClCompile Include="src\context\RenderingContext.cpp" />
     <ClCompile Include="src\Initialize.cpp" />

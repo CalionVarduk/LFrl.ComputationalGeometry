@@ -73,6 +73,9 @@
     <ClInclude Include="src\capacities\Hint.h">
       <Filter>capacities</Filter>
     </ClInclude>
+    <ClInclude Include="src\capacities\Sampling.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -116,6 +119,9 @@
       <Filter>capacities</Filter>
     </ClCompile>
     <ClCompile Include="src\capacities\Polygons.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Sampling.cpp">
       <Filter>capacities</Filter>
     </ClCompile>
   </ItemGroup>

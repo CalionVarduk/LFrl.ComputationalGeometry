@@ -6,7 +6,7 @@
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-// TODO: add Debug (might be a struct? include getting errors), Sampling, Stencil
+// TODO: add Debug (might be a struct? include getting errors), Stencil
 namespace Depth
 {
 	bool IsReadonly() noexcept;
