@@ -153,6 +153,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\capacities\Blending.h" />
     <ClInclude Include="src\capacities\Depth.h" />
     <ClInclude Include="src\capacities\Dithering.h" />
     <ClInclude Include="src\capacities\FaceCulling.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="src\wnd\Handle.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\capacities\Blending.cpp" />
     <ClCompile Include="src\capacities\Depth.cpp" />
     <ClCompile Include="src\capacities\Dithering.cpp" />
     <ClCompile Include="src\capacities\FaceCulling.cpp" />

@@ -85,6 +85,9 @@
     <ClInclude Include="src\capacities\FaceType.h">
       <Filter>capacities</Filter>
     </ClInclude>
+    <ClInclude Include="src\capacities\Blending.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -134,6 +137,9 @@
       <Filter>capacities</Filter>
     </ClCompile>
     <ClCompile Include="src\capacities\Stencil.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Blending.cpp">
       <Filter>capacities</Filter>
     </ClCompile>
   </ItemGroup>
