@@ -158,6 +158,7 @@
     <ClInclude Include="src\context\ViewContext.h" />
     <ClInclude Include="src\Initialize.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\primitives\Background.h" />
     <ClInclude Include="src\primitives\Projection.h" />
     <ClInclude Include="src\primitives\Viewport.h" />
     <ClInclude Include="src\utils\rendering_context_swapper.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="src\context\DeviceContext.cpp" />
     <ClCompile Include="src\context\RenderingContext.cpp" />
     <ClCompile Include="src\Initialize.cpp" />
+    <ClCompile Include="src\primitives\Background.cpp" />
     <ClCompile Include="src\primitives\Projection.cpp" />
     <ClCompile Include="src\primitives\Viewport.cpp" />
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />

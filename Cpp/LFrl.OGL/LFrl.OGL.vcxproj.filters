@@ -46,6 +46,9 @@
     <ClInclude Include="src\primitives\Viewport.h">
       <Filter>primitives</Filter>
     </ClInclude>
+    <ClInclude Include="src\primitives\Background.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -68,6 +71,9 @@
       <Filter>primitives</Filter>
     </ClCompile>
     <ClCompile Include="src\primitives\Viewport.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\Background.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
   </ItemGroup>
