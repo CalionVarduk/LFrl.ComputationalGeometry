@@ -87,14 +87,14 @@ void Polygons::Smoothing::Disable() noexcept
 	glDisable(GL_POLYGON_SMOOTH);
 }
 
-Hint Polygons::Smoothing::GetHint() noexcept
+HintType Polygons::Smoothing::GetHint() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_POLYGON_SMOOTH_HINT, &result);
-	return (Hint)result;
+	return (HintType)result;
 }
 
-void Polygons::Smoothing::SetHint(Hint hint) noexcept
+void Polygons::Smoothing::SetHint(HintType hint) noexcept
 {
 	glHint(GL_POLYGON_SMOOTH_HINT, (GLenum)hint);
 }

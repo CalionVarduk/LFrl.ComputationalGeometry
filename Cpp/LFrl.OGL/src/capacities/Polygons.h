@@ -1,7 +1,7 @@
 #ifndef __LFRL_OGL_CAPACITIES_POLYGONS_GUARD__
 #define __LFRL_OGL_CAPACITIES_POLYGONS_GUARD__
 
-#include "Hint.h"
+#include "HintType.h"
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
@@ -60,11 +60,11 @@ namespace Polygons
 		void Enable() noexcept;
 		void Disable() noexcept;
 
-		Hint GetHint() noexcept;
-		void SetHint(Hint hint) noexcept;
-		void HintFast() noexcept { SetHint(Hint::FAST); }
-		void HintNice() noexcept { SetHint(Hint::NICE); }
-		void HintAny() noexcept { SetHint(Hint::ANY); }
+		HintType GetHint() noexcept;
+		void SetHint(HintType hint) noexcept;
+		void HintFast() noexcept { SetHint(HintType::FAST); }
+		void HintNice() noexcept { SetHint(HintType::NICE); }
+		void HintAny() noexcept { SetHint(HintType::ANY); }
 	}
 }
 

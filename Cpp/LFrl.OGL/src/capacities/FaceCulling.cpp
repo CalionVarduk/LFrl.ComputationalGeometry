@@ -17,28 +17,28 @@ void FaceCulling::Disable() noexcept
 	glDisable(GL_CULL_FACE);
 }
 
-FaceCulling::Front::Type FaceCulling::Front::Get() noexcept
+FaceCulling::FrontOrientation::Type FaceCulling::FrontOrientation::Get() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_FRONT_FACE, &result);
-	return (FaceCulling::Front::Type)result;
+	return (FaceCulling::FrontOrientation::Type)result;
 }
 
-void FaceCulling::Front::Set(FaceCulling::Front::Type type) noexcept
+void FaceCulling::FrontOrientation::Set(FaceCulling::FrontOrientation::Type type) noexcept
 {
 	glFrontFace((GLenum)type);
 }
 
-FaceCulling::Cull::Type FaceCulling::Cull::Get() noexcept
+FaceType FaceCulling::Cull::Get() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_CULL_FACE_MODE, &result);
-	return (FaceCulling::Cull::Type)result;
+	return (FaceType)result;
 }
 
-void FaceCulling::Cull::Set(FaceCulling::Cull::Type type) noexcept
+void FaceCulling::Cull::Set(FaceType face) noexcept
 {
-	glCullFace((GLenum)type);
+	glCullFace((GLenum)face);
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE

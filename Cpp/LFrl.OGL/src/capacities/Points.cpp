@@ -32,14 +32,14 @@ void Points::Smoothing::Disable() noexcept
 	glDisable(GL_POINT_SMOOTH);
 }
 
-Hint Points::Smoothing::GetHint() noexcept
+HintType Points::Smoothing::GetHint() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_POINT_SMOOTH_HINT, &result);
-	return (Hint)result;
+	return (HintType)result;
 }
 
-void Points::Smoothing::SetHint(Hint hint) noexcept
+void Points::Smoothing::SetHint(HintType hint) noexcept
 {
 	glHint(GL_POINT_SMOOTH_HINT, (GLenum)hint);
 }

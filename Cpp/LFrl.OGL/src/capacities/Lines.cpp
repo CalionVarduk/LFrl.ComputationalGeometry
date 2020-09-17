@@ -17,14 +17,14 @@ void Lines::Smoothing::Disable() noexcept
 	glDisable(GL_LINE_SMOOTH);
 }
 
-Hint Lines::Smoothing::GetHint() noexcept
+HintType Lines::Smoothing::GetHint() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_LINE_SMOOTH_HINT, &result);
-	return (Hint)result;
+	return (HintType)result;
 }
 
-void Lines::Smoothing::SetHint(Hint hint) noexcept
+void Lines::Smoothing::SetHint(HintType hint) noexcept
 {
 	glHint(GL_LINE_SMOOTH_HINT, (GLenum)hint);
 }

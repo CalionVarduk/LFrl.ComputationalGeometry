@@ -1,12 +1,11 @@
 #ifndef __LFRL_OGL_CAPACITIES_DEPTH_GUARD__
 #define __LFRL_OGL_CAPACITIES_DEPTH_GUARD__
 
-#include "../internal/namespace_macros.h"
-#include "LFrl.Common/src/utils/typedefs.h"
+#include "FuncType.h"
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-// TODO: add Debug (might be a struct? include getting errors), Stencil
+// TODO: add Debug (might be a struct? include getting errors)
 namespace Depth
 {
 	bool IsReadonly() noexcept;
@@ -45,28 +44,16 @@ namespace Depth
 
 	namespace Func
 	{
-		enum struct Type
-		{
-			NEVER = GL_NEVER,
-			LESS_THAN = GL_LESS,
-			EQUAL_TO = GL_EQUAL,
-			LESS_THAN_OR_EQUAL_TO = GL_LEQUAL,
-			GREATER_THAN = GL_GREATER,
-			NOT_EQUAL_TO = GL_NOTEQUAL,
-			GREATER_THAN_OR_EQUAL_TO = GL_GEQUAL,
-			ALWAYS = GL_ALWAYS
-		};
-
-		Type Get() noexcept;
-		void Set(Type type) noexcept;
-		void SetNever() noexcept { Set(Type::NEVER); }
-		void SetLt() noexcept { Set(Type::LESS_THAN); }
-		void SetEq() noexcept { Set(Type::EQUAL_TO); }
-		void SetLe() noexcept { Set(Type::LESS_THAN_OR_EQUAL_TO); }
-		void SetGt() noexcept { Set(Type::GREATER_THAN); }
-		void SetNe() noexcept { Set(Type::NOT_EQUAL_TO); }
-		void SetGe() noexcept { Set(Type::GREATER_THAN_OR_EQUAL_TO); }
-		void SetAlways() noexcept { Set(Type::ALWAYS); }
+		FuncType Get() noexcept;
+		void Set(FuncType func) noexcept;
+		void SetNever() noexcept { Set(FuncType::NEVER); }
+		void SetLt() noexcept { Set(FuncType::LESS_THAN); }
+		void SetEq() noexcept { Set(FuncType::EQUAL_TO); }
+		void SetLe() noexcept { Set(FuncType::LESS_THAN_OR_EQUAL_TO); }
+		void SetGt() noexcept { Set(FuncType::GREATER_THAN); }
+		void SetNe() noexcept { Set(FuncType::NOT_EQUAL_TO); }
+		void SetGe() noexcept { Set(FuncType::GREATER_THAN_OR_EQUAL_TO); }
+		void SetAlways() noexcept { Set(FuncType::ALWAYS); }
 	}
 }
 

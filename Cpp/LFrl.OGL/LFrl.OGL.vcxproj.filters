@@ -70,10 +70,19 @@
     <ClInclude Include="src\capacities\Polygons.h">
       <Filter>capacities</Filter>
     </ClInclude>
-    <ClInclude Include="src\capacities\Hint.h">
+    <ClInclude Include="src\capacities\Sampling.h">
       <Filter>capacities</Filter>
     </ClInclude>
-    <ClInclude Include="src\capacities\Sampling.h">
+    <ClInclude Include="src\capacities\Stencil.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\FuncType.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\HintType.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\FaceType.h">
       <Filter>capacities</Filter>
     </ClInclude>
   </ItemGroup>
@@ -122,6 +131,9 @@
       <Filter>capacities</Filter>
     </ClCompile>
     <ClCompile Include="src\capacities\Sampling.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Stencil.cpp">
       <Filter>capacities</Filter>
     </ClCompile>
   </ItemGroup>

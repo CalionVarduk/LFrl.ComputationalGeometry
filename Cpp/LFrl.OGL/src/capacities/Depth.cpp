@@ -73,14 +73,14 @@ void Depth::Clamping::Disable() noexcept
 	glDisable(GL_DEPTH_CLAMP);
 }
 
-Depth::Func::Type Depth::Func::Get() noexcept
+FuncType Depth::Func::Get() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_DEPTH_FUNC, &result);
-	return (Depth::Func::Type)result;
+	return (FuncType)result;
 }
 
-void Depth::Func::Set(Depth::Func::Type type) noexcept
+void Depth::Func::Set(FuncType type) noexcept
 {
 	glDepthFunc((GLenum)type);
 }
