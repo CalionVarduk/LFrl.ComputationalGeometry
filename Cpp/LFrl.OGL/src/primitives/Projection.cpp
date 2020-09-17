@@ -6,6 +6,10 @@ Projection::Projection() noexcept
 	: _value(glm::identity<glm::mat4>())
 {}
 
+Projection::Projection(glm::mat4 const& value) noexcept
+	: _value(value)
+{}
+
 void Projection::SetOrthogonal(GLfloat width, GLfloat height, GLfloat zNear, GLfloat zFar)
 {
 	_value = glm::ortho(0.0f, width, height, 0.0f, zNear, zFar);

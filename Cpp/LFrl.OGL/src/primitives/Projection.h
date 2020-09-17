@@ -14,6 +14,7 @@ struct Projection final
 	Projection& operator= (Projection&&) noexcept = default;
 
 	Projection() noexcept;
+	explicit Projection(glm::mat4 const& value) noexcept;
 
 	glm::mat4 const& Get() const noexcept { return _value; }
 	void Set(glm::mat4 const& value) noexcept { _value = value; }

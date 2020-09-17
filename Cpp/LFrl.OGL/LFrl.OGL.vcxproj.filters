@@ -43,6 +43,9 @@
     <ClInclude Include="src\primitives\Projection.h">
       <Filter>primitives</Filter>
     </ClInclude>
+    <ClInclude Include="src\primitives\Viewport.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -62,6 +65,9 @@
       <Filter>wnd</Filter>
     </ClCompile>
     <ClCompile Include="src\primitives\Projection.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\Viewport.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
   </ItemGroup>
