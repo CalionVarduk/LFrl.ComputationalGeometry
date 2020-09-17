@@ -171,6 +171,8 @@
     <ClCompile Include="src\context\RenderingContext.cpp" />
     <ClCompile Include="src\Initialize.cpp" />
     <ClCompile Include="src\primitives\Background.cpp" />
+    <ClCompile Include="src\primitives\Depth.cpp" />
+    <ClCompile Include="src\primitives\Depth.h" />
     <ClCompile Include="src\primitives\FaceCulling.cpp" />
     <ClCompile Include="src\primitives\Projection.cpp" />
     <ClCompile Include="src\primitives\Viewport.cpp" />

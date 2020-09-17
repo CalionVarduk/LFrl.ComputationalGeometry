@@ -82,5 +82,11 @@
     <ClCompile Include="src\primitives\FaceCulling.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
+    <ClCompile Include="src\primitives\Depth.h">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\Depth.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

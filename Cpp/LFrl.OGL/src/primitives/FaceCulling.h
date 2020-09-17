@@ -9,17 +9,23 @@ BEGIN_LFRL_OGL_NAMESPACE
 namespace FaceCulling
 {
 	bool IsEnabled() noexcept;
-	void Enable(bool enable = true) noexcept;
-	void Disable(bool disable = true) noexcept { Enable(!disable); }
+	void Enable() noexcept;
+	void Disable() noexcept;
 
-	GLenum GetFrontFace() noexcept;
-	void SetFrontFaceCw() noexcept;
-	void SetFrontFaceCcw() noexcept;
+	namespace Front
+	{
+		GLenum Get() noexcept;
+		void SetCw() noexcept;
+		void SetCcw() noexcept;
+	}
 
-	GLenum GetCullFace() noexcept;
-	void SetCullFaceFront() noexcept;
-	void SetCullFaceBack() noexcept;
-	void SetCullFaceAll() noexcept;
+	namespace Cull
+	{
+		GLenum Get() noexcept;
+		void SetFront() noexcept;
+		void SetBack() noexcept;
+		void SetAll() noexcept;
+	}
 }
 
 END_LFRL_OGL_NAMESPACE

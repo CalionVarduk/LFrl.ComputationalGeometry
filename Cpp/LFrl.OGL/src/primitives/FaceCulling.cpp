@@ -7,49 +7,51 @@ bool FaceCulling::IsEnabled() noexcept
 	return glIsEnabled(GL_CULL_FACE);
 }
 
-void FaceCulling::Enable(bool enable) noexcept
+void FaceCulling::Enable() noexcept
 {
-	if (enable)
-		glEnable(GL_CULL_FACE);
-	else
-		glDisable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 }
 
-GLenum FaceCulling::GetFrontFace() noexcept
+void FaceCulling::Disable() noexcept
+{
+	glDisable(GL_CULL_FACE);
+}
+
+GLenum FaceCulling::Front::Get() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_FRONT_FACE, &result);
-	return result;
+	return (GLenum)result;
 }
 
-void FaceCulling::SetFrontFaceCw() noexcept
+void FaceCulling::Front::SetCw() noexcept
 {
 	glFrontFace(GL_CW);
 }
 
-void FaceCulling::SetFrontFaceCcw() noexcept
+void FaceCulling::Front::SetCcw() noexcept
 {
 	glFrontFace(GL_CCW);
 }
 
-GLenum FaceCulling::GetCullFace() noexcept
+GLenum FaceCulling::Cull::Get() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_CULL_FACE_MODE, &result);
-	return result;
+	return (GLenum)result;
 }
 
-void FaceCulling::SetCullFaceFront() noexcept
+void FaceCulling::Cull::SetFront() noexcept
 {
 	glCullFace(GL_FRONT);
 }
 
-void FaceCulling::SetCullFaceBack() noexcept
+void FaceCulling::Cull::SetBack() noexcept
 {
 	glCullFace(GL_BACK);
 }
 
-void FaceCulling::SetCullFaceAll() noexcept
+void FaceCulling::Cull::SetAll() noexcept
 {
 	glCullFace(GL_FRONT_AND_BACK);
 }

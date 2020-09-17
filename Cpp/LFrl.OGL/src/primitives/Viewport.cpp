@@ -4,7 +4,7 @@ BEGIN_LFRL_OGL_NAMESPACE
 
 Viewport Viewport::GetActive() noexcept
 {
-	GLint* result;
+	GLint result[4] = { 0, 0, 0, 0 };
 	glGetIntegerv(GL_VIEWPORT, result);
 	if (result == NULL)
 		return Viewport();
