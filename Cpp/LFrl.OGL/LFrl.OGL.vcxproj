@@ -153,16 +153,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\capacities\Depth.h" />
+    <ClInclude Include="src\capacities\Dithering.h" />
+    <ClInclude Include="src\capacities\FaceCulling.h" />
+    <ClInclude Include="src\capacities\Hint.h" />
+    <ClInclude Include="src\capacities\Lines.h" />
+    <ClInclude Include="src\capacities\Points.h" />
+    <ClInclude Include="src\capacities\Polygons.h" />
     <ClInclude Include="src\context\DeviceContext.h" />
     <ClInclude Include="src\context\RenderingContext.h" />
     <ClInclude Include="src\context\ViewContext.h" />
     <ClInclude Include="src\Initialize.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
     <ClInclude Include="src\primitives\Background.h" />
-    <ClInclude Include="src\primitives\Dithering.h" />
-    <ClInclude Include="src\primitives\FaceCulling.h" />
-    <ClInclude Include="src\primitives\Lines.h" />
-    <ClInclude Include="src\primitives\Points.h" />
     <ClInclude Include="src\primitives\Projection.h" />
     <ClInclude Include="src\primitives\Viewport.h" />
     <ClInclude Include="src\utils\rendering_context_swapper.h" />
@@ -170,16 +173,16 @@
     <ClInclude Include="src\wnd\Handle.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\capacities\Depth.cpp" />
+    <ClCompile Include="src\capacities\Dithering.cpp" />
+    <ClCompile Include="src\capacities\FaceCulling.cpp" />
+    <ClCompile Include="src\capacities\Lines.cpp" />
+    <ClCompile Include="src\capacities\Points.cpp" />
+    <ClCompile Include="src\capacities\Polygons.cpp" />
     <ClCompile Include="src\context\DeviceContext.cpp" />
     <ClCompile Include="src\context\RenderingContext.cpp" />
     <ClCompile Include="src\Initialize.cpp" />
     <ClCompile Include="src\primitives\Background.cpp" />
-    <ClCompile Include="src\primitives\Depth.cpp" />
-    <ClCompile Include="src\primitives\Depth.h" />
-    <ClCompile Include="src\primitives\Dithering.cpp" />
-    <ClCompile Include="src\primitives\FaceCulling.cpp" />
-    <ClCompile Include="src\primitives\Lines.cpp" />
-    <ClCompile Include="src\primitives\Points.cpp" />
     <ClCompile Include="src\primitives\Projection.cpp" />
     <ClCompile Include="src\primitives\Viewport.cpp" />
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />

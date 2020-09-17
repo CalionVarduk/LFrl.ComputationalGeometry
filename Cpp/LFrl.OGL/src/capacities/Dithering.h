@@ -1,10 +1,10 @@
-#ifndef __LFRL_OGL_DITHERING_GUARD__
-#define __LFRL_OGL_DITHERING_GUARD__
+#ifndef __LFRL_OGL_CAPACITIES_DITHERING_GUARD__
+#define __LFRL_OGL_CAPACITIES_DITHERING_GUARD__
 
 #include "../internal/namespace_macros.h"
 #include "LFrl.Common/src/utils/typedefs.h"
 
-BEGIN_LFRL_OGL_NAMESPACE
+BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
 namespace Dithering
 {
@@ -13,6 +13,6 @@ namespace Dithering
 	void Disable() noexcept;
 }
 
-END_LFRL_OGL_NAMESPACE
+END_LFRL_OGL_CAPACITIES_NAMESPACE
 
 #endif

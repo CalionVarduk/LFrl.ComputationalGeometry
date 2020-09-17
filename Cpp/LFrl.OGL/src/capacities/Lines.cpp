@@ -1,6 +1,6 @@
 #include "Lines.h"
 
-BEGIN_LFRL_OGL_NAMESPACE
+BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
 bool Lines::Smoothing::IsEnabled() noexcept
 {
@@ -17,26 +17,16 @@ void Lines::Smoothing::Disable() noexcept
 	glDisable(GL_LINE_SMOOTH);
 }
 
-GLenum Lines::Smoothing::GetHint() noexcept
+Hint Lines::Smoothing::GetHint() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_LINE_SMOOTH_HINT, &result);
-	return (GLenum)result;
+	return (Hint)result;
 }
 
-void Lines::Smoothing::HintFast() noexcept
+void Lines::Smoothing::SetHint(Hint hint) noexcept
 {
-	glHint(GL_LINE_SMOOTH_HINT, GL_FASTEST);
-}
-
-void Lines::Smoothing::HintNice() noexcept
-{
-	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-}
-
-void Lines::Smoothing::HintAny() noexcept
-{
-	glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+	glHint(GL_LINE_SMOOTH_HINT, (GLenum)hint);
 }
 
 GLfloat Lines::GetWidth() noexcept
@@ -51,4 +41,4 @@ void Lines::SetWidth(GLfloat value) noexcept
 	glLineWidth(value);
 }
 
-END_LFRL_OGL_NAMESPACE
+END_LFRL_OGL_CAPACITIES_NAMESPACE

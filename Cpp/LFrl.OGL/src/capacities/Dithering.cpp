@@ -1,6 +1,6 @@
 #include "Dithering.h"
 
-BEGIN_LFRL_OGL_NAMESPACE
+BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
 bool Dithering::IsEnabled() noexcept
 {
@@ -17,4 +17,4 @@ void Dithering::Disable() noexcept
 	glDisable(GL_DITHER);
 }
 
-END_LFRL_OGL_NAMESPACE
+END_LFRL_OGL_CAPACITIES_NAMESPACE

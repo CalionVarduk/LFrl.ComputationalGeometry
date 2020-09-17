@@ -1,6 +1,6 @@
 #include "Points.h"
 
-BEGIN_LFRL_OGL_NAMESPACE
+BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
 bool Points::ProgramSize::IsEnabled() noexcept
 {
@@ -32,26 +32,16 @@ void Points::Smoothing::Disable() noexcept
 	glDisable(GL_POINT_SMOOTH);
 }
 
-GLenum Points::Smoothing::GetHint() noexcept
+Hint Points::Smoothing::GetHint() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_POINT_SMOOTH_HINT, &result);
-	return (GLenum)result;
+	return (Hint)result;
 }
 
-void Points::Smoothing::HintFast() noexcept
+void Points::Smoothing::SetHint(Hint hint) noexcept
 {
-	glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
-}
-
-void Points::Smoothing::HintNice() noexcept
-{
-	glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-}
-
-void Points::Smoothing::HintAny() noexcept
-{
-	glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
+	glHint(GL_POINT_SMOOTH_HINT, (GLenum)hint);
 }
 
 GLfloat Points::GetSize() noexcept
@@ -66,4 +56,4 @@ void Points::SetSize(GLfloat value) noexcept
 	glPointSize(value);
 }
 
-END_LFRL_OGL_NAMESPACE
+END_LFRL_OGL_CAPACITIES_NAMESPACE

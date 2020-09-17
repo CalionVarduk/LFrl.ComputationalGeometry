@@ -16,6 +16,9 @@
     <Filter Include="utils">
       <UniqueIdentifier>{6c2e5e81-e766-493c-8e8c-10d583bd748b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="capacities">
+      <UniqueIdentifier>{d4d8ffa4-cdfd-4ace-920d-332ff3f667a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\internal\namespace_macros.h">
@@ -49,17 +52,26 @@
     <ClInclude Include="src\primitives\Background.h">
       <Filter>primitives</Filter>
     </ClInclude>
-    <ClInclude Include="src\primitives\FaceCulling.h">
-      <Filter>primitives</Filter>
+    <ClInclude Include="src\capacities\Depth.h">
+      <Filter>capacities</Filter>
     </ClInclude>
-    <ClInclude Include="src\primitives\Dithering.h">
-      <Filter>primitives</Filter>
+    <ClInclude Include="src\capacities\Dithering.h">
+      <Filter>capacities</Filter>
     </ClInclude>
-    <ClInclude Include="src\primitives\Lines.h">
-      <Filter>primitives</Filter>
+    <ClInclude Include="src\capacities\FaceCulling.h">
+      <Filter>capacities</Filter>
     </ClInclude>
-    <ClInclude Include="src\primitives\Points.h">
-      <Filter>primitives</Filter>
+    <ClInclude Include="src\capacities\Lines.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Points.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Polygons.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Hint.h">
+      <Filter>capacities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,23 +100,23 @@
     <ClCompile Include="src\primitives\Background.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
-    <ClCompile Include="src\primitives\FaceCulling.cpp">
-      <Filter>primitives</Filter>
+    <ClCompile Include="src\capacities\Depth.cpp">
+      <Filter>capacities</Filter>
     </ClCompile>
-    <ClCompile Include="src\primitives\Depth.h">
-      <Filter>primitives</Filter>
+    <ClCompile Include="src\capacities\Dithering.cpp">
+      <Filter>capacities</Filter>
     </ClCompile>
-    <ClCompile Include="src\primitives\Depth.cpp">
-      <Filter>primitives</Filter>
+    <ClCompile Include="src\capacities\FaceCulling.cpp">
+      <Filter>capacities</Filter>
     </ClCompile>
-    <ClCompile Include="src\primitives\Dithering.cpp">
-      <Filter>primitives</Filter>
+    <ClCompile Include="src\capacities\Lines.cpp">
+      <Filter>capacities</Filter>
     </ClCompile>
-    <ClCompile Include="src\primitives\Lines.cpp">
-      <Filter>primitives</Filter>
+    <ClCompile Include="src\capacities\Points.cpp">
+      <Filter>capacities</Filter>
     </ClCompile>
-    <ClCompile Include="src\primitives\Points.cpp">
-      <Filter>primitives</Filter>
+    <ClCompile Include="src\capacities\Polygons.cpp">
+      <Filter>capacities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

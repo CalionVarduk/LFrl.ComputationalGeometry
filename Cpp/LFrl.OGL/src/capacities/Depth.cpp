@@ -1,6 +1,6 @@
 #include "Depth.h"
 
-BEGIN_LFRL_OGL_NAMESPACE
+BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
 bool Depth::IsReadonly() noexcept
 {
@@ -46,7 +46,7 @@ void Depth::Test::Disable() noexcept
 	glDisable(GL_DEPTH_TEST);
 }
 
-Depth::Range::value Depth::Range::Get() noexcept
+Depth::Range::data Depth::Range::Get() noexcept
 {
 	GLdouble result[2] = { 0.0, 0.0 };
 	glGetDoublev(GL_DEPTH_RANGE, result);
@@ -73,51 +73,16 @@ void Depth::Clamping::Disable() noexcept
 	glDisable(GL_DEPTH_CLAMP);
 }
 
-GLenum Depth::Func::Get() noexcept
+Depth::Func::Type Depth::Func::Get() noexcept
 {
 	GLint result;
 	glGetIntegerv(GL_DEPTH_FUNC, &result);
-	return (GLenum)result;
+	return (Depth::Func::Type)result;
 }
 
-void Depth::Func::SetNever() noexcept
+void Depth::Func::Set(Depth::Func::Type type) noexcept
 {
-	glDepthFunc(GL_NEVER);
+	glDepthFunc((GLenum)type);
 }
 
-void Depth::Func::SetLt() noexcept
-{
-	glDepthFunc(GL_LESS);
-}
-
-void Depth::Func::SetEq() noexcept
-{
-	glDepthFunc(GL_EQUAL);
-}
-
-void Depth::Func::SetLe() noexcept
-{
-	glDepthFunc(GL_LEQUAL);
-}
-
-void Depth::Func::SetGt() noexcept
-{
-	glDepthFunc(GL_GREATER);
-}
-
-void Depth::Func::SetNe() noexcept
-{
-	glDepthFunc(GL_NOTEQUAL);
-}
-
-void Depth::Func::SetGe() noexcept
-{
-	glDepthFunc(GL_GEQUAL);
-}
-
-void Depth::Func::SetAlways() noexcept
-{
-	glDepthFunc(GL_ALWAYS);
-}
-
-END_LFRL_OGL_NAMESPACE
+END_LFRL_OGL_CAPACITIES_NAMESPACE
