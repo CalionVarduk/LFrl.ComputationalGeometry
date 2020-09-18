@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -156,6 +156,7 @@
     <ClInclude Include="src\capacities\Buffer.h" />
     <ClInclude Include="src\capacities\Blending.h" />
     <ClInclude Include="src\capacities\Color.h" />
+    <ClInclude Include="src\capacities\Debug.h" />
     <ClInclude Include="src\capacities\Depth.h" />
     <ClInclude Include="src\capacities\Dithering.h" />
     <ClInclude Include="src\capacities\FaceCulling.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="src\capacities\Blending.cpp" />
     <ClCompile Include="src\capacities\Buffer.cpp" />
     <ClCompile Include="src\capacities\Color.cpp" />
+    <ClCompile Include="src\capacities\Debug.cpp" />
     <ClCompile Include="src\capacities\Depth.cpp" />
     <ClCompile Include="src\capacities\FaceCulling.cpp" />
     <ClCompile Include="src\capacities\Lines.cpp" />

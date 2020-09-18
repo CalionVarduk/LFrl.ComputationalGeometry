@@ -94,6 +94,7 @@
     <ClInclude Include="src\capacities\Buffer.h">
       <Filter>capacities</Filter>
     </ClInclude>
+    <ClInclude Include="src\capacities\Debug.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -146,6 +147,9 @@
       <Filter>capacities</Filter>
     </ClCompile>
     <ClCompile Include="src\capacities\Buffer.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Debug.cpp">
       <Filter>capacities</Filter>
     </ClCompile>
   </ItemGroup>
