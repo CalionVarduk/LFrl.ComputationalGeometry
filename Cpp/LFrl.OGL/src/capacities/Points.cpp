@@ -2,58 +2,50 @@
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-bool Points::ProgramSize::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_PROGRAM_POINT_SIZE);
-}
-
-void Points::ProgramSize::Enable() noexcept
-{
-	glEnable(GL_PROGRAM_POINT_SIZE);
-}
-
-void Points::ProgramSize::Disable() noexcept
-{
-	glDisable(GL_PROGRAM_POINT_SIZE);
-}
-
-bool Points::Smoothing::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_POINT_SMOOTH);
-}
-
-void Points::Smoothing::Enable() noexcept
-{
-	glEnable(GL_POINT_SMOOTH);
-}
-
-void Points::Smoothing::Disable() noexcept
-{
-	glDisable(GL_POINT_SMOOTH);
-}
-
-HintType Points::Smoothing::GetHint() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_POINT_SMOOTH_HINT, &result);
-	return (HintType)result;
-}
-
-void Points::Smoothing::SetHint(HintType hint) noexcept
-{
-	glHint(GL_POINT_SMOOTH_HINT, (GLenum)hint);
-}
-
-GLfloat Points::GetSize() noexcept
-{
-	GLfloat result;
-	glGetFloatv(GL_POINT_SIZE, &result);
-	return result;
-}
-
 void Points::SetSize(GLfloat value) noexcept
 {
 	glPointSize(value);
+}
+
+Points::Smoothing::Snapshot Points::Smoothing::Snapshot::Load() noexcept
+{
+	Points::Smoothing::Snapshot result;
+	result.toggle = Points::Smoothing::ToggleSnapshot::Load();
+	result.hint = Points::Smoothing::HintSnapshot::Load();
+	return result;
+}
+
+Points::Smoothing::Snapshot::Snapshot() noexcept
+	: toggle(),
+	hint()
+{}
+
+void Points::Smoothing::Snapshot::Apply() noexcept
+{
+	toggle.Apply();
+	hint.Apply();
+}
+
+Points::Snapshot Points::Snapshot::Load() noexcept
+{
+	Points::Snapshot result;
+	result.size = Points::SizeSnapshot::Load();
+	result.programSize = Points::ProgramSize::Snapshot::Load();
+	result.smoothing = Points::Smoothing::Snapshot::Load();
+	return result;
+}
+
+Points::Snapshot::Snapshot() noexcept
+	: size(),
+	programSize(),
+	smoothing()
+{}
+
+void Points::Snapshot::Apply() noexcept
+{
+	size.Apply();
+	programSize.Apply();
+	smoothing.Apply();
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE

@@ -1,7 +1,12 @@
 #ifndef __LFRL_OGL_CAPACITIES_DEPTH_GUARD__
 #define __LFRL_OGL_CAPACITIES_DEPTH_GUARD__
 
+#include "macros.h"
 #include "FuncType.h"
+
+#define __LFRL_OGL_DEFINE_DEPTH_READONLY_CAPACITY_SETTER(READONLY)\
+if (READONLY) MakeReadonly(); \
+else MakeWritable();
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
@@ -12,14 +17,16 @@ namespace Depth
 	void MakeWritable() noexcept;
 	void MakeReadonly() noexcept;
 
-	GLdouble GetClearValue() noexcept;
+	LFRL_OGL_DEFINE_CAPACITY_GETTER_F64(ClearValue, GLdouble, GL_DEPTH_CLEAR_VALUE)
+
 	void SetClearValue(GLdouble value) noexcept;
+
+	LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Readonly, bool, false, IsReadonly, __LFRL_OGL_DEFINE_DEPTH_READONLY_CAPACITY_SETTER);
+	LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(ClearValue, GLdouble, 1.0, GetClearValue, SetClearValue);
 
 	namespace Test
 	{
-		bool IsEnabled() noexcept;
-		void Enable() noexcept;
-		void Disable() noexcept;
+		LFRL_OGL_DEFINE_BOOL_CAPACITY_SNAPSHOT_STRUCT(, GL_DEPTH_TEST, false);
 	}
 
 	namespace Range
@@ -31,20 +38,22 @@ namespace Depth
 		};
 
 		data Get() noexcept;
-		void Set(data value) noexcept { Set(value.zNear, value.zFar); }
 		void Set(GLdouble zNear, GLdouble zFar) noexcept;
+		void Set(data value) noexcept { Set(value.zNear, value.zFar); }
+
+		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
+			data data;);
 	}
 
 	namespace Clamping
 	{
-		bool IsEnabled() noexcept;
-		void Enable() noexcept;
-		void Disable() noexcept;
+		LFRL_OGL_DEFINE_BOOL_CAPACITY_SNAPSHOT_STRUCT(, GL_DEPTH_TEST, false);
 	}
 
 	namespace Func
 	{
-		FuncType Get() noexcept;
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(, FuncType, GL_DEPTH_FUNC)
+
 		void Set(FuncType func) noexcept;
 		void SetNever() noexcept { Set(FuncType::NEVER); }
 		void SetLt() noexcept { Set(FuncType::LESS_THAN); }
@@ -54,9 +63,22 @@ namespace Depth
 		void SetNe() noexcept { Set(FuncType::NOT_EQUAL_TO); }
 		void SetGe() noexcept { Set(FuncType::GREATER_THAN_OR_EQUAL_TO); }
 		void SetAlways() noexcept { Set(FuncType::ALWAYS); }
+
+		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
+			FuncType type;);
 	}
+
+	LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
+		ReadonlySnapshot readonly;
+		ClearValueSnapshot clearValue;
+		Test::Snapshot test;
+		Range::Snapshot range;
+		Clamping::Snapshot clamping;
+		Func::Snapshot func;);
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE
+
+#undef __LFRL_OGL_DEFINE_DEPTH_READONLY_CAPACITY_SETTER
 
 #endif

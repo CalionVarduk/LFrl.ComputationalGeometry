@@ -2,13 +2,6 @@
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-Polygons::Mode Polygons::GetMode() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_POLYGON_MODE, &result);
-	return (Polygons::Mode)result;
-}
-
 void Polygons::SetMode(Polygons::Mode mode) noexcept
 {
 	glPolygonMode(GL_FRONT_AND_BACK, (GLenum)mode);
@@ -27,76 +20,75 @@ void Polygons::Offset::Set(GLfloat factor, GLfloat units) noexcept
 	glPolygonOffset(factor, units);
 }
 
-bool Polygons::Offset::Line::IsEnabled() noexcept
+Polygons::Offset::Snapshot Polygons::Offset::Snapshot::Load() noexcept
 {
-	return glIsEnabled(GL_POLYGON_OFFSET_LINE);
+	Polygons::Offset::Snapshot result;
+	result.offset = Polygons::Offset::OffsetSnapshot::Load();
+	result.line = Polygons::Offset::Line::Snapshot::Load();
+	result.point = Polygons::Offset::Point::Snapshot::Load();
+	result.fill = Polygons::Offset::Fill::Snapshot::Load();
+	return result;
 }
 
-void Polygons::Offset::Line::Enable() noexcept
-{
-	glEnable(GL_POLYGON_OFFSET_LINE);
-}
+Polygons::Offset::Snapshot::Snapshot() noexcept
+	: offset(),
+	line(),
+	point(),
+	fill()
+{}
 
-void Polygons::Offset::Line::Disable() noexcept
+void Polygons::Offset::Snapshot::Apply() noexcept
 {
-	glDisable(GL_POLYGON_OFFSET_LINE);
-}
-
-bool Polygons::Offset::Point::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_POLYGON_OFFSET_POINT);
-}
-
-void Polygons::Offset::Point::Enable() noexcept
-{
-	glEnable(GL_POLYGON_OFFSET_POINT);
-}
-
-void Polygons::Offset::Point::Disable() noexcept
-{
-	glDisable(GL_POLYGON_OFFSET_POINT);
-}
-
-bool Polygons::Offset::Fill::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_POLYGON_OFFSET_FILL);
-}
-
-void Polygons::Offset::Fill::Enable() noexcept
-{
-	glEnable(GL_POLYGON_OFFSET_FILL);
-}
-
-void Polygons::Offset::Fill::Disable() noexcept
-{
-	glDisable(GL_POLYGON_OFFSET_FILL);
-}
-
-bool Polygons::Smoothing::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_POLYGON_SMOOTH);
-}
-
-void Polygons::Smoothing::Enable() noexcept
-{
-	glEnable(GL_POLYGON_SMOOTH);
-}
-
-void Polygons::Smoothing::Disable() noexcept
-{
-	glDisable(GL_POLYGON_SMOOTH);
-}
-
-HintType Polygons::Smoothing::GetHint() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_POLYGON_SMOOTH_HINT, &result);
-	return (HintType)result;
+	offset.Apply();
+	line.Apply();
+	point.Apply();
+	fill.Apply();
 }
 
 void Polygons::Smoothing::SetHint(HintType hint) noexcept
 {
 	glHint(GL_POLYGON_SMOOTH_HINT, (GLenum)hint);
+}
+
+Polygons::Smoothing::Snapshot Polygons::Smoothing::Snapshot::Load() noexcept
+{
+	Polygons::Smoothing::Snapshot result;
+	result.toggle = Polygons::Smoothing::ToggleSnapshot::Load();
+	result.hint = Polygons::Smoothing::HintSnapshot::Load();
+	return result;
+}
+
+Polygons::Smoothing::Snapshot::Snapshot() noexcept
+	: toggle(),
+	hint()
+{}
+
+void Polygons::Smoothing::Snapshot::Apply() noexcept
+{
+	toggle.Apply();
+	hint.Apply();
+}
+
+Polygons::Snapshot Polygons::Snapshot::Load() noexcept
+{
+	Polygons::Snapshot result;
+	result.mode = Polygons::ModeSnapshot::Load();
+	result.offset = Polygons::Offset::Snapshot::Load();
+	result.smoothing = Polygons::Smoothing::Snapshot::Load();
+	return result;
+}
+
+Polygons::Snapshot::Snapshot() noexcept
+	: mode(),
+	offset(),
+	smoothing()
+{}
+
+void Polygons::Snapshot::Apply() noexcept
+{
+	mode.Apply();
+	offset.Apply();
+	smoothing.Apply();
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE

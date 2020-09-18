@@ -2,43 +2,68 @@
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-bool FaceCulling::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_CULL_FACE);
-}
-
-void FaceCulling::Enable() noexcept
-{
-	glEnable(GL_CULL_FACE);
-}
-
-void FaceCulling::Disable() noexcept
-{
-	glDisable(GL_CULL_FACE);
-}
-
-FaceCulling::FrontOrientation::Type FaceCulling::FrontOrientation::Get() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_FRONT_FACE, &result);
-	return (FaceCulling::FrontOrientation::Type)result;
-}
-
 void FaceCulling::FrontOrientation::Set(FaceCulling::FrontOrientation::Type type) noexcept
 {
 	glFrontFace((GLenum)type);
 }
 
-FaceType FaceCulling::Cull::Get() noexcept
+FaceCulling::FrontOrientation::Snapshot FaceCulling::FrontOrientation::Snapshot::Load() noexcept
 {
-	GLint result;
-	glGetIntegerv(GL_CULL_FACE_MODE, &result);
-	return (FaceType)result;
+	FaceCulling::FrontOrientation::Snapshot result;
+	result.type = FaceCulling::FrontOrientation::Get();
+	return result;
+}
+
+FaceCulling::FrontOrientation::Snapshot::Snapshot() noexcept
+	: type(FaceCulling::FrontOrientation::Type::CCW)
+{}
+
+void FaceCulling::FrontOrientation::Snapshot::Apply() noexcept
+{
+	FaceCulling::FrontOrientation::Set(type);
 }
 
 void FaceCulling::Cull::Set(FaceType face) noexcept
 {
 	glCullFace((GLenum)face);
+}
+
+FaceCulling::Cull::Snapshot FaceCulling::Cull::Snapshot::Load() noexcept
+{
+	FaceCulling::Cull::Snapshot result;
+	result.type = FaceCulling::Cull::Get();
+	return result;
+}
+
+FaceCulling::Cull::Snapshot::Snapshot() noexcept
+	: type(FaceType::BACK)
+{}
+
+void FaceCulling::Cull::Snapshot::Apply() noexcept
+{
+	FaceCulling::Cull::Set(type);
+}
+
+FaceCulling::Snapshot FaceCulling::Snapshot::Load() noexcept
+{
+	FaceCulling::Snapshot result;
+	result.toggle = FaceCulling::ToggleSnapshot::Load();
+	result.frontOrientation = FaceCulling::FrontOrientation::Snapshot::Load();
+	result.cull = FaceCulling::Cull::Snapshot::Load();
+	return result;
+}
+
+FaceCulling::Snapshot::Snapshot() noexcept
+	: toggle(),
+	frontOrientation(),
+	cull()
+{}
+
+void FaceCulling::Snapshot::Apply() noexcept
+{
+	toggle.Apply();
+	frontOrientation.Apply();
+	cull.Apply();
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE

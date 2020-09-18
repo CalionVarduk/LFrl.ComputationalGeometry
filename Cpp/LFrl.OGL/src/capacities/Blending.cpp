@@ -2,21 +2,6 @@
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-bool Blending::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_BLEND);
-}
-
-void Blending::Enable() noexcept
-{
-	glEnable(GL_BLEND);
-}
-
-void Blending::Disable() noexcept
-{
-	glDisable(GL_BLEND);
-}
-
 glm::vec4 Blending::GetColor() noexcept
 {
 	GLfloat result[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -29,34 +14,6 @@ void Blending::SetColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a) noexcept
 	glBlendColor(r, g, b, a);
 }
 
-Blending::Func::Factor Blending::Func::GetSourceRgbFactor() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_BLEND_SRC_RGB, &result);
-	return (Blending::Func::Factor)result;
-}
-
-Blending::Func::Factor Blending::Func::GetDestinationRgbFactor() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_BLEND_DST_RGB, &result);
-	return (Blending::Func::Factor)result;
-}
-
-Blending::Func::Factor Blending::Func::GetSourceAlphaFactor() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_BLEND_SRC_ALPHA, &result);
-	return (Blending::Func::Factor)result;
-}
-
-Blending::Func::Factor Blending::Func::GetDestinationAlphaFactor() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_BLEND_DST_ALPHA, &result);
-	return (Blending::Func::Factor)result;
-}
-
 void Blending::Func::Set(Blending::Func::Factor sfactor, Blending::Func::Factor dfactor) noexcept
 {
 	glBlendFunc((GLenum)sfactor, (GLenum)dfactor);
@@ -67,18 +24,26 @@ void Blending::Func::SetSeparate(Blending::Func::Factor sfactorRgb, Blending::Fu
 	glBlendFuncSeparate((GLenum)sfactorRgb, (GLenum)dfactorRgb, (GLenum)sfactorAlpha, (GLenum)dfactorAlpha);
 }
 
-Blending::Equation::Mode Blending::Equation::GetRbgMode() noexcept
+Blending::Func::Snapshot Blending::Func::Snapshot::Load() noexcept
 {
-	GLint result;
-	glGetIntegerv(GL_BLEND_EQUATION_RGB, &result);
-	return (Blending::Equation::Mode)result;
+	Blending::Func::Snapshot result;
+	result.sourceRgbFactor = Blending::Func::GetSourceRgbFactor();
+	result.destinationRgbFactor = Blending::Func::GetDestinationRgbFactor();
+	result.sourceAlphaFactor = Blending::Func::GetSourceAlphaFactor();
+	result.destinationAlphaFactor = Blending::Func::GetDestinationAlphaFactor();
+	return result;
 }
 
-Blending::Equation::Mode Blending::Equation::GetAlphaMode() noexcept
+Blending::Func::Snapshot::Snapshot() noexcept
+	: sourceRgbFactor(Blending::Func::Factor::ONE),
+	destinationRgbFactor(Blending::Func::Factor::ZERO),
+	sourceAlphaFactor(Blending::Func::Factor::ONE),
+	destinationAlphaFactor(Blending::Func::Factor::ZERO)
+{}
+
+void Blending::Func::Snapshot::Apply() noexcept
 {
-	GLint result;
-	glGetIntegerv(GL_BLEND_EQUATION_ALPHA, &result);
-	return (Blending::Equation::Mode)result;
+	Blending::Func::SetSeparate(sourceRgbFactor, destinationRgbFactor, sourceAlphaFactor, destinationAlphaFactor);
 }
 
 void Blending::Equation::Set(Blending::Equation::Mode mode) noexcept
@@ -91,31 +56,74 @@ void Blending::Equation::SetSeparate(Blending::Equation::Mode rgb, Blending::Equ
 	glBlendEquationSeparate((GLenum)rgb, (GLenum)alpha);
 }
 
-bool Blending::LogicOp::IsEnabled() noexcept
+Blending::Equation::Snapshot Blending::Equation::Snapshot::Load() noexcept
 {
-	return glIsEnabled(GL_COLOR_LOGIC_OP);
+	Blending::Equation::Snapshot result;
+	result.rgbMode = Blending::Equation::GetRbgMode();
+	result.alphaMode = Blending::Equation::GetAlphaMode();
+	return result;
 }
 
-void Blending::LogicOp::Enable() noexcept
-{
-	glEnable(GL_COLOR_LOGIC_OP);
-}
+Blending::Equation::Snapshot::Snapshot() noexcept
+	: rgbMode(Blending::Equation::Mode::FUNC_ADD),
+	alphaMode(Blending::Equation::Mode::FUNC_ADD)
+{}
 
-void Blending::LogicOp::Disable() noexcept
+void Blending::Equation::Snapshot::Apply() noexcept
 {
-	glDisable(GL_COLOR_LOGIC_OP);
-}
-
-Blending::LogicOp::Code Blending::LogicOp::Get() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_LOGIC_OP_MODE, &result);
-	return (Blending::LogicOp::Code)result;
+	Blending::Equation::SetSeparate(rgbMode, alphaMode);
 }
 
 void Blending::LogicOp::Set(Blending::LogicOp::Code code) noexcept
 {
 	glLogicOp((GLenum)code);
+}
+
+Blending::LogicOp::Snapshot Blending::LogicOp::Snapshot::Load() noexcept
+{
+	Blending::LogicOp::Snapshot result;
+	result.toggle = Blending::LogicOp::ToggleSnapshot::Load();
+	result.code = Blending::LogicOp::CodeSnapshot::Load();
+	return result;
+}
+
+Blending::LogicOp::Snapshot::Snapshot() noexcept
+	: toggle(),
+	code()
+{}
+
+void Blending::LogicOp::Snapshot::Apply() noexcept
+{
+	toggle.Apply();
+	code.Apply();
+}
+
+Blending::Snapshot Blending::Snapshot::Load() noexcept
+{
+	Blending::Snapshot result;
+	result.toggle = Blending::ToggleSnapshot::Load();
+	result.color = Blending::ColorSnapshot::Load();
+	result.func = Blending::Func::Snapshot::Load();
+	result.equation = Blending::Equation::Snapshot::Load();
+	result.logicOp = Blending::LogicOp::Snapshot::Load();
+	return result;
+}
+
+Blending::Snapshot::Snapshot() noexcept
+	: toggle(),
+	color(),
+	func(),
+	equation(),
+	logicOp()
+{}
+
+void Blending::Snapshot::Apply() noexcept
+{
+	toggle.Apply();
+	color.Apply();
+	func.Apply();
+	equation.Apply();
+	logicOp.Apply();
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE

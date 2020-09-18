@@ -1,20 +1,22 @@
 #ifndef __LFRL_OGL_CAPACITIES_BLENDING_GUARD__
 #define __LFRL_OGL_CAPACITIES_BLENDING_GUARD__
 
+#include "macros.h"
 #include "HintType.h"
+
+#define __LFRL_OGL_BLENDING_CAPACITY_DEFAULT_COLOR glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
 namespace Blending
 {
-	bool IsEnabled() noexcept;
-	void Enable() noexcept;
-	void Disable() noexcept;
-
 	glm::vec4 GetColor() noexcept;
-	void SetColor(glm::vec4 const& color) noexcept { SetColor(color.r, color.g, color.b, color.a); }
 	void SetColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a) noexcept;
+	void SetColor(glm::vec4 const& color) noexcept { SetColor(color.r, color.g, color.b, color.a); }
 	void SetColor(GLubyte r, GLubyte g, GLubyte b, GLubyte a) noexcept { SetColor(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); }
+
+	LFRL_OGL_DEFINE_TOGGLE_CAPACITY_SNAPSHOT_STRUCT(GL_BLEND, false);
+	LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Color, glm::vec4, __LFRL_OGL_BLENDING_CAPACITY_DEFAULT_COLOR, GetColor, SetColor);
 
 	namespace Func
 	{
@@ -36,13 +38,19 @@ namespace Blending
 			ONE_MINUS_CONSTANT_ALPHA = GL_ONE_MINUS_CONSTANT_ALPHA
 		};
 
-		Factor GetSourceRgbFactor() noexcept;
-		Factor GetDestinationRgbFactor() noexcept;
-		Factor GetSourceAlphaFactor() noexcept;
-		Factor GetDestinationAlphaFactor() noexcept;
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(SourceRgbFactor, Factor, GL_BLEND_SRC_RGB)
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(DestinationRgbFactor, Factor, GL_BLEND_DST_RGB)
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(SourceAlphaFactor, Factor, GL_BLEND_SRC_ALPHA)
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(DestinationAlphaFactor, Factor, GL_BLEND_DST_ALPHA)
 
 		void Set(Factor sfactor, Factor dfactor) noexcept;
 		void SetSeparate(Factor sfactorRgb, Factor dfactorRgb, Factor sfactorAlpha, Factor dfactorAlpha) noexcept;
+
+		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
+			Factor sourceRgbFactor;
+			Factor destinationRgbFactor;
+			Factor sourceAlphaFactor;
+			Factor destinationAlphaFactor;);
 	}
 
 	namespace Equation
@@ -56,11 +64,15 @@ namespace Blending
 			MAX = GL_MAX
 		};
 
-		Mode GetRbgMode() noexcept;
-		Mode GetAlphaMode() noexcept;
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(RbgMode, Mode, GL_BLEND_EQUATION_RGB)
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(AlphaMode, Mode, GL_BLEND_EQUATION_ALPHA)
 
 		void Set(Mode mode) noexcept;
 		void SetSeparate(Mode rgb, Mode alpha) noexcept;
+
+		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
+			Mode rgbMode;
+			Mode alphaMode;);
 	}
 
 	namespace LogicOp
@@ -85,15 +97,28 @@ namespace Blending
 			OR_INVERTED = GL_OR_INVERTED
 		};
 
-		bool IsEnabled() noexcept;
-		void Enable() noexcept;
-		void Disable() noexcept;
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(, Code, GL_LOGIC_OP_MODE)
 
-		Code Get() noexcept;
 		void Set(Code code) noexcept;
+
+		LFRL_OGL_DEFINE_TOGGLE_CAPACITY_SNAPSHOT_STRUCT(GL_COLOR_LOGIC_OP, false);
+		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Code, Code, Code::COPY, Get, Set);
+
+		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
+			ToggleSnapshot toggle;
+			CodeSnapshot code;);
 	}
+
+	LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
+		ToggleSnapshot toggle;
+		ColorSnapshot color;
+		Func::Snapshot func;
+		Equation::Snapshot equation;
+		LogicOp::Snapshot logicOp;);
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE
+
+#undef __LFRL_OGL_BLENDING_CAPACITY_DEFAULT_COLOR
 
 #endif

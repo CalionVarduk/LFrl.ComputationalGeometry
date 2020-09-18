@@ -2,7 +2,6 @@
 #define __LFRL_OGL_CAPACITIES_HINT_TYPE_GUARD__
 
 #include "../internal/namespace_macros.h"
-#include "LFrl.Common/src/utils/typedefs.h"
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 

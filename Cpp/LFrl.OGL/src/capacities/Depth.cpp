@@ -6,7 +6,7 @@ bool Depth::IsReadonly() noexcept
 {
 	GLboolean result;
 	glGetBooleanv(GL_DEPTH_WRITEMASK, &result);
-	return result;
+	return !result;
 }
 
 void Depth::MakeWritable() noexcept
@@ -19,31 +19,9 @@ void Depth::MakeReadonly() noexcept
 	glDepthMask(GL_FALSE);
 }
 
-GLdouble Depth::GetClearValue() noexcept
-{
-	GLdouble result;
-	glGetDoublev(GL_DEPTH_CLEAR_VALUE, &result);
-	return result;
-}
-
 void Depth::SetClearValue(GLdouble value) noexcept
 {
 	glClearDepth(value);
-}
-
-bool Depth::Test::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_DEPTH_TEST);
-}
-
-void Depth::Test::Enable() noexcept
-{
-	glEnable(GL_DEPTH_TEST);
-}
-
-void Depth::Test::Disable() noexcept
-{
-	glDisable(GL_DEPTH_TEST);
 }
 
 Depth::Range::data Depth::Range::Get() noexcept
@@ -58,31 +36,72 @@ void Depth::Range::Set(GLdouble zNear, GLdouble zFar) noexcept
 	glDepthRange(zNear, zFar);
 }
 
-bool Depth::Clamping::IsEnabled() noexcept
+Depth::Range::Snapshot Depth::Range::Snapshot::Load() noexcept
 {
-	return glIsEnabled(GL_DEPTH_CLAMP);
+	Depth::Range::Snapshot result;
+	result.data = Depth::Range::Get();
+	return result;
 }
 
-void Depth::Clamping::Enable() noexcept
-{
-	glEnable(GL_DEPTH_CLAMP);
-}
+Depth::Range::Snapshot::Snapshot() noexcept
+	: data({ 0.0, 1.0 })
+{}
 
-void Depth::Clamping::Disable() noexcept
+void Depth::Range::Snapshot::Apply() noexcept
 {
-	glDisable(GL_DEPTH_CLAMP);
-}
-
-FuncType Depth::Func::Get() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_DEPTH_FUNC, &result);
-	return (FuncType)result;
+	Depth::Range::Set(data);
 }
 
 void Depth::Func::Set(FuncType type) noexcept
 {
 	glDepthFunc((GLenum)type);
+}
+
+Depth::Func::Snapshot Depth::Func::Snapshot::Load() noexcept
+{
+	Depth::Func::Snapshot result;
+	result.type = Depth::Func::Get();
+	return result;
+}
+
+Depth::Func::Snapshot::Snapshot() noexcept
+	: type(FuncType::LESS_THAN)
+{}
+
+void Depth::Func::Snapshot::Apply() noexcept
+{
+	Depth::Func::Set(type);
+}
+
+Depth::Snapshot Depth::Snapshot::Load() noexcept
+{
+	Depth::Snapshot result;
+	result.readonly = Depth::ReadonlySnapshot::Load();
+	result.clearValue = Depth::ClearValueSnapshot::Load();
+	result.test = Depth::Test::Snapshot::Load();
+	result.range = Depth::Range::Snapshot::Load();
+	result.clamping = Depth::Clamping::Snapshot::Load();
+	result.func = Depth::Func::Snapshot::Load();
+	return result;
+}
+
+Depth::Snapshot::Snapshot() noexcept
+	: readonly(),
+	clearValue(),
+	test(),
+	range(),
+	clamping(),
+	func()
+{}
+
+void Depth::Snapshot::Apply() noexcept
+{
+	readonly.Apply();
+	clearValue.Apply();
+	test.Apply();
+	range.Apply();
+	clamping.Apply();
+	func.Apply();
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE

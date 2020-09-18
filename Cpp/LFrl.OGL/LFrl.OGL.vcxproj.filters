@@ -88,6 +88,9 @@
     <ClInclude Include="src\capacities\Blending.h">
       <Filter>capacities</Filter>
     </ClInclude>
+    <ClInclude Include="src\capacities\macros.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -116,9 +119,6 @@
       <Filter>primitives</Filter>
     </ClCompile>
     <ClCompile Include="src\capacities\Depth.cpp">
-      <Filter>capacities</Filter>
-    </ClCompile>
-    <ClCompile Include="src\capacities\Dithering.cpp">
       <Filter>capacities</Filter>
     </ClCompile>
     <ClCompile Include="src\capacities\FaceCulling.cpp">

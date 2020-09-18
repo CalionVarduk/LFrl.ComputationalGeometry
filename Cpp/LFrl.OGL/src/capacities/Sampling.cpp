@@ -2,122 +2,96 @@
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-bool Sampling::Multi::IsEnabled() noexcept
+Sampling::Coverage::data Sampling::Coverage::GetValue() noexcept
 {
-	return glIsEnabled(GL_MULTISAMPLE);
+	GLfloat value;
+	GLboolean isInverted;
+	glGetFloatv(GL_SAMPLE_COVERAGE_VALUE, &value);
+	glGetBooleanv(GL_SAMPLE_COVERAGE_INVERT, &isInverted);
+	return { value, (bool)isInverted };
 }
 
-void Sampling::Multi::Enable() noexcept
+void Sampling::Coverage::SetValue(GLfloat value, bool isInverted) noexcept
 {
-	glEnable(GL_MULTISAMPLE);
+	glSampleCoverage(value, isInverted);
 }
 
-void Sampling::Multi::Disable() noexcept
+Sampling::Coverage::Snapshot Sampling::Coverage::Snapshot::Load() noexcept
 {
-	glDisable(GL_MULTISAMPLE);
-}
-
-bool Sampling::Alpha::ToCoverage::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_SAMPLE_ALPHA_TO_COVERAGE);
-}
-
-void Sampling::Alpha::ToCoverage::Enable() noexcept
-{
-	glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
-}
-
-void Sampling::Alpha::ToCoverage::Disable() noexcept
-{
-	glDisable(GL_SAMPLE_ALPHA_TO_COVERAGE);
-}
-
-bool Sampling::Alpha::ToOne::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_SAMPLE_ALPHA_TO_ONE);
-}
-
-void Sampling::Alpha::ToOne::Enable() noexcept
-{
-	glEnable(GL_SAMPLE_ALPHA_TO_ONE);
-}
-
-void Sampling::Alpha::ToOne::Disable() noexcept
-{
-	glDisable(GL_SAMPLE_ALPHA_TO_ONE);
-}
-
-bool Sampling::Coverage::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_SAMPLE_COVERAGE);
-}
-
-void Sampling::Coverage::Enable() noexcept
-{
-	glEnable(GL_SAMPLE_COVERAGE);
-}
-
-void Sampling::Coverage::Disable() noexcept
-{
-	glDisable(GL_SAMPLE_COVERAGE);
-}
-
-GLint Sampling::Coverage::GetSize() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_SAMPLES, &result);
+	Sampling::Coverage::Snapshot result;
+	result.toggle = Sampling::Coverage::ToggleSnapshot::Load();
+	result.value = Sampling::Coverage::ValueSnapshot::Load();
 	return result;
 }
 
-GLfloat Sampling::Coverage::GetValue() noexcept
+Sampling::Coverage::Snapshot::Snapshot() noexcept
+	: toggle(),
+	value()
+{}
+
+void Sampling::Coverage::Snapshot::Apply() noexcept
 {
-	GLfloat result;
-	glGetFloatv(GL_SAMPLE_COVERAGE_VALUE, &result);
-	return result;
+	toggle.Apply();
+	value.Apply();
 }
 
-bool Sampling::Coverage::IsValueInverted() noexcept
-{
-	GLboolean result;
-	glGetBooleanv(GL_SAMPLE_COVERAGE_INVERT, &result);
-	return result;
-}
-
-void Sampling::Coverage::SetValue(GLfloat value) noexcept
-{
-	glSampleCoverage(value, GL_FALSE);
-}
-
-void Sampling::Coverage::SetValueInverted(GLfloat value) noexcept
-{
-	glSampleCoverage(value, GL_TRUE);
-}
-
-bool Sampling::Mask::IsEnabled() noexcept
-{
-	return glIsEnabled(GL_SAMPLE_MASK);
-}
-
-void Sampling::Mask::Enable() noexcept
-{
-	glEnable(GL_SAMPLE_MASK);
-}
-
-void Sampling::Mask::Disable() noexcept
-{
-	glDisable(GL_SAMPLE_MASK);
-}
-
-GLbitfield Sampling::Mask::GetMasks() noexcept
+GLbitfield Sampling::Mask::GetMask() noexcept
 {
 	GLint result;
 	glGetIntegeri_v(GL_SAMPLE_MASK_VALUE, 0, &result);
 	return (GLbitfield)result;
 }
 
-void Sampling::Mask::SetMasks(GLbitfield value) noexcept
+void Sampling::Mask::SetMask(GLbitfield value) noexcept
 {
 	glSampleMaski(0, value);
+}
+
+Sampling::Mask::Snapshot Sampling::Mask::Snapshot::Load() noexcept
+{
+	Sampling::Mask::Snapshot result;
+	result.toggle = Sampling::Mask::ToggleSnapshot::Load();
+	result.value = Sampling::Mask::ValueSnapshot::Load();
+	return result;
+}
+
+Sampling::Mask::Snapshot::Snapshot() noexcept
+	: toggle(),
+	value()
+{}
+
+void Sampling::Mask::Snapshot::Apply() noexcept
+{
+	toggle.Apply();
+	value.Apply();
+}
+
+Sampling::Snapshot Sampling::Snapshot::Load() noexcept
+{
+	Sampling::Snapshot result;
+	result.multi = Sampling::Multi::Snapshot::Load();
+	result.alphaToCoverage = Sampling::Alpha::ToCoverage::Snapshot::Load();
+	result.alphaToOne = Sampling::Alpha::ToOne::Snapshot::Load();
+	result.coverage = Sampling::Coverage::Snapshot::Load();
+	result.mask = Sampling::Mask::Snapshot::Load();
+	return result;
+}
+
+Sampling::Snapshot::Snapshot() noexcept
+	: multi(),
+	alphaToCoverage(),
+	alphaToOne(),
+	coverage(),
+	mask()
+{}
+
+void Sampling::Snapshot::Apply() noexcept
+{
+	multi.Apply();
+	alphaToCoverage.Apply();
+	alphaToOne.Apply();
+	coverage.Apply();
+	mask.Apply();
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE

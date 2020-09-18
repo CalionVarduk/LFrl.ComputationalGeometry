@@ -2,7 +2,6 @@
 #define __LFRL_OGL_RENDERING_CONTEXT_GUARD__
 
 #include "DeviceContext.h"
-#include "../utils/rendering_context_swapper.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 

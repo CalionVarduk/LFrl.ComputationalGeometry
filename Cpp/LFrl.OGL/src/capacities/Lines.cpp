@@ -2,26 +2,9 @@
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-bool Lines::Smoothing::IsEnabled() noexcept
+void Lines::SetWidth(GLfloat value) noexcept
 {
-	return glIsEnabled(GL_LINE_SMOOTH);
-}
-
-void Lines::Smoothing::Enable() noexcept
-{
-	glEnable(GL_LINE_SMOOTH);
-}
-
-void Lines::Smoothing::Disable() noexcept
-{
-	glDisable(GL_LINE_SMOOTH);
-}
-
-HintType Lines::Smoothing::GetHint() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_LINE_SMOOTH_HINT, &result);
-	return (HintType)result;
+	glLineWidth(value);
 }
 
 void Lines::Smoothing::SetHint(HintType hint) noexcept
@@ -29,16 +12,42 @@ void Lines::Smoothing::SetHint(HintType hint) noexcept
 	glHint(GL_LINE_SMOOTH_HINT, (GLenum)hint);
 }
 
-GLfloat Lines::GetWidth() noexcept
+Lines::Smoothing::Snapshot Lines::Smoothing::Snapshot::Load() noexcept
 {
-	GLfloat result;
-	glGetFloatv(GL_LINE_WIDTH, &result);
+	Lines::Smoothing::Snapshot result;
+	result.toggle = Lines::Smoothing::ToggleSnapshot::Load();
+	result.hint = Lines::Smoothing::HintSnapshot::Load();
 	return result;
 }
 
-void Lines::SetWidth(GLfloat value) noexcept
+Lines::Smoothing::Snapshot::Snapshot() noexcept
+	: toggle(),
+	hint()
+{}
+
+void Lines::Smoothing::Snapshot::Apply() noexcept
 {
-	glLineWidth(value);
+	toggle.Apply();
+	hint.Apply();
+}
+
+Lines::Snapshot Lines::Snapshot::Load() noexcept
+{
+	Lines::Snapshot result;
+	result.width = Lines::WidthSnapshot::Load();
+	result.smoothing = Lines::Smoothing::Snapshot::Load();
+	return result;
+}
+
+Lines::Snapshot::Snapshot() noexcept
+	: width(),
+	smoothing()
+{}
+
+void Lines::Snapshot::Apply() noexcept
+{
+	width.Apply();
+	smoothing.Apply();
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE

@@ -161,6 +161,7 @@
     <ClInclude Include="src\capacities\FuncType.h" />
     <ClInclude Include="src\capacities\HintType.h" />
     <ClInclude Include="src\capacities\Lines.h" />
+    <ClInclude Include="src\capacities\macros.h" />
     <ClInclude Include="src\capacities\Points.h" />
     <ClInclude Include="src\capacities\Polygons.h" />
     <ClInclude Include="src\capacities\Sampling.h" />
@@ -180,7 +181,6 @@
   <ItemGroup>
     <ClCompile Include="src\capacities\Blending.cpp" />
     <ClCompile Include="src\capacities\Depth.cpp" />
-    <ClCompile Include="src\capacities\Dithering.cpp" />
     <ClCompile Include="src\capacities\FaceCulling.cpp" />
     <ClCompile Include="src\capacities\Lines.cpp" />
     <ClCompile Include="src\capacities\Points.cpp" />

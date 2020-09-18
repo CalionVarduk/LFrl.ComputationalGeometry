@@ -2,73 +2,31 @@
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-GLint Stencil::GetClearValue() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &result);
-	return result;
-}
-
 void Stencil::SetClearValue(GLint value) noexcept
 {
 	glClearStencil(value);
 }
 
-bool Stencil::Test::IsEnabled() noexcept
+Stencil::Func::data Stencil::Func::GetFront() noexcept
 {
-	return glIsEnabled(GL_STENCIL_TEST);
+	GLint func;
+	GLint ref;
+	GLint valueMask;
+	glGetIntegerv(GL_STENCIL_FUNC, &func);
+	glGetIntegerv(GL_STENCIL_REF, &ref);
+	glGetIntegerv(GL_STENCIL_VALUE_MASK, &valueMask);
+	return { (FuncType)func, ref, (GLuint)valueMask };
 }
 
-void Stencil::Test::Enable() noexcept
+Stencil::Func::data Stencil::Func::GetBack() noexcept
 {
-	glEnable(GL_STENCIL_TEST);
-}
-
-void Stencil::Test::Disable() noexcept
-{
-	glDisable(GL_STENCIL_TEST);
-}
-
-FuncType Stencil::Func::GetFront() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_STENCIL_FUNC, &result);
-	return (FuncType)result;
-}
-
-GLint Stencil::Func::GetFrontRef() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_STENCIL_REF, &result);
-	return result;
-}
-
-GLuint Stencil::Func::GetFrontValueMask() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_STENCIL_VALUE_MASK, &result);
-	return (GLuint)result;
-}
-
-FuncType Stencil::Func::GetBack() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_STENCIL_BACK_FUNC, &result);
-	return (FuncType)result;
-}
-
-GLint Stencil::Func::GetBackRef() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_STENCIL_BACK_REF, &result);
-	return result;
-}
-
-GLuint Stencil::Func::GetBackValueMask() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_STENCIL_BACK_VALUE_MASK, &result);
-	return (GLuint)result;
+	GLint func;
+	GLint ref;
+	GLint valueMask;
+	glGetIntegerv(GL_STENCIL_BACK_FUNC, &func);
+	glGetIntegerv(GL_STENCIL_BACK_REF, &ref);
+	glGetIntegerv(GL_STENCIL_BACK_VALUE_MASK, &valueMask);
+	return { (FuncType)func, ref, (GLuint)valueMask };
 }
 
 void Stencil::Func::Set(FuncType func, GLint ref, GLuint mask) noexcept
@@ -81,46 +39,45 @@ void Stencil::Func::SetSeparate(FaceType face, FuncType func, GLint ref, GLuint 
 	glStencilFuncSeparate((GLenum)face, (GLenum)func, ref, mask);
 }
 
-Stencil::Op::Type Stencil::Op::GetFrontStencilFail() noexcept
+Stencil::Func::Snapshot Stencil::Func::Snapshot::Load() noexcept
 {
-	GLint result;
-	glGetIntegerv(GL_STENCIL_FAIL, &result);
-	return (Stencil::Op::Type)result;
+	Stencil::Func::Snapshot result;
+	result.front = Stencil::Func::FrontSnapshot::Load();
+	result.back = Stencil::Func::BackSnapshot::Load();
+	return result;
 }
 
-Stencil::Op::Type Stencil::Op::GetFrontDepthFail() noexcept
+Stencil::Func::Snapshot::Snapshot() noexcept
+	: front(),
+	back()
+{}
+
+void Stencil::Func::Snapshot::Apply() noexcept
 {
-	GLint result;
-	glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, &result);
-	return (Stencil::Op::Type)result;
+	front.Apply();
+	back.Apply();
 }
 
-Stencil::Op::Type Stencil::Op::GetFrontPass() noexcept
+Stencil::Op::data Stencil::Op::GetFront() noexcept
 {
-	GLint result;
-	glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, &result);
-	return (Stencil::Op::Type)result;
+	GLint stencilFail;
+	GLint depthFail;
+	GLint pass;
+	glGetIntegerv(GL_STENCIL_FAIL, &stencilFail);
+	glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, &depthFail);
+	glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, &pass);
+	return { (Stencil::Op::Type)stencilFail, (Stencil::Op::Type)depthFail, (Stencil::Op::Type)pass };
 }
 
-Stencil::Op::Type Stencil::Op::GetBackStencilFail() noexcept
+Stencil::Op::data Stencil::Op::GetBack() noexcept
 {
-	GLint result;
-	glGetIntegerv(GL_STENCIL_BACK_FAIL, &result);
-	return (Stencil::Op::Type)result;
-}
-
-Stencil::Op::Type Stencil::Op::GetBackDepthFail() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_STENCIL_BACK_PASS_DEPTH_FAIL, &result);
-	return (Stencil::Op::Type)result;
-}
-
-Stencil::Op::Type Stencil::Op::GetBackPass() noexcept
-{
-	GLint result;
-	glGetIntegerv(GL_STENCIL_BACK_PASS_DEPTH_PASS, &result);
-	return (Stencil::Op::Type)result;
+	GLint stencilFail;
+	GLint depthFail;
+	GLint pass;
+	glGetIntegerv(GL_STENCIL_BACK_FAIL, &stencilFail);
+	glGetIntegerv(GL_STENCIL_BACK_PASS_DEPTH_FAIL, &depthFail);
+	glGetIntegerv(GL_STENCIL_BACK_PASS_DEPTH_PASS, &pass);
+	return { (Stencil::Op::Type)stencilFail, (Stencil::Op::Type)depthFail, (Stencil::Op::Type)pass };
 }
 
 void Stencil::Op::Set(Stencil::Op::Type sfail, Stencil::Op::Type dpfail, Stencil::Op::Type dppass) noexcept
@@ -133,18 +90,23 @@ void Stencil::Op::SetSeparate(FaceType face, Stencil::Op::Type sfail, Stencil::O
 	glStencilOpSeparate((GLenum)face, (GLenum)sfail, (GLenum)dpfail, (GLenum)dppass);
 }
 
-GLuint Stencil::Mask::GetFront() noexcept
+Stencil::Op::Snapshot Stencil::Op::Snapshot::Load() noexcept
 {
-	GLint result;
-	glGetIntegerv(GL_STENCIL_WRITEMASK, &result);
-	return (GLuint)result;
+	Stencil::Op::Snapshot result;
+	result.front = Stencil::Op::FrontSnapshot::Load();
+	result.back = Stencil::Op::BackSnapshot::Load();
+	return result;
 }
 
-GLuint Stencil::Mask::GetBack() noexcept
+Stencil::Op::Snapshot::Snapshot() noexcept
+	: front(),
+	back()
+{}
+
+void Stencil::Op::Snapshot::Apply() noexcept
 {
-	GLint result;
-	glGetIntegerv(GL_STENCIL_BACK_WRITEMASK, &result);
-	return (GLuint)result;
+	front.Apply();
+	back.Apply();
 }
 
 void Stencil::Mask::Set(GLuint mask) noexcept
@@ -155,6 +117,53 @@ void Stencil::Mask::Set(GLuint mask) noexcept
 void Stencil::Mask::SetSeparate(FaceType face, GLuint mask) noexcept
 {
 	glStencilMaskSeparate((GLenum)face, mask);
+}
+
+Stencil::Mask::Snapshot Stencil::Mask::Snapshot::Load() noexcept
+{
+	Stencil::Mask::Snapshot result;
+	result.front = Stencil::Mask::FrontSnapshot::Load();
+	result.back = Stencil::Mask::BackSnapshot::Load();
+	return result;
+}
+
+Stencil::Mask::Snapshot::Snapshot() noexcept
+	: front(),
+	back()
+{}
+
+void Stencil::Mask::Snapshot::Apply() noexcept
+{
+	front.Apply();
+	back.Apply();
+}
+
+Stencil::Snapshot Stencil::Snapshot::Load() noexcept
+{
+	Stencil::Snapshot result;
+	result.clearValue = Stencil::ClearValueSnapshot::Load();
+	result.test = Stencil::Test::Snapshot::Load();
+	result.func = Stencil::Func::Snapshot::Load();
+	result.op = Stencil::Op::Snapshot::Load();
+	result.mask = Stencil::Mask::Snapshot::Load();
+	return result;
+}
+
+Stencil::Snapshot::Snapshot() noexcept
+	: clearValue(),
+	test(),
+	func(),
+	op(),
+	mask()
+{}
+
+void Stencil::Snapshot::Apply() noexcept
+{
+	clearValue.Apply();
+	test.Apply();
+	func.Apply();
+	op.Apply();
+	mask.Apply();
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE
