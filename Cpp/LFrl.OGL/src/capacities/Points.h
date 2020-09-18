@@ -35,10 +35,36 @@ namespace Points
 			HintSnapshot hint;);
 	}
 
+	namespace Params
+	{
+		enum struct SpriteOrigin
+		{
+			LOWER_LEFT = GL_LOWER_LEFT,
+			UPPER_LEFT = GL_UPPER_LEFT
+		};
+
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_F32(ThresholdSize, GLfloat, GL_POINT_FADE_THRESHOLD_SIZE)
+
+		void SetThresholdSize(GLfloat value) noexcept;
+
+		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(ThresholdSize, GLfloat, 1.0f, GetThresholdSize, SetThresholdSize);
+
+		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(SpriteOrigin, SpriteOrigin, GL_POINT_SPRITE_COORD_ORIGIN)
+
+		void SetSpriteOrigin(SpriteOrigin value) noexcept;
+
+		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(SpriteOrigin, SpriteOrigin, SpriteOrigin::UPPER_LEFT, GetSpriteOrigin, SetSpriteOrigin);
+
+		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
+			ThresholdSizeSnapshot thresholdSize;
+			SpriteOriginSnapshot spriteOrigin;);
+	}
+
 	LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
 		SizeSnapshot size;
 		ProgramSize::Snapshot programSize;
-		Smoothing::Snapshot smoothing;);
+		Smoothing::Snapshot smoothing;
+		Params::Snapshot params;);
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE
