@@ -46,9 +46,6 @@
     <ClInclude Include="src\primitives\Projection.h">
       <Filter>primitives</Filter>
     </ClInclude>
-    <ClInclude Include="src\primitives\Background.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
     <ClInclude Include="src\capacities\Depth.h">
       <Filter>capacities</Filter>
     </ClInclude>
@@ -91,6 +88,12 @@
     <ClInclude Include="src\capacities\Viewport.h">
       <Filter>capacities</Filter>
     </ClInclude>
+    <ClInclude Include="src\capacities\Color.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Buffer.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -110,9 +113,6 @@
       <Filter>wnd</Filter>
     </ClCompile>
     <ClCompile Include="src\primitives\Projection.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="src\primitives\Background.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
     <ClCompile Include="src\capacities\Depth.cpp">
@@ -140,6 +140,12 @@
       <Filter>capacities</Filter>
     </ClCompile>
     <ClCompile Include="src\capacities\Viewport.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Color.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Buffer.cpp">
       <Filter>capacities</Filter>
     </ClCompile>
   </ItemGroup>
