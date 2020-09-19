@@ -52,4 +52,23 @@ Debug::ErrorType Debug::GetError() noexcept
 	return (Debug::ErrorType)glGetError();
 }
 
+Debug::Snapshot Debug::Snapshot::Load() noexcept
+{
+	Debug::Snapshot result;
+	result.toggle = Debug::ToggleSnapshot::Load();
+	result.async = Debug::AsyncSnapshot::Load();
+	return result;
+}
+
+Debug::Snapshot::Snapshot() noexcept
+	: toggle(),
+	async()
+{}
+
+void Debug::Snapshot::Apply() noexcept
+{
+	toggle.Apply();
+	async.Apply();
+}
+
 END_LFRL_OGL_CAPACITIES_NAMESPACE
