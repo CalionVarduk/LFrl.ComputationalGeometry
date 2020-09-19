@@ -161,6 +161,9 @@
     <ClInclude Include="src\diagnostics\convertible_duration.h">
       <Filter>diagnostics</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\is_iterable.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\logging\logger.cpp">

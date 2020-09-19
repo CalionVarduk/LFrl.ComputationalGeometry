@@ -4,6 +4,7 @@
 #include "LFrl.Common/src/diagnostics/IMeasurable.h"
 #include "LFrl.Common/src/diagnostics/IRepeatMeasurable.h"
 #include "LFrl.Common/src/diagnostics/Stopwatch.h"
+#include "LFrl.Common/src/utils/is_iterable.h"
 
 using namespace LFRL_COMMON;
 
@@ -49,6 +50,9 @@ private:
 
 int main()
 {
+	auto iter = is_iterable<std::vector<int>>::value;
+	auto iter_of = is_iterable_of<std::vector<int>, int>::value;
+
 	TestMeasure m;
 	auto d = m.Measure();
 	auto dms = d.get_ms();
