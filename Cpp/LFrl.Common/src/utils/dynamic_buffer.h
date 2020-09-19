@@ -31,7 +31,7 @@ struct dynamic_buffer final
 
 	void reset();
 
-	bool ok() const noexcept { return _data !== nullptr; }
+	bool ok() const noexcept { return _data != nullptr; }
 	size_type size() const noexcept { return _size; }
 	pointer data() const noexcept { return _data; }
 

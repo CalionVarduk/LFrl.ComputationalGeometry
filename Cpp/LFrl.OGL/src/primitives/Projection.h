@@ -2,7 +2,6 @@
 #define __LFRL_OGL_PROJECTION_GUARD__
 
 #include "../internal/namespace_macros.h"
-#include "LFrl.Common/src/utils/typedefs.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 

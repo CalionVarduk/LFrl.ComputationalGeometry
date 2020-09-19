@@ -175,6 +175,8 @@
     <ClInclude Include="src\context\ViewContext.h" />
     <ClInclude Include="src\Initialize.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\primitives\AccessType.h" />
+    <ClInclude Include="src\primitives\BufferObject.h" />
     <ClInclude Include="src\primitives\Projection.h" />
     <ClInclude Include="src\utils\rendering_context_swapper.h" />
     <ClInclude Include="src\wnd\Class.h" />
@@ -196,6 +198,7 @@
     <ClCompile Include="src\context\DeviceContext.cpp" />
     <ClCompile Include="src\context\RenderingContext.cpp" />
     <ClCompile Include="src\Initialize.cpp" />
+    <ClCompile Include="src\primitives\BufferObject.cpp" />
     <ClCompile Include="src\primitives\Projection.cpp" />
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
     <ClCompile Include="src\wnd\Class.cpp" />
