@@ -8,7 +8,7 @@ Sampling::Coverage::data Sampling::Coverage::GetValue() noexcept
 	GLboolean isInverted;
 	glGetFloatv(GL_SAMPLE_COVERAGE_VALUE, &value);
 	glGetBooleanv(GL_SAMPLE_COVERAGE_INVERT, &isInverted);
-	return { value, (bool)isInverted };
+	return { value, static_cast<bool>(isInverted) };
 }
 
 void Sampling::Coverage::SetValue(GLfloat value, bool isInverted) noexcept
@@ -39,7 +39,7 @@ GLbitfield Sampling::Mask::GetMask() noexcept
 {
 	GLint result;
 	glGetIntegeri_v(GL_SAMPLE_MASK_VALUE, 0, &result);
-	return (GLbitfield)result;
+	return static_cast<GLbitfield>(result);
 }
 
 void Sampling::Mask::SetMask(GLbitfield value) noexcept

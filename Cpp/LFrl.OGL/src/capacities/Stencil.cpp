@@ -15,7 +15,7 @@ Stencil::Func::data Stencil::Func::GetFront() noexcept
 	glGetIntegerv(GL_STENCIL_FUNC, &func);
 	glGetIntegerv(GL_STENCIL_REF, &ref);
 	glGetIntegerv(GL_STENCIL_VALUE_MASK, &valueMask);
-	return { (FuncType)func, ref, (GLuint)valueMask };
+	return { static_cast<FuncType>(func), ref, static_cast<GLuint>(valueMask) };
 }
 
 Stencil::Func::data Stencil::Func::GetBack() noexcept
@@ -26,17 +26,17 @@ Stencil::Func::data Stencil::Func::GetBack() noexcept
 	glGetIntegerv(GL_STENCIL_BACK_FUNC, &func);
 	glGetIntegerv(GL_STENCIL_BACK_REF, &ref);
 	glGetIntegerv(GL_STENCIL_BACK_VALUE_MASK, &valueMask);
-	return { (FuncType)func, ref, (GLuint)valueMask };
+	return { static_cast<FuncType>(func), ref, static_cast<GLuint>(valueMask) };
 }
 
 void Stencil::Func::Set(FuncType func, GLint ref, GLuint mask) noexcept
 {
-	glStencilFunc((GLenum)func, ref, mask);
+	glStencilFunc(static_cast<GLenum>(func), ref, mask);
 }
 
 void Stencil::Func::SetSeparate(FaceType face, FuncType func, GLint ref, GLuint mask) noexcept
 {
-	glStencilFuncSeparate((GLenum)face, (GLenum)func, ref, mask);
+	glStencilFuncSeparate(static_cast<GLenum>(face), static_cast<GLenum>(func), ref, mask);
 }
 
 Stencil::Func::Snapshot Stencil::Func::Snapshot::Load() noexcept
@@ -66,7 +66,7 @@ Stencil::Op::data Stencil::Op::GetFront() noexcept
 	glGetIntegerv(GL_STENCIL_FAIL, &stencilFail);
 	glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, &depthFail);
 	glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, &pass);
-	return { (Stencil::Op::Type)stencilFail, (Stencil::Op::Type)depthFail, (Stencil::Op::Type)pass };
+	return { static_cast<Stencil::Op::Type>(stencilFail), static_cast<Stencil::Op::Type>(depthFail), static_cast<Stencil::Op::Type>(pass) };
 }
 
 Stencil::Op::data Stencil::Op::GetBack() noexcept
@@ -77,17 +77,17 @@ Stencil::Op::data Stencil::Op::GetBack() noexcept
 	glGetIntegerv(GL_STENCIL_BACK_FAIL, &stencilFail);
 	glGetIntegerv(GL_STENCIL_BACK_PASS_DEPTH_FAIL, &depthFail);
 	glGetIntegerv(GL_STENCIL_BACK_PASS_DEPTH_PASS, &pass);
-	return { (Stencil::Op::Type)stencilFail, (Stencil::Op::Type)depthFail, (Stencil::Op::Type)pass };
+	return { static_cast<Stencil::Op::Type>(stencilFail), static_cast<Stencil::Op::Type>(depthFail), static_cast<Stencil::Op::Type>(pass) };
 }
 
 void Stencil::Op::Set(Stencil::Op::Type sfail, Stencil::Op::Type dpfail, Stencil::Op::Type dppass) noexcept
 {
-	glStencilOp((GLenum)sfail, (GLenum)dpfail, (GLenum)dppass);
+	glStencilOp(static_cast<GLenum>(sfail), static_cast<GLenum>(dpfail), static_cast<GLenum>(dppass));
 }
 
 void Stencil::Op::SetSeparate(FaceType face, Stencil::Op::Type sfail, Stencil::Op::Type dpfail, Stencil::Op::Type dppass) noexcept
 {
-	glStencilOpSeparate((GLenum)face, (GLenum)sfail, (GLenum)dpfail, (GLenum)dppass);
+	glStencilOpSeparate(static_cast<GLenum>(face), static_cast<GLenum>(sfail), static_cast<GLenum>(dpfail), static_cast<GLenum>(dppass));
 }
 
 Stencil::Op::Snapshot Stencil::Op::Snapshot::Load() noexcept
@@ -116,7 +116,7 @@ void Stencil::Mask::Set(GLuint mask) noexcept
 
 void Stencil::Mask::SetSeparate(FaceType face, GLuint mask) noexcept
 {
-	glStencilMaskSeparate((GLenum)face, mask);
+	glStencilMaskSeparate(static_cast<GLenum>(face), mask);
 }
 
 Stencil::Mask::Snapshot Stencil::Mask::Snapshot::Load() noexcept

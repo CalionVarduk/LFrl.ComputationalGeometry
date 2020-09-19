@@ -23,15 +23,15 @@ PixelFormatAttributes::PixelFormatAttributes() noexcept
 std::array<int, 19> PixelFormatAttributes::encode() const noexcept
 {
 	return {
-	WGL_DRAW_TO_WINDOW_ARB, (int)drawToWindow,
-	WGL_SUPPORT_OPENGL_ARB, (int)supportOpenGL,
-	WGL_DOUBLE_BUFFER_ARB, (int)doubleBuffer,
-	WGL_PIXEL_TYPE_ARB, (int)pixelType,
-	WGL_COLOR_BITS_ARB, (int)colorBits,
-	WGL_DEPTH_BITS_ARB, (int)depthBits,
-	WGL_STENCIL_BITS_ARB, (int)stencilBits,
+	WGL_DRAW_TO_WINDOW_ARB, static_cast<int>(drawToWindow),
+	WGL_SUPPORT_OPENGL_ARB, static_cast<int>(supportOpenGL),
+	WGL_DOUBLE_BUFFER_ARB, static_cast<int>(doubleBuffer),
+	WGL_PIXEL_TYPE_ARB, static_cast<int>(pixelType),
+	WGL_COLOR_BITS_ARB, static_cast<int>(colorBits),
+	WGL_DEPTH_BITS_ARB, static_cast<int>(depthBits),
+	WGL_STENCIL_BITS_ARB, static_cast<int>(stencilBits),
 	WGL_SAMPLE_BUFFERS_ARB, sampleCount > 0 ? 1 : 0,
-	WGL_SAMPLES_ARB, (int)sampleCount,
+	WGL_SAMPLES_ARB, static_cast<int>(sampleCount),
 	0 };
 }
 

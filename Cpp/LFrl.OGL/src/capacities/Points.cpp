@@ -7,6 +7,11 @@ void Points::SetSize(GLfloat value) noexcept
 	glPointSize(value);
 }
 
+void Points::Smoothing::SetHint(HintType hint) noexcept
+{
+	glHint(GL_POINT_SMOOTH_HINT, static_cast<GLenum>(hint));
+}
+
 Points::Smoothing::Snapshot Points::Smoothing::Snapshot::Load() noexcept
 {
 	Points::Smoothing::Snapshot result;
@@ -32,7 +37,7 @@ void Points::Params::SetThresholdSize(GLfloat value) noexcept
 }
 void Points::Params::SetSpriteOrigin(Points::Params::SpriteOrigin value) noexcept
 {
-	glPointParameteri(GL_POINT_SPRITE_COORD_ORIGIN, (GLint)value);
+	glPointParameteri(GL_POINT_SPRITE_COORD_ORIGIN, static_cast<GLint>(value));
 }
 
 Points::Params::Snapshot Points::Params::Snapshot::Load() noexcept

@@ -24,12 +24,12 @@ void Debug::RegisterCallback(GLDEBUGPROC callback, void const* userParam) noexce
 
 GLuint Debug::GetMessageLog(GLuint count, GLuint bufSize, Debug::MessageSource* sources, Debug::MessageType* types, GLuint* ids, Debug::MessageSeverity* severities, GLuint* lengths, char* messageLog)
 {
-	return glGetDebugMessageLog(count, bufSize, (GLenum*)sources, (GLenum*)types, ids, (GLenum*)severities, (GLsizei*)lengths, messageLog);
+	return glGetDebugMessageLog(count, bufSize, reinterpret_cast<GLenum*>(sources), reinterpret_cast<GLenum*>(types), ids, reinterpret_cast<GLenum*>(severities), reinterpret_cast<GLsizei*>(lengths), messageLog);
 }
 
 void Debug::InsertMessage(Debug::MessageSource source, Debug::MessageType type, GLuint id, Debug::MessageSeverity severity, GLuint length, char const* message)
 {
-	glDebugMessageInsert((GLenum)source, (GLenum)type, id, (GLenum)severity, length, message);
+	glDebugMessageInsert(static_cast<GLenum>(source), static_cast<GLenum>(type), id, static_cast<GLenum>(severity), length, message);
 }
 
 void Debug::EnableMessages(Debug::MessageSource source, Debug::MessageType type, Debug::MessageSeverity severity, GLuint count, GLuint const* ids)
@@ -44,7 +44,7 @@ void Debug::DisableMessages(Debug::MessageSource source, Debug::MessageType type
 
 void Debug::MessageControl(Debug::MessageSource source, Debug::MessageType type, Debug::MessageSeverity severity, GLuint count, GLuint const* ids, bool enabled)
 {
-	glDebugMessageControl((GLenum)source, (GLenum)type, (GLenum)severity, count, ids, enabled);
+	glDebugMessageControl(static_cast<GLenum>(source), static_cast<GLenum>(type), static_cast<GLenum>(severity), count, ids, enabled);
 }
 
 Debug::ErrorType Debug::GetError() noexcept

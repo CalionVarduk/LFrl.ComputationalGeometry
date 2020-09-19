@@ -10,7 +10,7 @@ char const* __get_gl_string(RenderingContext const& ctx, GLenum value)
 	{
 		auto swapper = rendering_context_swapper(ctx);
 		if (swapper.swapped())
-			result = (char*)glGetString(value);
+			result = reinterpret_cast<char const*>(glGetString(value));
 	}
 	return result;
 }
@@ -33,10 +33,10 @@ RenderingAttributes::RenderingAttributes() noexcept
 std::array<int, 11> RenderingAttributes::encode() const noexcept
 {
 	return {
-	WGL_CONTEXT_MAJOR_VERSION_ARB, (int)majorVersion,
-	WGL_CONTEXT_MINOR_VERSION_ARB, (int)minorVersion,
-	WGL_CONTEXT_LAYER_PLANE_ARB, (int)layerPlane,
-	WGL_CONTEXT_FLAGS_ARB, (int)flags,
+	WGL_CONTEXT_MAJOR_VERSION_ARB, static_cast<int>(majorVersion),
+	WGL_CONTEXT_MINOR_VERSION_ARB, static_cast<int>(minorVersion),
+	WGL_CONTEXT_LAYER_PLANE_ARB, static_cast<int>(layerPlane),
+	WGL_CONTEXT_FLAGS_ARB, static_cast<int>(flags),
 	WGL_CONTEXT_PROFILE_MASK_ARB, useCoreProfile ? WGL_CONTEXT_CORE_PROFILE_BIT_ARB : WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
 	0 };
 }
@@ -135,7 +135,7 @@ GLint RenderingContext::GetGLMinorVersion() const
 
 char const* RenderingContext::GetGLewVersion() const
 {
-	return (char*)glewGetString(GLEW_VERSION);
+	return reinterpret_cast<char const*>(glewGetString(GLEW_VERSION));
 }
 
 char const* RenderingContext::GetGLslVersion() const

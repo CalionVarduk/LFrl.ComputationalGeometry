@@ -54,7 +54,7 @@ void Depth::Range::Snapshot::Apply() noexcept
 
 void Depth::Func::Set(FuncType type) noexcept
 {
-	glDepthFunc((GLenum)type);
+	glDepthFunc(static_cast<GLenum>(type));
 }
 
 Depth::Func::Snapshot Depth::Func::Snapshot::Load() noexcept

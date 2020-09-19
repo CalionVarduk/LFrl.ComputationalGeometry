@@ -47,7 +47,7 @@ RECT Handle::GetRect() const
 POINT Handle::GetPosition() const
 {
 	auto rect = GetRect();
-	::MapWindowPoints(HWND_DESKTOP, GetParentHwnd(), (LPPOINT)&rect, 2);
+	::MapWindowPoints(HWND_DESKTOP, GetParentHwnd(), reinterpret_cast<LPPOINT>(&rect), 2);
 	return { rect.left, rect.top };
 }
 

@@ -9,7 +9,7 @@ void Lines::SetWidth(GLfloat value) noexcept
 
 void Lines::Smoothing::SetHint(HintType hint) noexcept
 {
-	glHint(GL_LINE_SMOOTH_HINT, (GLenum)hint);
+	glHint(GL_LINE_SMOOTH_HINT, static_cast<GLenum>(hint));
 }
 
 Lines::Smoothing::Snapshot Lines::Smoothing::Snapshot::Load() noexcept

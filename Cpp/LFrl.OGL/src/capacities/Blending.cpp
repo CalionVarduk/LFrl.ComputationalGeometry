@@ -16,12 +16,12 @@ void Blending::SetColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a) noexcept
 
 void Blending::Func::Set(Blending::Func::Factor sfactor, Blending::Func::Factor dfactor) noexcept
 {
-	glBlendFunc((GLenum)sfactor, (GLenum)dfactor);
+	glBlendFunc(static_cast<GLenum>(sfactor), static_cast<GLenum>(dfactor));
 }
 
 void Blending::Func::SetSeparate(Blending::Func::Factor sfactorRgb, Blending::Func::Factor dfactorRgb, Blending::Func::Factor sfactorAlpha, Blending::Func::Factor dfactorAlpha) noexcept
 {
-	glBlendFuncSeparate((GLenum)sfactorRgb, (GLenum)dfactorRgb, (GLenum)sfactorAlpha, (GLenum)dfactorAlpha);
+	glBlendFuncSeparate(static_cast<GLenum>(sfactorRgb), static_cast<GLenum>(dfactorRgb), static_cast<GLenum>(sfactorAlpha), static_cast<GLenum>(dfactorAlpha));
 }
 
 Blending::Func::Snapshot Blending::Func::Snapshot::Load() noexcept
@@ -48,12 +48,12 @@ void Blending::Func::Snapshot::Apply() noexcept
 
 void Blending::Equation::Set(Blending::Equation::Mode mode) noexcept
 {
-	glBlendEquation((GLenum)mode);
+	glBlendEquation(static_cast<GLenum>(mode));
 }
 
 void Blending::Equation::SetSeparate(Blending::Equation::Mode rgb, Blending::Equation::Mode alpha) noexcept
 {
-	glBlendEquationSeparate((GLenum)rgb, (GLenum)alpha);
+	glBlendEquationSeparate(static_cast<GLenum>(rgb), static_cast<GLenum>(alpha));
 }
 
 Blending::Equation::Snapshot Blending::Equation::Snapshot::Load() noexcept
@@ -76,7 +76,7 @@ void Blending::Equation::Snapshot::Apply() noexcept
 
 void Blending::LogicOp::Set(Blending::LogicOp::Code code) noexcept
 {
-	glLogicOp((GLenum)code);
+	glLogicOp(static_cast<GLenum>(code));
 }
 
 Blending::LogicOp::Snapshot Blending::LogicOp::Snapshot::Load() noexcept

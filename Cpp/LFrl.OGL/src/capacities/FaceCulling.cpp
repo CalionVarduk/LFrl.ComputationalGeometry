@@ -4,7 +4,7 @@ BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
 void FaceCulling::FrontOrientation::Set(FaceCulling::FrontOrientation::Type type) noexcept
 {
-	glFrontFace((GLenum)type);
+	glFrontFace(static_cast<GLenum>(type));
 }
 
 FaceCulling::FrontOrientation::Snapshot FaceCulling::FrontOrientation::Snapshot::Load() noexcept
@@ -25,7 +25,7 @@ void FaceCulling::FrontOrientation::Snapshot::Apply() noexcept
 
 void FaceCulling::Cull::Set(FaceType face) noexcept
 {
-	glCullFace((GLenum)face);
+	glCullFace(static_cast<GLenum>(face));
 }
 
 FaceCulling::Cull::Snapshot FaceCulling::Cull::Snapshot::Load() noexcept

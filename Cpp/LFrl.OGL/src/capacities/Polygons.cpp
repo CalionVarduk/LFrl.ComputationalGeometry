@@ -4,7 +4,7 @@ BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
 void Polygons::SetMode(Polygons::Mode mode) noexcept
 {
-	glPolygonMode(GL_FRONT_AND_BACK, (GLenum)mode);
+	glPolygonMode(GL_FRONT_AND_BACK, static_cast<GLenum>(mode));
 }
 
 Polygons::Offset::data Polygons::Offset::Get() noexcept
@@ -47,7 +47,7 @@ void Polygons::Offset::Snapshot::Apply() noexcept
 
 void Polygons::Smoothing::SetHint(HintType hint) noexcept
 {
-	glHint(GL_POLYGON_SMOOTH_HINT, (GLenum)hint);
+	glHint(GL_POLYGON_SMOOTH_HINT, static_cast<GLenum>(hint));
 }
 
 Polygons::Smoothing::Snapshot Polygons::Smoothing::Snapshot::Load() noexcept
