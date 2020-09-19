@@ -180,6 +180,7 @@
     <ClInclude Include="src\primitives\BufferObject.h" />
     <ClInclude Include="src\primitives\Projection.h" />
     <ClInclude Include="src\primitives\ShaderObject.h" />
+    <ClInclude Include="src\primitives\ShaderProgram.h" />
     <ClInclude Include="src\primitives\VertexArrayObject.h" />
     <ClInclude Include="src\utils\rendering_context_swapper.h" />
     <ClInclude Include="src\wnd\Class.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="src\primitives\BufferObject.cpp" />
     <ClCompile Include="src\primitives\Projection.cpp" />
     <ClCompile Include="src\primitives\ShaderObject.cpp" />
+    <ClCompile Include="src\primitives\ShaderProgram.cpp" />
     <ClCompile Include="src\primitives\VertexArrayObject.cpp" />
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
     <ClCompile Include="src\wnd\Class.cpp" />

@@ -4,6 +4,7 @@
 #include <array>
 #include "../ObjectState.h"
 #include "LFrl.Common/src/utils/requires.h"
+#include "LFrl.Common/src/utils/is_iterable.h"
 #include "LFrl.Common/src/utils/dynamic_buffer.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
@@ -24,14 +25,14 @@ struct VertexArrayObject final
 	static GLuint GetBoundId();
 	static bool IsAnyBound() { return GetBoundId() != NULL; }
 
-	template <class TIter, LFRL_COMMON::requires<std::is_same<typename std::iterator_traits<TIter>::value_type, VertexArrayObject*>::value> = 0>
-	static void InitializeRange(TIter begin, TIter end);
+	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexArrayObject*>::value> = 0>
+	static void InitializeRange(TIterable const& iterable);
 
 	template <GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
 	static void InitializeRange(std::array<VertexArrayObject*, count>& arrays);
 
-	template <class TIter, LFRL_COMMON::requires<std::is_same<typename std::iterator_traits<TIter>::value_type, VertexArrayObject*>::value> = 0>
-	static void DisposeRange(TIter begin, TIter end);
+	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexArrayObject*>::value> = 0>
+	static void DisposeRange(TIterable const& iterable);
 
 	template <GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
 	static void DisposeRange(std::array<VertexArrayObject*, count>& arrays);
@@ -59,11 +60,11 @@ private:
 	ObjectState _state;
 };
 
-template <class TIter, LFRL_COMMON::requires<std::is_same<typename std::iterator_traits<TIter>::value_type, VertexArrayObject*>::value>>
-void VertexArrayObject::InitializeRange(TIter begin, TIter end)
+template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexArrayObject*>::value>>
+void VertexArrayObject::InitializeRange(TIterable const& iterable)
 {
 	auto count = 0;
-	for (auto cur = begin; cur != end; ++cur)
+	for (auto current = iterable.begin(); current != iterable.end(); ++current)
 		++count;
 
 	if (count <= 0)
@@ -73,7 +74,7 @@ void VertexArrayObject::InitializeRange(TIter begin, TIter end)
 	glGenVertexArrays(count, ids.data());
 
 	count = 0;
-	for (auto current = begin; current != end; ++current, ++count)
+	for (auto current = iterable.begin(); current != iterable.end(); ++current, ++count)
 	{
 		current->_id = ids[count];
 		current->_state = current->_id == 0 ? ObjectState::INIT_FAILURE : ObjectState::READY;
@@ -93,11 +94,11 @@ void VertexArrayObject::InitializeRange(std::array<VertexArrayObject*, count>& a
 	}
 }
 
-template <class TIter, LFRL_COMMON::requires<std::is_same<typename std::iterator_traits<TIter>::value_type, VertexArrayObject*>::value>>
-void VertexArrayObject::DisposeRange(TIter begin, TIter end)
+template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexArrayObject*>::value>>
+void VertexArrayObject::DisposeRange(TIterable const& iterable)
 {
 	auto count = 0;
-	for (auto cur = begin; cur != end; ++cur)
+	for (auto current = iterable.begin(); current != iterable.end(); ++current)
 		++count;
 
 	if (count <= 0)
@@ -106,7 +107,7 @@ void VertexArrayObject::DisposeRange(TIter begin, TIter end)
 	LFRL_COMMON::dynamic_buffer<GLuint> ids(count);
 
 	count = 0;
-	for (auto current = begin; current != end; ++current, ++count)
+	for (auto current = iterable.begin(); current != iterable.end(); ++current, ++count)
 	{
 		ids[count] = current->_id;
 		current->_id = 0;
