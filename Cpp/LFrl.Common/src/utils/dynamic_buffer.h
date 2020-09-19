@@ -67,7 +67,7 @@ dynamic_buffer<T>::dynamic_buffer(typename dynamic_buffer<T>::size_type size)
 	: _size(size),
 	_data([size]() -> auto {
 		if (size == 0)
-			return (T*)nullptr;
+			return static_cast<T*>(nullptr);
 
 		auto result = new T[size];
 		std::memset(result, 0, size);

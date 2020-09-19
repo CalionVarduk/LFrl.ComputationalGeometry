@@ -31,7 +31,7 @@ public:
 	bool HasValue() const noexcept { return _ptr != nullptr; }
 	reference GetValue() const noexcept(false) { return *_ptr; }
 	pointer Get() const noexcept { return _ptr; }
-	uPtr GetAddress() const noexcept { return (uPtr)_ptr; }
+	uPtr GetAddress() const noexcept { return reinterpret_cast<uPtr>(_ptr); }
 
 	void Set(pointer ptr) noexcept { _ptr = ptr; }
 	void Set(reference value) noexcept { Set(&value); }
@@ -80,7 +80,7 @@ public:
 	bool HasValue() const noexcept { return _ptr != nullptr; }
 	reference GetValue() const noexcept(false) { return *_ptr; }
 	pointer Get() const noexcept { return _ptr; }
-	uPtr GetAddress() const noexcept { return (uPtr)_ptr; }
+	uPtr GetAddress() const noexcept { return reinterpret_cast<uPtr>(_ptr); }
 
 	void Set(pointer ptr);
 	void Set(WeakNullable<T> const& other) { Set(other.Get()); }

@@ -32,7 +32,7 @@ struct array_ptr final
 
 	array_ptr<const T> to_const() const noexcept { return array_ptr<const T>(_begin, _end); }
 
-	size_type size() const noexcept { return (size_type)(_end - _begin); }
+	size_type size() const noexcept { return static_cast<size_type>(_end - _begin); }
 	bool empty() const noexcept { return _end <= _begin; }
 
 	iterator begin() noexcept { return _begin; }

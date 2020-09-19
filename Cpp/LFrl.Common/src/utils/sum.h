@@ -22,7 +22,7 @@ struct sum<T, v1>
 template <class T>
 struct sum<T>
 {
-	static constexpr T value = T(0);
+	static constexpr T value = static_cast<T>(0);
 };
 
 END_LFRL_COMMON_NAMESPACE

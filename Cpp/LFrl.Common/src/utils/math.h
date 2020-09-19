@@ -14,7 +14,7 @@ BEGIN_LFRL_COMMON_NAMESPACE
 template <class T, requires<std::is_floating_point<T>::value> = 0>
 constexpr T pi() noexcept
 {
-	return (T)M_PI;
+	return static_cast<T>(M_PI);
 }
 
 template <class T, requires<std::is_floating_point<T>::value> = 0>
@@ -32,7 +32,7 @@ constexpr T c180_by_pi() noexcept
 template <class T, requires<std::is_convertible<int, T>::value> = 0>
 constexpr T abs(param<T> v)
 {
-	return v < T(0) ? -v : v;
+	return v < static_cast<T>(0) ? -v : v;
 }
 
 template <class T>
@@ -122,7 +122,7 @@ T sqrt(param<T> v)
 template <class T, requires_all<!std::is_floating_point<T>::value, std::is_convertible<T, double>::value, std::is_convertible<double, T>::value> = 0>
 T sqrt(param<T> v)
 {
-	return (T)sqrt<double>((double)v);
+	return static_cast<T>(sqrt<double>(static_cast<double>(v)));
 }
 
 template <class T, requires<std::is_same<T, float>::value> = 0>
@@ -146,7 +146,7 @@ T sin(param<T> v)
 template <class T, requires_all<!std::is_floating_point<T>::value, std::is_convertible<T, double>::value, std::is_convertible<double, T>::value> = 0>
 T sin(param<T> v)
 {
-	return (T)sin<double>((double)v);
+	return static_cast<T>(sin<double>(static_cast<double>(v)));
 }
 
 template <class T, requires<std::is_same<T, float>::value> = 0>
@@ -170,7 +170,7 @@ T cos(param<T> v)
 template <class T, requires_all<!std::is_floating_point<T>::value, std::is_convertible<T, double>::value, std::is_convertible<double, T>::value> = 0>
 T cos(param<T> v)
 {
-	return (T)cos<double>((double)v);
+	return static_cast<T>(cos<double>(static_cast<double>(v)));
 }
 
 template <class T, requires<std::is_same<T, float>::value> = 0>
@@ -194,19 +194,19 @@ T atan2(param<T> y, param<T> x)
 template <class T, requires_all<!std::is_floating_point<T>::value, std::is_convertible<T, double>::value, std::is_convertible<double, T>::value> = 0>
 T atan2(param<T> y, param<T> x)
 {
-	return (T)atan2<double>((double)y, (double)x);
+	return static_cast<T>(atan2<double>(static_cast<double>(y), static_cast<double>(x)));
 }
 
 template <class T, requires<std::is_convertible<double, T>::value> = 0>
 constexpr T deg_to_rad(param<T> deg)
 {
-	return deg * (T)pi_by_c180<double>();
+	return deg * static_cast<T>(pi_by_c180<double>());
 }
 
 template <class T, requires<std::is_convertible<double, T>::value> = 0>
 constexpr T rad_to_deg(param<T> rad)
 {
-	return rad * (T)c180_by_pi<double>();
+	return rad * static_cast<T>(c180_by_pi<double>());
 }
 
 END_LFRL_COMMON_NAMESPACE
