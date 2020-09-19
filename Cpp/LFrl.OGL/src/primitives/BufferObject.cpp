@@ -1,6 +1,6 @@
 #include "BufferObject.h"
 
-#define INITIALIZE(TARGET, USAGE) _id(0), _target(TARGET), _usage(USAGE), _state(State::CREATED)
+#define INITIALIZE(TARGET, USAGE) _id(0), _target(TARGET), _usage(USAGE), _state(ObjectState::CREATED)
 
 BEGIN_LFRL_OGL_NAMESPACE
 
@@ -69,30 +69,30 @@ BufferObject::BufferObject(BufferObject::Target target, BufferObject::Usage usag
 
 BufferObject::ActionResult BufferObject::Initialize()
 {
-	if (_id != 0)
+	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
 
 	glGenBuffers(1, &_id);
 	if (_id == 0)
 	{
-		_state = State::INIT_FAILURE;
+		_state = ObjectState::INIT_FAILURE;
 		return ActionResult::BUFFER_GEN_FAILURE;
 	}
 
-	_state = State::READY;
+	_state = ObjectState::READY;
 	return ActionResult::OK;
 }
 
 BufferObject::ActionResult BufferObject::Dispose()
 {
-	if (_state == State::DISPOSED)
+	if (_state == ObjectState::DISPOSED)
 		return ActionResult::ALREADY_DISPOSED;
 
-	if (_state != State::READY)
+	if (_state != ObjectState::READY)
 		return ActionResult::NOT_READY;
 
 	glDeleteBuffers(1, &_id);
-	_state = State::DISPOSED;
+	_state = ObjectState::DISPOSED;
 	return ActionResult::OK;
 }
 

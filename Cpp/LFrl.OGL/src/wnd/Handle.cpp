@@ -7,7 +7,7 @@ HandleParams::HandleParams() noexcept
 {}
 
 Handle::Handle()
-	: _hwnd(NULL), _cls(NULL), _params(), _state(State::CREATED)
+	: _hwnd(NULL), _cls(NULL), _params(), _state(ObjectState::CREATED)
 {}
 
 HWND Handle::GetParentHwnd() const
@@ -64,12 +64,12 @@ bool Handle::Validate(RECT const* rect)
 
 Handle::ActionResult Handle::Initialize(Class const& cls, HandleParams params)
 {
-	if (_state == State::READY || _state == State::DISPOSED)
+	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
 
-	if (cls.GetState() != Class::State::REGISTERED)
+	if (cls.GetState() != ObjectState::READY)
 	{
-		_state = State::INIT_FAILURE;
+		_state = ObjectState::INIT_FAILURE;
 		return ActionResult::INVALID_CLASS;
 	}
 
@@ -91,30 +91,30 @@ Handle::ActionResult Handle::Initialize(Class const& cls, HandleParams params)
 
 	if (hwnd == NULL)
 	{
-		_state = State::INIT_FAILURE;
+		_state = ObjectState::INIT_FAILURE;
 		return ActionResult::HWND_INIT_FAILURE;
 	}
 
 	_hwnd = hwnd;
 	_cls = &cls;
 	_params = params;
-	_state = State::READY;
+	_state = ObjectState::READY;
 	return ActionResult::OK;
 }
 
 Handle::ActionResult Handle::Dispose()
 {
-	if (_state == State::DISPOSED)
+	if (_state == ObjectState::DISPOSED)
 		return ActionResult::ALREADY_DISPOSED;
 
-	if (_state != State::READY)
+	if (_state != ObjectState::READY)
 		return ActionResult::NOT_READY;
 
 	if (!::DestroyWindow(_hwnd))
 		return ActionResult::HWND_DISPOSAL_FAILURE;
 
 	_hwnd = NULL;
-	_state = State::DISPOSED;
+	_state = ObjectState::DISPOSED;
 	return ActionResult::OK;
 }
 

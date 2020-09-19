@@ -20,14 +20,6 @@ struct HandleParams final
 
 struct Handle final
 {
-	enum struct State
-	{
-		CREATED = 0,
-		INIT_FAILURE = 1,
-		READY = 2,
-		DISPOSED = 3
-	};
-
 	enum struct ActionResult
 	{
 		OK = 0,
@@ -53,7 +45,7 @@ struct Handle final
 	HWND GetHwnd() const noexcept { return _hwnd; }
 	Class const* GetClass() const noexcept { return _cls; }
 	HandleParams const& GetParams() const noexcept { return _params; }
-	State GetState() const noexcept { return _state; }
+	ObjectState GetState() const noexcept { return _state; }
 
 	bool SetData(int index, LONG_PTR data);
 	LONG_PTR GetData(int index) const;
@@ -70,7 +62,7 @@ private:
 	HWND _hwnd;
 	Class const* _cls;
 	HandleParams _params;
-	State _state;
+	ObjectState _state;
 };
 
 END_LFRL_OGL_WND_NAMESPACE

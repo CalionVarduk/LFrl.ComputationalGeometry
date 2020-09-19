@@ -3,6 +3,7 @@
 
 #include <array>
 #include "../wnd/Handle.h"
+#include "../ObjectState.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 
@@ -37,14 +38,6 @@ struct DeviceContext final
 		ALREADY_DISPOSED = 8
 	};
 
-	enum struct State
-	{
-		CREATED = 0,
-		INIT_FAILURE = 1,
-		READY = 2,
-		DISPOSED = 3
-	};
-
 	static const PIXELFORMATDESCRIPTOR DEFAULT_PIXEL_FORMAT_DESCRIPTOR;
 
 	DeviceContext(DeviceContext const&) = delete;
@@ -60,7 +53,7 @@ struct DeviceContext final
 	PIXELFORMATDESCRIPTOR const& GetPixelFormatDescriptor() const noexcept { return _pxfDescriptor; }
 	PixelFormatAttributes const& GetPixelFormatAttributes() const noexcept { return _pxfAttributes; }
 	LFRL_COMMON::i32 GetPixelFormat() const noexcept { return _pxf; }
-	State GetState() const noexcept { return _state; }
+	ObjectState GetState() const noexcept { return _state; }
 
 	ActionResult Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes);
 	ActionResult Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
@@ -76,7 +69,7 @@ private:
 	PIXELFORMATDESCRIPTOR _pxfDescriptor;
 	PixelFormatAttributes _pxfAttributes;
 	LFRL_COMMON::i32 _pxf;
-	State _state;
+	ObjectState _state;
 };
 
 END_LFRL_OGL_NAMESPACE

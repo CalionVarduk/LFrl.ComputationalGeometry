@@ -103,6 +103,10 @@
     <ClInclude Include="src\primitives\AccessType.h">
       <Filter>primitives</Filter>
     </ClInclude>
+    <ClInclude Include="src\primitives\VertexArrayObject.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjectState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -161,6 +165,9 @@
       <Filter>capacities</Filter>
     </ClCompile>
     <ClCompile Include="src\primitives\BufferObject.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\VertexArrayObject.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
   </ItemGroup>

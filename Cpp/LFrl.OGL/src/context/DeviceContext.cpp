@@ -38,7 +38,7 @@ std::array<int, 19> PixelFormatAttributes::encode() const noexcept
 const PIXELFORMATDESCRIPTOR DeviceContext::DEFAULT_PIXEL_FORMAT_DESCRIPTOR = __create_default_pxf_descriptor();
 
 DeviceContext::DeviceContext() noexcept
-	: _hdc(NULL), _handle(NULL), _pxfDescriptor(), _pxfAttributes(), _pxf(0), _state(State::CREATED)
+	: _hdc(NULL), _handle(NULL), _pxfDescriptor(), _pxfAttributes(), _pxf(0), _state(ObjectState::CREATED)
 {
 	std::memset(&_pxfDescriptor, 0, sizeof(_pxfDescriptor));
 }
@@ -52,19 +52,19 @@ DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle const& handle,
 
 DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor)
 {
-	if (_state == State::READY || _state == State::DISPOSED)
+	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
 
-	if (handle.GetState() != Wnd::Handle::State::READY)
+	if (handle.GetState() != ObjectState::READY)
 	{
-		_state = State::INIT_FAILURE;
+		_state = ObjectState::INIT_FAILURE;
 		return ActionResult::INVALID_HANDLE;
 	}
 
 	auto hdc = ::GetDC(handle.GetHwnd());
 	if (hdc == NULL)
 	{
-		_state = State::INIT_FAILURE;
+		_state = ObjectState::INIT_FAILURE;
 		return ActionResult::HDC_INIT_FAILURE;
 	}
 
@@ -81,14 +81,14 @@ DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle const& handle,
 		if (pxf == 0)
 		{
 			::ReleaseDC(handle.GetHwnd(), hdc);
-			_state = State::INIT_FAILURE;
+			_state = ObjectState::INIT_FAILURE;
 			return ActionResult::PIXEL_FORMAT_CHOICE_FAILURE;
 		}
 	}
 	if (!::SetPixelFormat(hdc, pxf, &descriptor))
 	{
 		::ReleaseDC(handle.GetHwnd(), hdc);
-		_state = State::INIT_FAILURE;
+		_state = ObjectState::INIT_FAILURE;
 		return ActionResult::PIXEL_FORMAT_INIT_FAILURE;
 	}
 
@@ -97,7 +97,7 @@ DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle const& handle,
 	_pxfDescriptor = descriptor;
 	_pxfAttributes = attributes;
 	_pxf = pxf;
-	_state = State::READY;
+	_state = ObjectState::READY;
 	return ActionResult::OK;
 }
 
@@ -113,17 +113,17 @@ bool DeviceContext::SwapBuffers()
 
 DeviceContext::ActionResult DeviceContext::Dispose()
 {
-	if (_state == State::DISPOSED)
+	if (_state == ObjectState::DISPOSED)
 		return ActionResult::ALREADY_DISPOSED;
 
-	if (_state != State::READY)
+	if (_state != ObjectState::READY)
 		return ActionResult::NOT_READY;
 
 	if (!::ReleaseDC(_handle->GetHwnd(), _hdc))
 		return ActionResult::HDC_DISPOSAL_FAILURE;
 
 	_hdc = NULL;
-	_state = State::DISPOSED;
+	_state = ObjectState::DISPOSED;
 	return ActionResult::OK;
 }
 

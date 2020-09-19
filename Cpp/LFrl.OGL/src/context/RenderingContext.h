@@ -31,14 +31,6 @@ struct RenderingContext final
 		ALREADY_DISPOSED = 6
 	};
 
-	enum struct State
-	{
-		CREATED = 0,
-		INIT_FAILURE = 1,
-		READY = 2,
-		DISPOSED = 3
-	};
-
 	static bool Deactivate();
 
 	RenderingContext(RenderingContext const&) = delete;
@@ -52,7 +44,7 @@ struct RenderingContext final
 	HGLRC GetHglrc() const noexcept { return _hglrc; }
 	DeviceContext const* GetDeviceContext() const noexcept { return _dc; }
 	RenderingAttributes const& GetAttributes() const noexcept { return _attributes; }
-	State GetState() const noexcept { return _state; }
+	ObjectState GetState() const noexcept { return _state; }
 
 	ActionResult Initialize(DeviceContext const& dc, RenderingAttributes attributes);
 
@@ -74,7 +66,7 @@ private:
 	HGLRC _hglrc;
 	DeviceContext const* _dc;
 	RenderingAttributes _attributes;
-	State _state;
+	ObjectState _state;
 };
 
 END_LFRL_OGL_NAMESPACE

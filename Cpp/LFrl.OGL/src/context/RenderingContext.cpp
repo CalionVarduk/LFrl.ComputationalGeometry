@@ -47,17 +47,17 @@ bool RenderingContext::Deactivate()
 }
 
 RenderingContext::RenderingContext()
-	: _hglrc(NULL), _dc(NULL), _attributes(), _state(State::CREATED)
+	: _hglrc(NULL), _dc(NULL), _attributes(), _state(ObjectState::CREATED)
 {}
 
 RenderingContext::ActionResult RenderingContext::Initialize(DeviceContext const& dc, RenderingAttributes attributes)
 {
-	if (_state == State::READY || _state == State::DISPOSED)
+	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
 
-	if (dc.GetState() != DeviceContext::State::READY)
+	if (dc.GetState() != ObjectState::READY)
 	{
-		_state = State::INIT_FAILURE;
+		_state = ObjectState::INIT_FAILURE;
 		return ActionResult::INVALID_DEVICE_CONTEXT;
 	}
 
@@ -66,14 +66,14 @@ RenderingContext::ActionResult RenderingContext::Initialize(DeviceContext const&
 
 	if (hglrc == NULL)
 	{
-		_state = State::INIT_FAILURE;
+		_state = ObjectState::INIT_FAILURE;
 		return ActionResult::HGLRC_INIT_FAILURE;
 	}
 
 	_hglrc = hglrc;
 	_dc = &dc;
 	_attributes = attributes;
-	_state = State::READY;
+	_state = ObjectState::READY;
 	return ActionResult::OK;
 }
 
@@ -89,17 +89,17 @@ bool RenderingContext::IsActive() const
 
 RenderingContext::ActionResult RenderingContext::Dispose()
 {
-	if (_state == State::DISPOSED)
+	if (_state == ObjectState::DISPOSED)
 		return ActionResult::ALREADY_DISPOSED;
 
-	if (_state != State::READY)
+	if (_state != ObjectState::READY)
 		return ActionResult::NOT_READY;
 
 	if ((IsActive() && !Deactivate()) || !wglDeleteContext(_hglrc))
 		return ActionResult::HGLRC_DISPOSAL_FAILURE;
 
 	_hglrc = NULL;
-	_state = State::DISPOSED;
+	_state = ObjectState::DISPOSED;
 	return ActionResult::OK;
 }
 

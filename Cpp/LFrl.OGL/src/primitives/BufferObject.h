@@ -4,6 +4,7 @@
 #include <array>
 #include <vector>
 #include "AccessType.h"
+#include "../ObjectState.h"
 #include "LFrl.Common/src/utils/requires.h"
 #include "LFrl.Common/src/utils/dynamic_buffer.h"
 
@@ -11,14 +12,6 @@ BEGIN_LFRL_OGL_NAMESPACE
 
 struct BufferObject final
 {
-	enum struct State
-	{
-		CREATED = 0,
-		INIT_FAILURE = 1,
-		READY = 2,
-		DISPOSED = 3
-	};
-
 	enum struct ActionResult
 	{
 		OK = 0,
@@ -78,6 +71,7 @@ struct BufferObject final
 	static void Bind(Target target, GLuint id);
 	static void Unbind(Target target) { Bind(target, NULL); }
 	static GLuint GetBoundId(Binding binding);
+	static bool IsAnyBound(Binding binding) { return GetBoundId(binding) != NULL; }
 	static void SetData(Target target, GLuint size, void const* data, Usage usage);
 	static void SetSubData(Target target, GLint offset, GLuint size, void const* data);
 	static bool CopySubData(Target source, Target destination, GLint readOffset, GLint writeOffset, GLuint size);
@@ -127,7 +121,7 @@ struct BufferObject final
 	~BufferObject() { Dispose(); }
 
 	GLuint GetId() const noexcept { return _id; }
-	State GetState() const noexcept { return _state; }
+	ObjectState GetState() const noexcept { return _state; }
 
 	Target GetTarget() const noexcept { return _target; }
 	void SetTarget(Target value) noexcept { _target = value; }
@@ -174,7 +168,7 @@ private:
 	GLuint _id;
 	Target _target;
 	Usage _usage;
-	State _state;
+	ObjectState _state;
 };
 
 template <class TIter, LFRL_COMMON::requires<std::is_same<typename std::iterator_traits<TIter>::value_type, BufferObject*>::value>>
@@ -194,7 +188,7 @@ void BufferObject::InitializeRange(TIter begin, TIter end)
 	for (auto current = begin; current != end; ++current, ++count)
 	{
 		current->_id = ids[count];
-		current->_state = current->_id == 0 ? State::INIT_FAILURE : State::READY;
+		current->_state = current->_id == 0 ? ObjectState::INIT_FAILURE : ObjectState::READY;
 	}
 }
 
@@ -207,7 +201,7 @@ void BufferObject::InitializeRange(std::array<BufferObject*, count>& buffers)
 	for (GLsizei i = 0; i < count; ++i)
 	{
 		buffers[i]->_id = ids[i];
-		buffers[i]->_state = buffers[i]->_id == 0 ? State::INIT_FAILURE : State::READY;
+		buffers[i]->_state = buffers[i]->_id == 0 ? ObjectState::INIT_FAILURE : ObjectState::READY;
 	}
 }
 
@@ -228,7 +222,7 @@ void BufferObject::DisposeRange(TIter begin, TIter end)
 	{
 		ids[count] = current->_id;
 		current->_id = 0;
-		current->_state = State::DISPOSED;
+		current->_state = ObjectState::DISPOSED;
 	}
 	glDeleteBuffers(ids.size(), ids.data());
 }
@@ -242,7 +236,7 @@ void BufferObject::DisposeRange(std::array<BufferObject*, count>& buffers)
 	{
 		ids[i] = buffers[i]->_id;
 		buffers[i]->_id = 0;
-		buffers[i]->_state = State::DISPOSED;
+		buffers[i]->_state = ObjectState::DISPOSED;
 	}
 	glDeleteBuffers(count, ids.data());
 }

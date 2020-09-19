@@ -175,9 +175,11 @@
     <ClInclude Include="src\context\ViewContext.h" />
     <ClInclude Include="src\Initialize.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\ObjectState.h" />
     <ClInclude Include="src\primitives\AccessType.h" />
     <ClInclude Include="src\primitives\BufferObject.h" />
     <ClInclude Include="src\primitives\Projection.h" />
+    <ClInclude Include="src\primitives\VertexArrayObject.h" />
     <ClInclude Include="src\utils\rendering_context_swapper.h" />
     <ClInclude Include="src\wnd\Class.h" />
     <ClInclude Include="src\wnd\Handle.h" />
@@ -200,6 +202,7 @@
     <ClCompile Include="src\Initialize.cpp" />
     <ClCompile Include="src\primitives\BufferObject.cpp" />
     <ClCompile Include="src\primitives\Projection.cpp" />
+    <ClCompile Include="src\primitives\VertexArrayObject.cpp" />
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
     <ClCompile Include="src\wnd\Class.cpp" />
     <ClCompile Include="src\wnd\Handle.cpp" />

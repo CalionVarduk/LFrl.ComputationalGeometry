@@ -2,20 +2,12 @@
 #define __LFRL_OGL_WND_CLASS_GUARD__
 
 #include <string>
-#include "../internal/namespace_macros.h"
+#include "../ObjectState.h"
 
 BEGIN_LFRL_OGL_WND_NAMESPACE
 
 struct Class final
 {
-	enum struct State
-	{
-		CREATED = 0,
-		INIT_FAILURE = 1,
-		REGISTERED = 2,
-		DISPOSED = 3
-	};
-
 	enum struct ActionResult
 	{
 		OK = 0,
@@ -35,14 +27,14 @@ struct Class final
 	~Class() { Dispose(); }
 
 	WNDCLASS const& GetParams() const noexcept { return _params; }
-	State GetState() const noexcept { return _state; }
+	ObjectState GetState() const noexcept { return _state; }
 
 	ActionResult Initialize(WNDCLASS params);
 	ActionResult Dispose();
 
 private:
 	WNDCLASS _params;
-	State _state;
+	ObjectState _state;
 };
 
 END_LFRL_OGL_WND_NAMESPACE
