@@ -164,6 +164,9 @@
     <ClInclude Include="src\utils\is_iterable.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\reverse.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\logging\logger.cpp">

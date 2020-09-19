@@ -31,6 +31,8 @@ template <class T>
 struct is_iterable
 {
 	typedef T type;
+	typedef decltype(__BEGIN(T)) iterator_type;
+	typedef decltype(__BEGIN(const T)) const_iterator_type;
 	static constexpr bool value = sizeof(__detail::__is_iterable_check<T>(0)) == sizeof(__detail::__true_t);
 };
 
@@ -39,6 +41,8 @@ struct is_iterable_of
 {
 	typedef T type;
 	typedef V value_type;
+	typedef typename is_iterable<T>::iterator_type iterator_type;
+	typedef typename is_iterable<T>::const_iterator_type const_iterator_type;
 	static constexpr bool value = is_iterable<T>::value && std::is_same<decltype(*__BEGIN(T)), V&>::value;
 };
 

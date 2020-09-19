@@ -64,6 +64,7 @@
     <ClInclude Include="src\utils\pass_by_mode.h" />
     <ClInclude Include="src\utils\product.h" />
     <ClInclude Include="src\utils\requires.h" />
+    <ClInclude Include="src\utils\reverse.h" />
     <ClInclude Include="src\utils\static_ctor.h" />
     <ClInclude Include="src\utils\sum.h" />
     <ClInclude Include="src\utils\typedefs.h" />
