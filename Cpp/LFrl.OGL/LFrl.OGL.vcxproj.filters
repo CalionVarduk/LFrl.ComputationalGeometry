@@ -107,6 +107,9 @@
       <Filter>primitives</Filter>
     </ClInclude>
     <ClInclude Include="src\ObjectState.h" />
+    <ClInclude Include="src\primitives\ShaderObject.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -168,6 +171,9 @@
       <Filter>primitives</Filter>
     </ClCompile>
     <ClCompile Include="src\primitives\VertexArrayObject.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\ShaderObject.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
   </ItemGroup>

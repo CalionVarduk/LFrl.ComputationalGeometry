@@ -111,9 +111,9 @@ struct BufferObject final
 	static void SetSubData(Target target, GLint offset, T const& data) { SetSubData(target, offset, sizeof(T), &data); }
 
 	BufferObject(BufferObject const&) = delete;
-	BufferObject(BufferObject&&) = delete;
+	BufferObject(BufferObject&&) = default;
 	BufferObject& operator=(BufferObject const&) = delete;
-	BufferObject& operator=(BufferObject&&) = delete;
+	BufferObject& operator=(BufferObject&&) = default;
 
 	BufferObject() noexcept;
 	explicit BufferObject(Target target) noexcept;
