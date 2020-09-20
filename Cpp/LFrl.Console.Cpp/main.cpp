@@ -39,7 +39,7 @@ protected:
 		StopWatch watch;
 		watch.Start();
 
-		auto c = 1;
+		auto c = 1U;
 		for (u32 i = 0; i < c; ++i)
 			ans = _rng.NextUint64();
 
@@ -56,8 +56,8 @@ int main()
 
 	auto iter = is_iterable<std::vector<int>>::value;
 	auto iter_of = is_iterable_of<std::vector<int>, int>::value;
-	auto iter = is_iterable<array_ptr<int>>::value;
-	auto iter_of = is_iterable_of<array_ptr<int>, int>::value;
+	auto iter2 = is_iterable<array_ptr<int>>::value;
+	auto iter_of2 = is_iterable_of<array_ptr<int>, int>::value;
 	auto riter = is_iterable_of<reverse<std::vector<int>>, int>::value;
 
 	TestMeasure m;
