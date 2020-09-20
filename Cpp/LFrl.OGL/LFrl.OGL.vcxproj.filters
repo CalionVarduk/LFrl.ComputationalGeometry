@@ -118,6 +118,9 @@
     <ClInclude Include="src\utils\object_store_base.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\primitives\TimerQuery.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -189,5 +192,8 @@
     </ClCompile>
     <ClCompile Include="src\ShaderObjectStore.cpp" />
     <ClCompile Include="src\ShaderProgramStore.cpp" />
+    <ClCompile Include="src\primitives\TimerQuery.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

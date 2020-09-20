@@ -181,6 +181,7 @@
     <ClInclude Include="src\primitives\Projection.h" />
     <ClInclude Include="src\primitives\ShaderObject.h" />
     <ClInclude Include="src\primitives\ShaderProgram.h" />
+    <ClInclude Include="src\primitives\TimerQuery.h" />
     <ClInclude Include="src\primitives\VertexArrayObject.h" />
     <ClInclude Include="src\ShaderObjectStore.h" />
     <ClInclude Include="src\ShaderProgramStore.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="src\primitives\Projection.cpp" />
     <ClCompile Include="src\primitives\ShaderObject.cpp" />
     <ClCompile Include="src\primitives\ShaderProgram.cpp" />
+    <ClCompile Include="src\primitives\TimerQuery.cpp" />
     <ClCompile Include="src\primitives\VertexArrayObject.cpp" />
     <ClCompile Include="src\ShaderObjectStore.cpp" />
     <ClCompile Include="src\ShaderProgramStore.cpp" />
