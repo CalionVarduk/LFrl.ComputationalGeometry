@@ -9,13 +9,234 @@ GLuint __get_attribute_max_name_length(GLuint id)
 	return static_cast<GLuint>(nameLength);
 }
 
-ShaderProgram::Attribute::ConfigurableType ShaderProgram::Attribute::ConvertToConfigurableType(ShaderVariableType::Code code) noexcept
+GLuint __get_uniform_max_name_length(GLuint id)
 {
-	auto scalarTypeCode = ShaderVariableType::GetScalarTypeCode(code);
+	GLint nameLength;
+	glGetProgramiv(id, GL_ACTIVE_UNIFORM_MAX_LENGTH, &nameLength);
+	return static_cast<GLuint>(nameLength);
+}
+
+constexpr GLuint ShaderProgram::Attribute::Type::GetColumnCount(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	switch (code)
+	{
+	case Code::FLOAT:
+	case Code::FLOAT_VEC2:
+	case Code::FLOAT_VEC3:
+	case Code::FLOAT_VEC4:
+	case Code::INT:
+	case Code::INT_VEC2:
+	case Code::INT_VEC3:
+	case Code::INT_VEC4:
+	case Code::UNSIGNED_INT:
+	case Code::UNSIGNED_INT_VEC2:
+	case Code::UNSIGNED_INT_VEC3:
+	case Code::UNSIGNED_INT_VEC4:
+	case Code::DOUBLE:
+	case Code::DOUBLE_VEC2:
+	case Code::DOUBLE_VEC3:
+	case Code::DOUBLE_VEC4:
+		return 1;
+	case Code::FLOAT_MAT2:
+	case Code::FLOAT_MAT2x3:
+	case Code::FLOAT_MAT2x4:
+	case Code::DOUBLE_MAT2:
+	case Code::DOUBLE_MAT2x3:
+	case Code::DOUBLE_MAT2x4:
+		return 2;
+	case Code::FLOAT_MAT3:
+	case Code::FLOAT_MAT3x2:
+	case Code::FLOAT_MAT3x4:
+	case Code::DOUBLE_MAT3:
+	case Code::DOUBLE_MAT3x2:
+	case Code::DOUBLE_MAT3x4:
+		return 3;
+	case Code::FLOAT_MAT4:
+	case Code::FLOAT_MAT4x2:
+	case Code::FLOAT_MAT4x3:
+	case Code::DOUBLE_MAT4:
+	case Code::DOUBLE_MAT4x2:
+	case Code::DOUBLE_MAT4x3:
+		return 4;
+	}
+	return 0;
+}
+
+constexpr GLuint ShaderProgram::Attribute::Type::GetRowCount(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	auto columnCount = GetColumnCount(code);
+	return columnCount == 0 ? 0 : GetScalarCount(code) / columnCount;
+}
+
+constexpr GLuint ShaderProgram::Attribute::Type::GetScalarCount(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	switch (code)
+	{
+	case Code::FLOAT:
+	case Code::INT:
+	case Code::UNSIGNED_INT:
+	case Code::DOUBLE:
+		return 1;
+	case Code::FLOAT_VEC2:
+	case Code::INT_VEC2:
+	case Code::UNSIGNED_INT_VEC2:
+	case Code::DOUBLE_VEC2:
+		return 2;
+	case Code::FLOAT_VEC3:
+	case Code::INT_VEC3:
+	case Code::UNSIGNED_INT_VEC3:
+	case Code::DOUBLE_VEC3:
+		return 3;
+	case Code::FLOAT_VEC4:
+	case Code::FLOAT_MAT2:
+	case Code::INT_VEC4:
+	case Code::UNSIGNED_INT_VEC4:
+	case Code::DOUBLE_VEC4:
+	case Code::DOUBLE_MAT2:
+		return 4;
+	case Code::FLOAT_MAT2x3:
+	case Code::FLOAT_MAT3x2:
+	case Code::DOUBLE_MAT2x3:
+	case Code::DOUBLE_MAT3x2:
+		return 6;
+	case Code::FLOAT_MAT2x4:
+	case Code::FLOAT_MAT4x2:
+	case Code::DOUBLE_MAT2x4:
+	case Code::DOUBLE_MAT4x2:
+		return 8;
+	case Code::FLOAT_MAT3:
+	case Code::DOUBLE_MAT3:
+		return 9;
+	case Code::FLOAT_MAT3x4:
+	case Code::FLOAT_MAT4x3:
+	case Code::DOUBLE_MAT3x4:
+	case Code::DOUBLE_MAT4x3:
+		return 12;
+	case Code::FLOAT_MAT4:
+	case Code::DOUBLE_MAT4:
+		return 16;
+	}
+	return 0;
+}
+
+constexpr ShaderProgram::Attribute::Type::Code ShaderProgram::Attribute::Type::GetScalarTypeCode(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	switch (code)
+	{
+	case Code::FLOAT:
+	case Code::FLOAT_VEC2:
+	case Code::FLOAT_VEC3:
+	case Code::FLOAT_VEC4:
+	case Code::FLOAT_MAT2:
+	case Code::FLOAT_MAT3:
+	case Code::FLOAT_MAT4:
+	case Code::FLOAT_MAT2x3:
+	case Code::FLOAT_MAT2x4:
+	case Code::FLOAT_MAT3x2:
+	case Code::FLOAT_MAT3x4:
+	case Code::FLOAT_MAT4x2:
+	case Code::FLOAT_MAT4x3:
+		return Code::FLOAT;
+	case Code::INT:
+	case Code::INT_VEC2:
+	case Code::INT_VEC3:
+	case Code::INT_VEC4:
+		return Code::INT;
+	case Code::UNSIGNED_INT:
+	case Code::UNSIGNED_INT_VEC2:
+	case Code::UNSIGNED_INT_VEC3:
+	case Code::UNSIGNED_INT_VEC4:
+		return Code::UNSIGNED_INT;
+	case Code::DOUBLE:
+	case Code::DOUBLE_VEC2:
+	case Code::DOUBLE_VEC3:
+	case Code::DOUBLE_VEC4:
+	case Code::DOUBLE_MAT2:
+	case Code::DOUBLE_MAT3:
+	case Code::DOUBLE_MAT4:
+	case Code::DOUBLE_MAT2x3:
+	case Code::DOUBLE_MAT2x4:
+	case Code::DOUBLE_MAT3x2:
+	case Code::DOUBLE_MAT3x4:
+	case Code::DOUBLE_MAT4x2:
+	case Code::DOUBLE_MAT4x3:
+		return Code::DOUBLE;
+	}
+	return Code::UNDEFINED;
+}
+
+constexpr GLuint ShaderProgram::Attribute::Type::GetScalarSize(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	switch (code)
+	{
+	case Code::FLOAT:
+	case Code::FLOAT_VEC2:
+	case Code::FLOAT_VEC3:
+	case Code::FLOAT_VEC4:
+	case Code::FLOAT_MAT2:
+	case Code::FLOAT_MAT3:
+	case Code::FLOAT_MAT4:
+	case Code::FLOAT_MAT2x3:
+	case Code::FLOAT_MAT2x4:
+	case Code::FLOAT_MAT3x2:
+	case Code::FLOAT_MAT3x4:
+	case Code::FLOAT_MAT4x2:
+	case Code::FLOAT_MAT4x3:
+		return sizeof(GLfloat);
+	case Code::INT:
+	case Code::INT_VEC2:
+	case Code::INT_VEC3:
+	case Code::INT_VEC4:
+		return sizeof(GLint);
+	case Code::UNSIGNED_INT:
+	case Code::UNSIGNED_INT_VEC2:
+	case Code::UNSIGNED_INT_VEC3:
+	case Code::UNSIGNED_INT_VEC4:
+		return sizeof(GLuint);
+	case Code::DOUBLE:
+	case Code::DOUBLE_VEC2:
+	case Code::DOUBLE_VEC3:
+	case Code::DOUBLE_VEC4:
+	case Code::DOUBLE_MAT2:
+	case Code::DOUBLE_MAT3:
+	case Code::DOUBLE_MAT4:
+	case Code::DOUBLE_MAT2x3:
+	case Code::DOUBLE_MAT2x4:
+	case Code::DOUBLE_MAT3x2:
+	case Code::DOUBLE_MAT3x4:
+	case Code::DOUBLE_MAT4x2:
+	case Code::DOUBLE_MAT4x3:
+		return sizeof(GLdouble);
+	}
+	return 0;
+}
+
+constexpr ShaderProgram::Attribute::Type ShaderProgram::Attribute::Type::Create(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	Type result;
+	result._code = code;
+	result._columnCount = GetColumnCount(code);
+	result._rowCount = GetRowCount(code);
+	result._scalarCount = GetScalarCount(code);
+	result._scalarTypeCode = GetScalarTypeCode(code);
+	result._scalarSize = GetScalarSize(code);
+	result._columnSize = GetColumnSize(code);
+	result._rowSize = GetRowSize(code);
+	result._size = GetSize(code);
+	return result;
+}
+
+constexpr ShaderProgram::Attribute::Type::Type() noexcept
+	: _code(Code::UNDEFINED), _columnCount(0), _rowCount(0), _scalarCount(0), _scalarTypeCode(Code::UNDEFINED), _scalarSize(0), _columnSize(0), _rowSize(0), _size(0)
+{}
+
+ShaderProgram::Attribute::ConfigurableType ShaderProgram::Attribute::ConvertToConfigurableType(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	auto scalarTypeCode = Type::GetScalarTypeCode(code);
 	return static_cast<ConfigurableType>(scalarTypeCode);
 }
 
-ShaderProgram::Attribute::ConfigurableType ShaderProgram::Attribute::ConvertToConfigurableType(ShaderVariableType const& type) noexcept
+ShaderProgram::Attribute::ConfigurableType ShaderProgram::Attribute::ConvertToConfigurableType(ShaderProgram::Attribute::Type const& type) noexcept
 {
 	return static_cast<ConfigurableType>(type.GetScalarTypeCode());
 }
@@ -123,7 +344,7 @@ GLuint ShaderProgram::Attribute::GetConfiguredOffsetAt(GLuint index) const
 {
 	void* result;
 	glGetVertexAttribPointerv(_location + index, GL_VERTEX_ATTRIB_ARRAY_POINTER, &result);
-	return reinterpret_cast<GLuint>(result);
+	return static_cast<GLuint>(reinterpret_cast<GLsizeiptr>(result));
 }
 
 GLuint ShaderProgram::Attribute::GetConfiguredBufferObjectIdAt(GLuint index) const
@@ -149,7 +370,7 @@ void ShaderProgram::Attribute::ConfigureAt(GLuint index, GLuint stride, GLuint o
 
 void ShaderProgram::Attribute::ConfigureAt(GLuint index, GLuint size, ShaderProgram::Attribute::ConfigurableType type, GLuint stride, GLuint offset, bool normalized)
 {
-	glVertexAttribPointer(_location + index, static_cast<GLint>(size), static_cast<GLenum>(type), normalized, stride, reinterpret_cast<void*>(offset));
+	glVertexAttribPointer(_location + index, static_cast<GLint>(size), static_cast<GLenum>(type), normalized, stride, reinterpret_cast<void*>(static_cast<GLsizeiptr>(offset)));
 }
 
 void ShaderProgram::Attribute::Configure(GLuint stride, GLuint offset)
@@ -170,14 +391,175 @@ void ShaderProgram::Attribute::_Populate(GLuint programId, GLuint index, LFRL_CO
 {
 	GLint size;
 	GLenum type;
-	glGetActiveAttrib(programId, index, nameBuffer.size(), NULL, &size, &type, nameBuffer.data());
+	glGetActiveAttrib(programId, index, static_cast<GLsizei>(nameBuffer.size()), NULL, &size, &type, nameBuffer.data());
 	auto location = glGetAttribLocation(programId, nameBuffer.data());
 
 	_programId = programId;
 	_index = static_cast<GLint>(index);
 	_location = location;
 	_size = static_cast<GLuint>(size);
-	_type = ShaderVariableType::Create(static_cast<ShaderVariableType::Code>(type));
+	_type = Type::Create(static_cast<Type::Code>(type));
+	_name = nameBuffer.data();
+}
+
+ShaderProgram::Uniform::Uniform() noexcept
+	: _programId(0), _index(-1), _location(-1), _size(0), _type(), _name()
+{}
+
+ShaderProgram::Uniform::LoadResult ShaderProgram::Uniform::Load(GLuint programId, GLuint index)
+{
+	if (!glIsProgram(programId))
+		return LoadResult::INVALID_PROGRAM;
+
+	auto uniformCount = GetUniformCount(programId);
+
+	if (index >= uniformCount)
+		return LoadResult::INVALID_INDEX;
+
+	auto nameLength = __get_uniform_max_name_length(programId);
+	LFRL_COMMON::dynamic_buffer<char> buffer(nameLength);
+
+	_Populate(programId, index, buffer);
+	return LoadResult::OK;
+}
+
+void ShaderProgram::Uniform::Set(GLfloat value)
+{
+	glUniform1f(_location, value);
+}
+
+void ShaderProgram::Uniform::Set(GLint value)
+{
+	glUniform1i(_location, value);
+}
+
+void ShaderProgram::Uniform::Set(GLuint value)
+{
+	glUniform1ui(_location, value);
+}
+
+void ShaderProgram::Uniform::Set(bool value)
+{
+	glUniform1i(_location, static_cast<GLint>(value));
+}
+
+void ShaderProgram::Uniform::SetVec2(GLfloat x, GLfloat y)
+{
+	glUniform2f(_location, x, y);
+}
+
+void ShaderProgram::Uniform::SetVec2(GLint x, GLint y)
+{
+	glUniform2i(_location, x, y);
+}
+
+void ShaderProgram::Uniform::SetVec2(GLuint x, GLuint y)
+{
+	glUniform2ui(_location, x, y);
+}
+
+void ShaderProgram::Uniform::SetVec2(bool x, bool y)
+{
+	glUniform2i(_location, static_cast<GLint>(x), static_cast<GLint>(y));
+}
+
+void ShaderProgram::Uniform::SetVec3(GLfloat x, GLfloat y, GLfloat z)
+{
+	glUniform3f(_location, x, y, z);
+}
+
+void ShaderProgram::Uniform::SetVec3(GLint x, GLint y, GLint z)
+{
+	glUniform3i(_location, x, y, z);
+}
+
+void ShaderProgram::Uniform::SetVec3(GLuint x, GLuint y, GLuint z)
+{
+	glUniform3ui(_location, x, y, z);
+}
+
+void ShaderProgram::Uniform::SetVec3(bool x, bool y, bool z)
+{
+	glUniform3i(_location, static_cast<GLint>(x), static_cast<GLint>(y), static_cast<GLint>(z));
+}
+
+void ShaderProgram::Uniform::SetVec4(GLfloat x, GLfloat y, GLfloat z, GLfloat w)
+{
+	glUniform4f(_location, x, y, z, w);
+}
+
+void ShaderProgram::Uniform::SetVec4(GLint x, GLint y, GLint z, GLint w)
+{
+	glUniform4i(_location, x, y, z, w);
+}
+
+void ShaderProgram::Uniform::SetVec4(GLuint x, GLuint y, GLuint z, GLuint w)
+{
+	glUniform4ui(_location, x, y, z, w);
+}
+
+void ShaderProgram::Uniform::SetVec4(bool x, bool y, bool z, bool w)
+{
+	glUniform4i(_location, static_cast<GLint>(x), static_cast<GLint>(y), static_cast<GLint>(z), static_cast<GLint>(w));
+}
+
+void ShaderProgram::Uniform::SetMat2(glm::mat2 const& value, bool transpose)
+{
+	glUniformMatrix2fv(_location, 1, transpose, glm::value_ptr(value));
+}
+
+void ShaderProgram::Uniform::SetMat2x3(glm::mat2x3 const& value, bool transpose)
+{
+	glUniformMatrix2x3fv(_location, 1, transpose, glm::value_ptr(value));
+}
+
+void ShaderProgram::Uniform::SetMat2x4(glm::mat2x4 const& value, bool transpose)
+{
+	glUniformMatrix2x4fv(_location, 1, transpose, glm::value_ptr(value));
+}
+
+void ShaderProgram::Uniform::SetMat3(glm::mat3 const& value, bool transpose)
+{
+	glUniformMatrix3fv(_location, 1, transpose, glm::value_ptr(value));
+}
+
+void ShaderProgram::Uniform::SetMat3x2(glm::mat3x2 const& value, bool transpose)
+{
+	glUniformMatrix3x2fv(_location, 1, transpose, glm::value_ptr(value));
+}
+
+void ShaderProgram::Uniform::SetMat3x4(glm::mat3x4 const& value, bool transpose)
+{
+	glUniformMatrix3x4fv(_location, 1, transpose, glm::value_ptr(value));
+}
+
+void ShaderProgram::Uniform::SetMat4(glm::mat4 const& value, bool transpose)
+{
+	glUniformMatrix4fv(_location, 1, transpose, glm::value_ptr(value));
+}
+
+void ShaderProgram::Uniform::SetMat4x2(glm::mat4x2 const& value, bool transpose)
+{
+	glUniformMatrix4x2fv(_location, 1, transpose, glm::value_ptr(value));
+}
+
+void ShaderProgram::Uniform::SetMat4x3(glm::mat4x3 const& value, bool transpose)
+{
+	glUniformMatrix4x3fv(_location, 1, transpose, glm::value_ptr(value));
+}
+
+void ShaderProgram::Uniform::_Populate(GLuint programId, GLuint index, LFRL_COMMON::dynamic_buffer<char> const& nameBuffer)
+{
+	GLint size;
+	GLenum type;
+	glGetActiveUniform(programId, index, static_cast<GLsizei>(nameBuffer.size()), NULL, &size, &type, nameBuffer.data());
+	auto location = glGetUniformLocation(programId, nameBuffer.data());
+
+	_programId = programId;
+	_index = static_cast<GLint>(index);
+	_location = location;
+	_size = static_cast<GLuint>(size);
+	_type = static_cast<Type>(type);
 	_name = nameBuffer.data();
 }
 
@@ -266,7 +648,7 @@ GLuint ShaderProgram::GetAttachedShaderIds(GLuint id, LFRL_COMMON::array_ptr<GLu
 		return 0;
 
 	GLint count;
-	glGetAttachedShaders(id, buffer.size(), &count, buffer.get());
+	glGetAttachedShaders(id, static_cast<GLsizei>(buffer.size()), &count, buffer.get());
 	return count;
 }
 
@@ -283,7 +665,7 @@ GLuint ShaderProgram::GetAttributes(GLuint id, LFRL_COMMON::array_ptr<ShaderProg
 		return 0;
 
 	auto count = GetAttributeCount(id);
-	auto read = count > buffer.size() ? buffer.size() : count;
+	auto read = count > buffer.size() ? static_cast<GLuint>(buffer.size()) : count;
 
 	auto nameLength = __get_attribute_max_name_length(id);
 	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
@@ -299,6 +681,32 @@ GLuint ShaderProgram::GetAttributes(GLuint id, LFRL_COMMON::array_ptr<ShaderProg
 void ShaderProgram::BindAttributeLocation(GLuint id, GLuint location, char const* name)
 {
 	glBindAttribLocation(id, location, name);
+}
+
+GLuint ShaderProgram::GetUniformCount(GLuint id)
+{
+	GLint result;
+	glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &result);
+	return static_cast<GLuint>(result);
+}
+
+GLuint ShaderProgram::GetUniforms(GLuint id, LFRL_COMMON::array_ptr<ShaderProgram::Uniform> buffer)
+{
+	if (buffer.size())
+		return 0;
+
+	auto count = GetUniformCount(id);
+	auto read = count > buffer.size() ? static_cast<GLuint>(buffer.size()) : count;
+
+	auto nameLength = __get_uniform_max_name_length(id);
+	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+
+	for (GLuint i = 0; i < read; ++i)
+	{
+		buffer[i]._Populate(id, i, nameBuffer);
+		nameBuffer.reset();
+	}
+	return read;
 }
 
 ShaderProgram::ShaderProgram() noexcept
@@ -365,9 +773,25 @@ std::vector<GLuint> ShaderProgram::GetAttachedShaderIds() const
 std::vector<ShaderProgram::Attribute> ShaderProgram::GetAttributes() const
 {
 	auto count = GetAttributeCount(_id);
-	std::vector<ShaderProgram::Attribute> result(count, ShaderProgram::Attribute());
+	std::vector<Attribute> result(count, Attribute());
 
 	auto nameLength = __get_attribute_max_name_length(_id);
+	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+
+	for (GLuint i = 0; i < count; ++i)
+	{
+		result[i]._Populate(_id, i, nameBuffer);
+		nameBuffer.reset();
+	}
+	return result;
+}
+
+std::vector<ShaderProgram::Uniform> ShaderProgram::GetUniforms() const
+{
+	auto count = GetUniformCount(_id);
+	std::vector<Uniform> result(count, Uniform());
+
+	auto nameLength = __get_uniform_max_name_length(_id);
 	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
 
 	for (GLuint i = 0; i < count; ++i)

@@ -113,9 +113,6 @@
     <ClInclude Include="src\primitives\ShaderProgram.h">
       <Filter>primitives</Filter>
     </ClInclude>
-    <ClInclude Include="src\primitives\ShaderVariableType.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -183,9 +180,6 @@
       <Filter>primitives</Filter>
     </ClCompile>
     <ClCompile Include="src\primitives\ShaderProgram.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="src\primitives\ShaderVariableType.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
   </ItemGroup>
