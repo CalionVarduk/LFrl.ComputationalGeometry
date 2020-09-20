@@ -32,9 +32,8 @@ struct ShaderProgram final
 		enum struct LoadResult
 		{
 			OK = 0,
-			ALREADY_LOADED = 1,
-			INVALID_PROGRAM = 2,
-			INVALID_INDEX = 3
+			INVALID_PROGRAM = 1,
+			INVALID_INDEX = 2
 		};
 
 		enum struct ConfigurableType
@@ -64,7 +63,6 @@ struct ShaderProgram final
 		Attribute& operator=(Attribute const&) = default;
 		Attribute& operator=(Attribute&&) = default;
 
-		bool IsLoaded() const noexcept { return _index >= 0; }
 		GLuint GetProgramId() const noexcept { return _programId; }
 		GLint GetIndex() const noexcept { return _index; }
 		GLint GetLocation() const noexcept { return _location; }
@@ -148,7 +146,8 @@ struct ShaderProgram final
 	static GLuint GetAttachedShaderIds(GLuint id, LFRL_COMMON::array_ptr<GLuint> buffer);
 	static GLuint GetAttributeCount(GLuint id);
 	static GLuint GetAttributes(GLuint id, LFRL_COMMON::array_ptr<Attribute> buffer);
-	// TODO: add possibility to bind location (glBindAttribLocation), + non-static version
+	static void BindAttributeLocation(GLuint id, GLuint location, char const* name);
+	static void BindAttributeLocation(GLuint id, GLuint location, std::string const& name) { BindAttributeLocation(id, location, name.data()); }
 
 	ShaderProgram(ShaderProgram const&) = delete;
 	ShaderProgram(ShaderProgram&&) = default;
@@ -167,6 +166,10 @@ struct ShaderProgram final
 	ActionResult DetachShader(GLuint shaderId);
 	ActionResult DetachShader(ShaderObject const& shader) { return DetachShader(shader.GetId()); }
 	ActionResult Link();
+
+	void BindAttributeLocation(GLuint location, char const* name) { BindAttributeLocation(_id, location, name); }
+	void BindAttributeLocation(GLuint location, std::string const& name) { BindAttributeLocation(location, name.data()); }
+	void BindAttributeLocation(GLuint location, Attribute const& attribute) { BindAttributeLocation(location, attribute.GetName()); }
 
 	GLuint GetAttachedShaderCount() const { return GetAttachedShaderCount(_id); }
 	std::vector<GLuint> GetAttachedShaderIds() const;

@@ -26,9 +26,6 @@ ShaderProgram::Attribute::Attribute() noexcept
 
 ShaderProgram::Attribute::LoadResult ShaderProgram::Attribute::Load(GLuint programId, GLuint index)
 {
-	if (IsLoaded())
-		return LoadResult::ALREADY_LOADED;
-
 	if (!glIsProgram(programId))
 		return LoadResult::INVALID_PROGRAM;
 
@@ -297,6 +294,11 @@ GLuint ShaderProgram::GetAttributes(GLuint id, LFRL_COMMON::array_ptr<ShaderProg
 		nameBuffer.reset();
 	}
 	return read;
+}
+
+void ShaderProgram::BindAttributeLocation(GLuint id, GLuint location, char const* name)
+{
+	glBindAttribLocation(id, location, name);
 }
 
 ShaderProgram::ShaderProgram() noexcept
