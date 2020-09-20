@@ -121,6 +121,9 @@
     <ClInclude Include="src\primitives\TimerQuery.h">
       <Filter>primitives</Filter>
     </ClInclude>
+    <ClInclude Include="src\primitives\CachedTimerQuery.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">

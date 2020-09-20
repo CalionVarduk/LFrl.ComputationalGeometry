@@ -13,9 +13,12 @@ struct TimerQuery final
 		OK = 0,
 		ALREADY_INITIALIZED = 1,
 		QUERY_GEN_FAILURE = 2,
-		ALREADY_DISPOSED = 6,
-		NOT_READY = 7
+		ALREADY_DISPOSED = 3,
+		NOT_READY = 4
 	};
+
+	static GLuint GetRunningId();
+	static bool IsAnyRunning() { return GetRunningId() != NULL; }
 
 	TimerQuery(TimerQuery const&) = delete;
 	TimerQuery(TimerQuery&&) = default;
@@ -30,7 +33,7 @@ struct TimerQuery final
 	GLuint GetQueryCount() const noexcept { return _queryCount; }
 	GLuint64 GetLastElapsedTimeNs() const noexcept { return _lastElapsedTimeNs; }
 	GLuint64 GetTotalElapsedTimeNs() const noexcept { return _totalElapsedTimeNs; }
-	GLdouble GetAverageElapsedTimeNs() const noexcept { return _totalElapsedTimeNs / static_cast<GLdouble>(_queryCount); }
+	GLdouble GetAverageElapsedTimeNs() const noexcept { return _queryCount == 0 ? 0.0 : _totalElapsedTimeNs / static_cast<GLdouble>(_queryCount); }
 	std::chrono::duration<GLuint64, std::chrono::nanoseconds::period> GetLastElapsedTime() const noexcept;
 	std::chrono::duration<GLuint64, std::chrono::nanoseconds::period> GetTotalElapsedTime() const noexcept;
 	std::chrono::duration<GLdouble, std::chrono::nanoseconds::period> GetAverageElapsedTime() const noexcept;
@@ -38,6 +41,7 @@ struct TimerQuery final
 
 	ActionResult Initialize();
 
+	bool IsRunning() const;
 	void Reset();
 	void Begin();
 	void End();

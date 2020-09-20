@@ -177,6 +177,7 @@
     <ClInclude Include="src\internal\namespace_macros.h" />
     <ClInclude Include="src\ObjectState.h" />
     <ClInclude Include="src\primitives\AccessType.h" />
+    <ClInclude Include="src\primitives\CachedTimerQuery.h" />
     <ClInclude Include="src\primitives\BufferObject.h" />
     <ClInclude Include="src\primitives\Projection.h" />
     <ClInclude Include="src\primitives\ShaderObject.h" />

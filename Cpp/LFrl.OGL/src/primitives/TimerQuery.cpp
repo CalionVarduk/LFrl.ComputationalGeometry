@@ -2,6 +2,13 @@
 
 BEGIN_LFRL_OGL_NAMESPACE
 
+GLuint TimerQuery::GetRunningId()
+{
+	GLint result;
+	glGetQueryiv(GL_TIME_ELAPSED, GL_CURRENT_QUERY, &result);
+	return static_cast<GLuint>(result);
+}
+
 TimerQuery::TimerQuery() noexcept
 	: _ids(), _active(0), _inactive(1), _queryCount(0), _lastElapsedTimeNs(0), _totalElapsedTimeNs(0), _state(ObjectState::CREATED)
 {
@@ -53,6 +60,12 @@ TimerQuery::ActionResult TimerQuery::Initialize()
 	_ids[1] = ids[1];
 	_state = ObjectState::READY;
 	return ActionResult::OK;
+}
+
+bool TimerQuery::IsRunning() const
+{
+	auto current = GetRunningId();
+	return current == _ids[0] || current == _ids[1];
 }
 
 void TimerQuery::Reset()
