@@ -182,6 +182,9 @@
     <ClInclude Include="src\primitives\ShaderObject.h" />
     <ClInclude Include="src\primitives\ShaderProgram.h" />
     <ClInclude Include="src\primitives\VertexArrayObject.h" />
+    <ClInclude Include="src\ShaderObjectStore.h" />
+    <ClInclude Include="src\ShaderProgramStore.h" />
+    <ClInclude Include="src\utils\object_store_base.h" />
     <ClInclude Include="src\utils\rendering_context_swapper.h" />
     <ClInclude Include="src\wnd\Class.h" />
     <ClInclude Include="src\wnd\Handle.h" />
@@ -207,6 +210,8 @@
     <ClCompile Include="src\primitives\ShaderObject.cpp" />
     <ClCompile Include="src\primitives\ShaderProgram.cpp" />
     <ClCompile Include="src\primitives\VertexArrayObject.cpp" />
+    <ClCompile Include="src\ShaderObjectStore.cpp" />
+    <ClCompile Include="src\ShaderProgramStore.cpp" />
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
     <ClCompile Include="src\wnd\Class.cpp" />
     <ClCompile Include="src\wnd\Handle.cpp" />

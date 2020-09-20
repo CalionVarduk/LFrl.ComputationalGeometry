@@ -450,6 +450,220 @@ private:
 	ObjectState _state;
 };
 
+constexpr GLuint ShaderProgram::Attribute::Type::GetColumnCount(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	switch (code)
+	{
+	case Code::FLOAT:
+	case Code::FLOAT_VEC2:
+	case Code::FLOAT_VEC3:
+	case Code::FLOAT_VEC4:
+	case Code::INT:
+	case Code::INT_VEC2:
+	case Code::INT_VEC3:
+	case Code::INT_VEC4:
+	case Code::UNSIGNED_INT:
+	case Code::UNSIGNED_INT_VEC2:
+	case Code::UNSIGNED_INT_VEC3:
+	case Code::UNSIGNED_INT_VEC4:
+	case Code::DOUBLE:
+	case Code::DOUBLE_VEC2:
+	case Code::DOUBLE_VEC3:
+	case Code::DOUBLE_VEC4:
+		return 1;
+	case Code::FLOAT_MAT2:
+	case Code::FLOAT_MAT2x3:
+	case Code::FLOAT_MAT2x4:
+	case Code::DOUBLE_MAT2:
+	case Code::DOUBLE_MAT2x3:
+	case Code::DOUBLE_MAT2x4:
+		return 2;
+	case Code::FLOAT_MAT3:
+	case Code::FLOAT_MAT3x2:
+	case Code::FLOAT_MAT3x4:
+	case Code::DOUBLE_MAT3:
+	case Code::DOUBLE_MAT3x2:
+	case Code::DOUBLE_MAT3x4:
+		return 3;
+	case Code::FLOAT_MAT4:
+	case Code::FLOAT_MAT4x2:
+	case Code::FLOAT_MAT4x3:
+	case Code::DOUBLE_MAT4:
+	case Code::DOUBLE_MAT4x2:
+	case Code::DOUBLE_MAT4x3:
+		return 4;
+	}
+	return 0;
+}
+
+constexpr GLuint ShaderProgram::Attribute::Type::GetRowCount(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	auto columnCount = GetColumnCount(code);
+	return columnCount == 0 ? 0 : GetScalarCount(code) / columnCount;
+}
+
+constexpr GLuint ShaderProgram::Attribute::Type::GetScalarCount(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	switch (code)
+	{
+	case Code::FLOAT:
+	case Code::INT:
+	case Code::UNSIGNED_INT:
+	case Code::DOUBLE:
+		return 1;
+	case Code::FLOAT_VEC2:
+	case Code::INT_VEC2:
+	case Code::UNSIGNED_INT_VEC2:
+	case Code::DOUBLE_VEC2:
+		return 2;
+	case Code::FLOAT_VEC3:
+	case Code::INT_VEC3:
+	case Code::UNSIGNED_INT_VEC3:
+	case Code::DOUBLE_VEC3:
+		return 3;
+	case Code::FLOAT_VEC4:
+	case Code::FLOAT_MAT2:
+	case Code::INT_VEC4:
+	case Code::UNSIGNED_INT_VEC4:
+	case Code::DOUBLE_VEC4:
+	case Code::DOUBLE_MAT2:
+		return 4;
+	case Code::FLOAT_MAT2x3:
+	case Code::FLOAT_MAT3x2:
+	case Code::DOUBLE_MAT2x3:
+	case Code::DOUBLE_MAT3x2:
+		return 6;
+	case Code::FLOAT_MAT2x4:
+	case Code::FLOAT_MAT4x2:
+	case Code::DOUBLE_MAT2x4:
+	case Code::DOUBLE_MAT4x2:
+		return 8;
+	case Code::FLOAT_MAT3:
+	case Code::DOUBLE_MAT3:
+		return 9;
+	case Code::FLOAT_MAT3x4:
+	case Code::FLOAT_MAT4x3:
+	case Code::DOUBLE_MAT3x4:
+	case Code::DOUBLE_MAT4x3:
+		return 12;
+	case Code::FLOAT_MAT4:
+	case Code::DOUBLE_MAT4:
+		return 16;
+	}
+	return 0;
+}
+
+constexpr ShaderProgram::Attribute::Type::Code ShaderProgram::Attribute::Type::GetScalarTypeCode(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	switch (code)
+	{
+	case Code::FLOAT:
+	case Code::FLOAT_VEC2:
+	case Code::FLOAT_VEC3:
+	case Code::FLOAT_VEC4:
+	case Code::FLOAT_MAT2:
+	case Code::FLOAT_MAT3:
+	case Code::FLOAT_MAT4:
+	case Code::FLOAT_MAT2x3:
+	case Code::FLOAT_MAT2x4:
+	case Code::FLOAT_MAT3x2:
+	case Code::FLOAT_MAT3x4:
+	case Code::FLOAT_MAT4x2:
+	case Code::FLOAT_MAT4x3:
+		return Code::FLOAT;
+	case Code::INT:
+	case Code::INT_VEC2:
+	case Code::INT_VEC3:
+	case Code::INT_VEC4:
+		return Code::INT;
+	case Code::UNSIGNED_INT:
+	case Code::UNSIGNED_INT_VEC2:
+	case Code::UNSIGNED_INT_VEC3:
+	case Code::UNSIGNED_INT_VEC4:
+		return Code::UNSIGNED_INT;
+	case Code::DOUBLE:
+	case Code::DOUBLE_VEC2:
+	case Code::DOUBLE_VEC3:
+	case Code::DOUBLE_VEC4:
+	case Code::DOUBLE_MAT2:
+	case Code::DOUBLE_MAT3:
+	case Code::DOUBLE_MAT4:
+	case Code::DOUBLE_MAT2x3:
+	case Code::DOUBLE_MAT2x4:
+	case Code::DOUBLE_MAT3x2:
+	case Code::DOUBLE_MAT3x4:
+	case Code::DOUBLE_MAT4x2:
+	case Code::DOUBLE_MAT4x3:
+		return Code::DOUBLE;
+	}
+	return Code::UNDEFINED;
+}
+
+constexpr GLuint ShaderProgram::Attribute::Type::GetScalarSize(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	switch (code)
+	{
+	case Code::FLOAT:
+	case Code::FLOAT_VEC2:
+	case Code::FLOAT_VEC3:
+	case Code::FLOAT_VEC4:
+	case Code::FLOAT_MAT2:
+	case Code::FLOAT_MAT3:
+	case Code::FLOAT_MAT4:
+	case Code::FLOAT_MAT2x3:
+	case Code::FLOAT_MAT2x4:
+	case Code::FLOAT_MAT3x2:
+	case Code::FLOAT_MAT3x4:
+	case Code::FLOAT_MAT4x2:
+	case Code::FLOAT_MAT4x3:
+		return sizeof(GLfloat);
+	case Code::INT:
+	case Code::INT_VEC2:
+	case Code::INT_VEC3:
+	case Code::INT_VEC4:
+		return sizeof(GLint);
+	case Code::UNSIGNED_INT:
+	case Code::UNSIGNED_INT_VEC2:
+	case Code::UNSIGNED_INT_VEC3:
+	case Code::UNSIGNED_INT_VEC4:
+		return sizeof(GLuint);
+	case Code::DOUBLE:
+	case Code::DOUBLE_VEC2:
+	case Code::DOUBLE_VEC3:
+	case Code::DOUBLE_VEC4:
+	case Code::DOUBLE_MAT2:
+	case Code::DOUBLE_MAT3:
+	case Code::DOUBLE_MAT4:
+	case Code::DOUBLE_MAT2x3:
+	case Code::DOUBLE_MAT2x4:
+	case Code::DOUBLE_MAT3x2:
+	case Code::DOUBLE_MAT3x4:
+	case Code::DOUBLE_MAT4x2:
+	case Code::DOUBLE_MAT4x3:
+		return sizeof(GLdouble);
+	}
+	return 0;
+}
+
+constexpr ShaderProgram::Attribute::Type ShaderProgram::Attribute::Type::Create(ShaderProgram::Attribute::Type::Code code) noexcept
+{
+	Type result;
+	result._code = code;
+	result._columnCount = GetColumnCount(code);
+	result._rowCount = GetRowCount(code);
+	result._scalarCount = GetScalarCount(code);
+	result._scalarTypeCode = GetScalarTypeCode(code);
+	result._scalarSize = GetScalarSize(code);
+	result._columnSize = GetColumnSize(code);
+	result._rowSize = GetRowSize(code);
+	result._size = GetSize(code);
+	return result;
+}
+
+constexpr ShaderProgram::Attribute::Type::Type() noexcept
+	: _code(Code::UNDEFINED), _columnCount(0), _rowCount(0), _scalarCount(0), _scalarTypeCode(Code::UNDEFINED), _scalarSize(0), _columnSize(0), _rowSize(0), _size(0)
+{}
+
 END_LFRL_OGL_NAMESPACE
 
 #endif

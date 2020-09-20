@@ -113,6 +113,11 @@
     <ClInclude Include="src\primitives\ShaderProgram.h">
       <Filter>primitives</Filter>
     </ClInclude>
+    <ClInclude Include="src\ShaderObjectStore.h" />
+    <ClInclude Include="src\ShaderProgramStore.h" />
+    <ClInclude Include="src\utils\object_store_base.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -182,5 +187,7 @@
     <ClCompile Include="src\primitives\ShaderProgram.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
+    <ClCompile Include="src\ShaderObjectStore.cpp" />
+    <ClCompile Include="src\ShaderProgramStore.cpp" />
   </ItemGroup>
 </Project>
