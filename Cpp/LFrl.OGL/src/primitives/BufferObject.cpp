@@ -40,9 +40,9 @@ void* BufferObject::Map(BufferObject::Target target, AccessType access)
 	return glMapBuffer(static_cast<GLenum>(target), static_cast<GLenum>(access));
 }
 
-void* BufferObject::MapRange(BufferObject::Target target, GLint offset, GLuint size, AccessType access)
+void* BufferObject::MapRange(BufferObject::Target target, GLint offset, GLuint size, GLbitfield access)
 {
-	return glMapBufferRange(static_cast<GLenum>(target), static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), static_cast<GLenum>(access));
+	return glMapBufferRange(static_cast<GLenum>(target), static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), access);
 }
 
 void BufferObject::FlushMappedRange(BufferObject::Target target, GLint offset, GLuint size)

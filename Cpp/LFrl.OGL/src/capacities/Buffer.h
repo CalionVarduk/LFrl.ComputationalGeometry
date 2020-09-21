@@ -17,10 +17,10 @@ namespace Buffer
 
 	void Clear(GLbitfield buffers) noexcept;
 
-	GLbitfield operator| (Type l, Type r) noexcept { return static_cast<GLbitfield>(l) | static_cast<GLbitfield>(r); }
-	GLbitfield operator| (Type l, GLbitfield r) noexcept { return static_cast<GLbitfield>(l) | r; }
-	GLbitfield operator| (GLbitfield l, Type r) noexcept { return l | static_cast<GLbitfield>(r); }
-	GLbitfield operator|= (GLbitfield l, Type r) noexcept { return l | static_cast<GLbitfield>(r); }
+	inline GLbitfield operator| (Type l, Type r) noexcept { return static_cast<GLbitfield>(l) | static_cast<GLbitfield>(r); }
+	inline GLbitfield operator| (Type l, GLbitfield r) noexcept { return static_cast<GLbitfield>(l) | r; }
+	inline GLbitfield operator| (GLbitfield l, Type r) noexcept { return l | static_cast<GLbitfield>(r); }
+	inline GLbitfield operator|= (GLbitfield l, Type r) noexcept { return l | static_cast<GLbitfield>(r); }
 }
 
 END_LFRL_OGL_CAPACITIES_NAMESPACE

@@ -16,7 +16,7 @@ bool __init_ctx_swapper(HDC hdc, HGLRC hglrc, HDC& prevHdc, HGLRC& prevHglrc)
 	return wglMakeCurrent(hdc, hglrc);
 }
 
-rendering_context_swapper::rendering_context_swapper()
+rendering_context_swapper::rendering_context_swapper() noexcept
 	: _hdc(NULL), _hglrc(NULL), _prev_hdc(NULL), _prev_hglrc(NULL), _swapped(false)
 {}
 

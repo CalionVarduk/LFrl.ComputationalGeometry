@@ -13,7 +13,7 @@ bool __init_prog_swapper(GLuint id, GLuint& prevId)
 	return true;
 }
 
-shader_program_swapper::shader_program_swapper()
+shader_program_swapper::shader_program_swapper() noexcept
 	: _id(0), _prev_id(0), _swapped(false)
 {}
 

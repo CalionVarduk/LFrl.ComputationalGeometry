@@ -10,7 +10,7 @@ struct buffer_object_mapper final
 	buffer_object_mapper(buffer_object_mapper const&) = delete;
 	buffer_object_mapper& operator=(buffer_object_mapper const&) = delete;
 
-	buffer_object_mapper();
+	buffer_object_mapper() noexcept;
 	explicit buffer_object_mapper(BufferObject::Target target, AccessType access);
 	buffer_object_mapper(BufferObject const& obj, AccessType access);
 	buffer_object_mapper(buffer_object_mapper&&) noexcept;

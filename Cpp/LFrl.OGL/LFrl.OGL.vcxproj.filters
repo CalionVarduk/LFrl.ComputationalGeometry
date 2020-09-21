@@ -133,6 +133,12 @@
     <ClInclude Include="src\utils\buffer_object_mapper.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\buffer_object_range_mapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\AccessFlag.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -211,6 +217,9 @@
       <Filter>utils</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\buffer_object_mapper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\buffer_object_range_mapper.cpp">
       <Filter>utils</Filter>
     </ClCompile>
   </ItemGroup>

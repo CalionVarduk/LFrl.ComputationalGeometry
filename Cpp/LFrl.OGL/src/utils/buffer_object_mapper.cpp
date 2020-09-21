@@ -7,7 +7,7 @@ void __init_buffer_mapper(BufferObject::Target target, AccessType access, void*&
 	ptr = BufferObject::Map(target, access);
 }
 
-buffer_object_mapper::buffer_object_mapper()
+buffer_object_mapper::buffer_object_mapper() noexcept
 	: _ptr(nullptr), _target(BufferObject::Target::UNDEFINED), _access(AccessType::READ_WRITE)
 {}
 

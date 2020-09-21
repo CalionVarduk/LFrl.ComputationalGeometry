@@ -10,7 +10,7 @@ struct rendering_context_swapper final
 	rendering_context_swapper(rendering_context_swapper const&) = delete;
 	rendering_context_swapper& operator=(rendering_context_swapper const&) = delete;
 
-	rendering_context_swapper();
+	rendering_context_swapper() noexcept;
 	rendering_context_swapper(HDC hdc, HGLRC hglrc);
 	explicit rendering_context_swapper(RenderingContext const& ctx);
 	rendering_context_swapper(rendering_context_swapper&&) noexcept;
