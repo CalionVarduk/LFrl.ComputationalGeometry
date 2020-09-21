@@ -40,9 +40,6 @@
     <ClInclude Include="src\wnd\Class.h">
       <Filter>wnd</Filter>
     </ClInclude>
-    <ClInclude Include="src\context\ViewContext.h">
-      <Filter>context</Filter>
-    </ClInclude>
     <ClInclude Include="src\primitives\Projection.h">
       <Filter>primitives</Filter>
     </ClInclude>
@@ -124,6 +121,15 @@
     <ClInclude Include="src\primitives\CachedTimerQuery.h">
       <Filter>primitives</Filter>
     </ClInclude>
+    <ClInclude Include="src\wnd\GLCanvas.h">
+      <Filter>wnd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\CanvasContext.h">
+      <Filter>context</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\shader_program_swapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -197,6 +203,9 @@
     <ClCompile Include="src\ShaderProgramStore.cpp" />
     <ClCompile Include="src\primitives\TimerQuery.cpp">
       <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\shader_program_swapper.cpp">
+      <Filter>utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

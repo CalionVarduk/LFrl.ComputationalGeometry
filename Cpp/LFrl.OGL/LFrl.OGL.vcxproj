@@ -172,7 +172,7 @@
     <ClInclude Include="src\capacities\Viewport.h" />
     <ClInclude Include="src\context\DeviceContext.h" />
     <ClInclude Include="src\context\RenderingContext.h" />
-    <ClInclude Include="src\context\ViewContext.h" />
+    <ClInclude Include="src\context\CanvasContext.h" />
     <ClInclude Include="src\Initialize.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
     <ClInclude Include="src\ObjectState.h" />
@@ -188,7 +188,9 @@
     <ClInclude Include="src\ShaderProgramStore.h" />
     <ClInclude Include="src\utils\object_store_base.h" />
     <ClInclude Include="src\utils\rendering_context_swapper.h" />
+    <ClInclude Include="src\utils\shader_program_swapper.h" />
     <ClInclude Include="src\wnd\Class.h" />
+    <ClInclude Include="src\wnd\GLCanvas.h" />
     <ClInclude Include="src\wnd\Handle.h" />
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +218,7 @@
     <ClCompile Include="src\ShaderObjectStore.cpp" />
     <ClCompile Include="src\ShaderProgramStore.cpp" />
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
+    <ClCompile Include="src\utils\shader_program_swapper.cpp" />
     <ClCompile Include="src\wnd\Class.cpp" />
     <ClCompile Include="src\wnd\Handle.cpp" />
   </ItemGroup>

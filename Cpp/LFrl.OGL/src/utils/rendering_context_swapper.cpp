@@ -62,7 +62,12 @@ rendering_context_swapper& rendering_context_swapper::operator=(rendering_contex
 		{
 			auto currentHglrc = wglGetCurrentContext();
 			if (currentHglrc != _hglrc && !wglMakeCurrent(_hdc, _hglrc))
+			{
+				if (currentHglrc != _prev_hglrc)
+					wglMakeCurrent(_prev_hdc, _prev_hglrc);
+
 				_swapped = false;
+			}
 		}		
 	}
 	return *this;
