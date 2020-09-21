@@ -4,16 +4,16 @@ BEGIN_LFRL_OGL_NAMESPACE
 
 bool __init_prog_swapper(GLuint id, GLuint& prevId)
 {
-	glGetIntegerv(GL_CURRENT_PROGRAM, reinterpret_cast<GLint*>(&prevId));
+	prevId = ShaderProgram::GetUsedId();
 
 	if (id == prevId)
 		return false;
 
-	glUseProgram(id);
+	ShaderProgram::Use(id);
 	return true;
 }
 
-shader_program_swapper::shader_program_swapper() noexcept
+shader_program_swapper::shader_program_swapper()
 	: _id(0), _prev_id(0), _swapped(false)
 {}
 
@@ -51,11 +51,9 @@ shader_program_swapper& shader_program_swapper::operator=(shader_program_swapper
 
 		if (_swapped)
 		{
-			GLuint currentId = 0;
-			glGetIntegerv(GL_CURRENT_PROGRAM, reinterpret_cast<GLint*>(&currentId));
-
+			auto currentId = ShaderProgram::GetUsedId();
 			if (currentId != _id)
-				glUseProgram(_id);
+				ShaderProgram::Use(_id);
 		}
 	}
 	return *this;
@@ -65,7 +63,7 @@ bool shader_program_swapper::swap_back()
 {
 	if (_swapped)
 	{
-		glUseProgram(_prev_id);
+		ShaderProgram::Use(_prev_id);
 		_swapped = false;
 		return true;
 	}

@@ -186,6 +186,7 @@
     <ClInclude Include="src\primitives\VertexArrayObject.h" />
     <ClInclude Include="src\ShaderObjectStore.h" />
     <ClInclude Include="src\ShaderProgramStore.h" />
+    <ClInclude Include="src\utils\buffer_object_mapper.h" />
     <ClInclude Include="src\utils\object_store_base.h" />
     <ClInclude Include="src\utils\rendering_context_swapper.h" />
     <ClInclude Include="src\utils\shader_program_swapper.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="src\primitives\VertexArrayObject.cpp" />
     <ClCompile Include="src\ShaderObjectStore.cpp" />
     <ClCompile Include="src\ShaderProgramStore.cpp" />
+    <ClCompile Include="src\utils\buffer_object_mapper.cpp" />
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
     <ClCompile Include="src\utils\shader_program_swapper.cpp" />
     <ClCompile Include="src\wnd\Class.cpp" />

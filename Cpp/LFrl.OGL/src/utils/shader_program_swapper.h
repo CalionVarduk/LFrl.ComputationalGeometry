@@ -10,7 +10,7 @@ struct shader_program_swapper final
 	shader_program_swapper(shader_program_swapper const&) = delete;
 	shader_program_swapper& operator=(shader_program_swapper const&) = delete;
 
-	shader_program_swapper() noexcept;
+	shader_program_swapper();
 	explicit shader_program_swapper(GLuint programId);
 	explicit shader_program_swapper(ShaderProgram const& program);
 	shader_program_swapper(shader_program_swapper&&) noexcept;

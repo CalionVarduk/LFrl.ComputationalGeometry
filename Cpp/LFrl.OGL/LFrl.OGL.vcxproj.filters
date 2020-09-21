@@ -130,6 +130,9 @@
     <ClInclude Include="src\utils\shader_program_swapper.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\buffer_object_mapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -205,6 +208,9 @@
       <Filter>primitives</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\shader_program_swapper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\buffer_object_mapper.cpp">
       <Filter>utils</Filter>
     </ClCompile>
   </ItemGroup>
