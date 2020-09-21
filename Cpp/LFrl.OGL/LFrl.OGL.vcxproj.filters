@@ -139,6 +139,9 @@
     <ClInclude Include="src\primitives\AccessFlag.h">
       <Filter>primitives</Filter>
     </ClInclude>
+    <ClInclude Include="src\primitives\Transform.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -224,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="src\wnd\GLCanvas.cpp">
       <Filter>wnd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\Transform.cpp">
+      <Filter>primitives</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

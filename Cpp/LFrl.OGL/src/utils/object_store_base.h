@@ -11,6 +11,7 @@ namespace __detail
 	template <class Store, class T>
 	class object_store_base
 	{
+		// TODO: look into why this isn't working
 		//static_assert(std::is_base_of<object_store_base<Store, T>, Store>::value, "object_store_base<Store, T>: Store must inherit from object_store_base<Store, T>.");
 
 		object_store_base(object_store_base<Store, T> const&) = delete;
