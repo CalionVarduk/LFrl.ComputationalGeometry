@@ -37,29 +37,29 @@ namespace Stencil
 		data GetBack() noexcept;
 
 		void Set(FuncType func, GLint ref, GLuint mask) noexcept;
-		void Set(data value) noexcept { Set(value.func, value.ref, value.valueMask); }
-		void SetNever(GLint ref, GLuint mask) noexcept { Set(FuncType::NEVER, ref, mask); }
-		void SetLt(GLint ref, GLuint mask) noexcept { Set(FuncType::LESS_THAN, ref, mask); }
-		void SetEq(GLint ref, GLuint mask) noexcept { Set(FuncType::EQUAL_TO, ref, mask); }
-		void SetLe(GLint ref, GLuint mask) noexcept { Set(FuncType::LESS_THAN_OR_EQUAL_TO, ref, mask); }
-		void SetGt(GLint ref, GLuint mask) noexcept { Set(FuncType::GREATER_THAN, ref, mask); }
-		void SetNe(GLint ref, GLuint mask) noexcept { Set(FuncType::NOT_EQUAL_TO, ref, mask); }
-		void SetGe(GLint ref, GLuint mask) noexcept { Set(FuncType::GREATER_THAN_OR_EQUAL_TO, ref, mask); }
-		void SetAlways(GLint ref, GLuint mask) noexcept { Set(FuncType::ALWAYS, ref, mask); }
+		inline void Set(data value) noexcept { Set(value.func, value.ref, value.valueMask); }
+		inline void SetNever(GLint ref, GLuint mask) noexcept { Set(FuncType::NEVER, ref, mask); }
+		inline void SetLt(GLint ref, GLuint mask) noexcept { Set(FuncType::LESS_THAN, ref, mask); }
+		inline void SetEq(GLint ref, GLuint mask) noexcept { Set(FuncType::EQUAL_TO, ref, mask); }
+		inline void SetLe(GLint ref, GLuint mask) noexcept { Set(FuncType::LESS_THAN_OR_EQUAL_TO, ref, mask); }
+		inline void SetGt(GLint ref, GLuint mask) noexcept { Set(FuncType::GREATER_THAN, ref, mask); }
+		inline void SetNe(GLint ref, GLuint mask) noexcept { Set(FuncType::NOT_EQUAL_TO, ref, mask); }
+		inline void SetGe(GLint ref, GLuint mask) noexcept { Set(FuncType::GREATER_THAN_OR_EQUAL_TO, ref, mask); }
+		inline void SetAlways(GLint ref, GLuint mask) noexcept { Set(FuncType::ALWAYS, ref, mask); }
 
 		void SetSeparate(FaceType face, FuncType func, GLint ref, GLuint mask) noexcept;
-		void SetSeparate(FaceType face, data value) noexcept { SetSeparate(face, value.func, value.ref, value.valueMask); }
-		void SetSeparateNever(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::NEVER, ref, mask); }
-		void SetSeparateLt(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::LESS_THAN, ref, mask); }
-		void SetSeparateEq(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::EQUAL_TO, ref, mask); }
-		void SetSeparateLe(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::LESS_THAN_OR_EQUAL_TO, ref, mask); }
-		void SetSeparateGt(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::GREATER_THAN, ref, mask); }
-		void SetSeparateNe(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::NOT_EQUAL_TO, ref, mask); }
-		void SetSeparateGe(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::GREATER_THAN_OR_EQUAL_TO, ref, mask); }
-		void SetSeparateAlways(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::ALWAYS, ref, mask); }
+		inline void SetSeparate(FaceType face, data value) noexcept { SetSeparate(face, value.func, value.ref, value.valueMask); }
+		inline void SetSeparateNever(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::NEVER, ref, mask); }
+		inline void SetSeparateLt(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::LESS_THAN, ref, mask); }
+		inline void SetSeparateEq(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::EQUAL_TO, ref, mask); }
+		inline void SetSeparateLe(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::LESS_THAN_OR_EQUAL_TO, ref, mask); }
+		inline void SetSeparateGt(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::GREATER_THAN, ref, mask); }
+		inline void SetSeparateNe(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::NOT_EQUAL_TO, ref, mask); }
+		inline void SetSeparateGe(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::GREATER_THAN_OR_EQUAL_TO, ref, mask); }
+		inline void SetSeparateAlways(FaceType face, GLint ref, GLuint mask) noexcept { SetSeparate(face, FuncType::ALWAYS, ref, mask); }
 
-		void SetFront(data value) noexcept { SetSeparate(FaceType::FRONT, value); }
-		void SetBack(data value) noexcept { SetSeparate(FaceType::BACK, value); }
+		inline void SetFront(data value) noexcept { SetSeparate(FaceType::FRONT, value); }
+		inline void SetBack(data value) noexcept { SetSeparate(FaceType::BACK, value); }
 
 		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Front, data, __LFRL_OGL_STENCIL_FUNC_CAPACITY_DEFAULT_VALUE, GetFront, SetFront);
 		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Back, data, __LFRL_OGL_STENCIL_FUNC_CAPACITY_DEFAULT_VALUE, GetBack, SetBack);
@@ -94,13 +94,13 @@ namespace Stencil
 		data GetBack() noexcept;
 
 		void Set(Type sfail, Type dpfail, Type dppass) noexcept;
-		void Set(data value) noexcept { Set(value.stencilFail, value.depthFail, value.pass); }
+		inline void Set(data value) noexcept { Set(value.stencilFail, value.depthFail, value.pass); }
 
 		void SetSeparate(FaceType face, Type sfail, Type dpfail, Type dppass) noexcept;
-		void SetSeparate(FaceType face, data value) noexcept { SetSeparate(face, value.stencilFail, value.depthFail, value.pass); }
+		inline void SetSeparate(FaceType face, data value) noexcept { SetSeparate(face, value.stencilFail, value.depthFail, value.pass); }
 
-		void SetFront(data value) noexcept { SetSeparate(FaceType::FRONT, value); }
-		void SetBack(data value) noexcept { SetSeparate(FaceType::BACK, value); }
+		inline void SetFront(data value) noexcept { SetSeparate(FaceType::FRONT, value); }
+		inline void SetBack(data value) noexcept { SetSeparate(FaceType::BACK, value); }
 
 		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Front, data, __LFRL_OGL_STENCIL_OP_CAPACITY_DEFAULT_VALUE, GetFront, SetFront);
 		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Back, data, __LFRL_OGL_STENCIL_OP_CAPACITY_DEFAULT_VALUE, GetBack, SetBack);
@@ -117,8 +117,8 @@ namespace Stencil
 
 		void Set(GLuint mask) noexcept;
 		void SetSeparate(FaceType face, GLuint mask) noexcept;
-		void SetFront(GLuint mask) noexcept { SetSeparate(FaceType::FRONT, mask); }
-		void SetBack(GLuint mask) noexcept { SetSeparate(FaceType::BACK, mask); }
+		inline void SetFront(GLuint mask) noexcept { SetSeparate(FaceType::FRONT, mask); }
+		inline void SetBack(GLuint mask) noexcept { SetSeparate(FaceType::BACK, mask); }
 
 		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Front, GLuint, __LFRL_OGL_STENCIL_MASK_CAPACITY_DEFAULT_VALUE, GetFront, SetFront);
 		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Back, GLuint, __LFRL_OGL_STENCIL_MASK_CAPACITY_DEFAULT_VALUE, GetBack, SetBack);

@@ -5,6 +5,7 @@
 
 BEGIN_LFRL_OGL_NAMESPACE
 
+// TODO: add base type Transform, can be nicely used for actual objects
 struct Projection final
 {
 	Projection(Projection const&) noexcept = default;

@@ -30,7 +30,7 @@ Class::ActionResult Class::Dispose()
 		return ActionResult::ALREADY_DISPOSED;
 
 	if (_state != ObjectState::READY)
-		return ActionResult::NOT_REGISTERED;
+		return ActionResult::NOT_READY;
 
 	if (!UnregisterClass(_params.lpszClassName, _params.hInstance))
 		return ActionResult::UNREGISTRATION_FAILURE;

@@ -19,9 +19,9 @@ namespace Lines
 		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(Hint, HintType, GL_LINE_SMOOTH_HINT)
 
 		void SetHint(HintType hint) noexcept;
-		void HintFast() noexcept { SetHint(HintType::FAST); }
-		void HintNice() noexcept { SetHint(HintType::NICE); }
-		void HintAny() noexcept { SetHint(HintType::ANY); }
+		inline void HintFast() noexcept { SetHint(HintType::FAST); }
+		inline void HintNice() noexcept { SetHint(HintType::NICE); }
+		inline void HintAny() noexcept { SetHint(HintType::ANY); }
 
 		LFRL_OGL_DEFINE_TOGGLE_CAPACITY_SNAPSHOT_STRUCT(GL_LINE_SMOOTH, false);
 		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Hint, HintType, HintType::ANY, GetHint, SetHint);

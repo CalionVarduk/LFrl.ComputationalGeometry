@@ -41,8 +41,8 @@ namespace Sampling
 
 		data GetValue() noexcept;
 		void SetValue(GLfloat value, bool isInverted = false) noexcept;
-		void SetValue(data value) noexcept { SetValue(value.value, value.isInverted); }
-		void SetValueInverted(GLfloat value) noexcept { SetValue(value, true); }
+		inline void SetValue(data value) noexcept { SetValue(value.value, value.isInverted); }
+		inline void SetValueInverted(GLfloat value) noexcept { SetValue(value, true); }
 
 		LFRL_OGL_DEFINE_TOGGLE_CAPACITY_SNAPSHOT_STRUCT(GL_SAMPLE_COVERAGE, false);
 		LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Value, data, __LFRL_OGL_SAMPLING_COVERAGE_CAPACITY_DEFAULT_DATA, GetValue, SetValue);

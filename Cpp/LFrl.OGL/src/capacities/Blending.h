@@ -12,8 +12,8 @@ namespace Blending
 {
 	glm::vec4 GetColor() noexcept;
 	void SetColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a) noexcept;
-	void SetColor(glm::vec4 const& color) noexcept { SetColor(color.r, color.g, color.b, color.a); }
-	void SetColor(GLubyte r, GLubyte g, GLubyte b, GLubyte a) noexcept { SetColor(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); }
+	inline void SetColor(glm::vec4 const& color) noexcept { SetColor(color.r, color.g, color.b, color.a); }
+	inline void SetColor(GLubyte r, GLubyte g, GLubyte b, GLubyte a) noexcept { SetColor(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); }
 
 	LFRL_OGL_DEFINE_TOGGLE_CAPACITY_SNAPSHOT_STRUCT(GL_BLEND, false);
 	LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(Color, glm::vec4, __LFRL_OGL_BLENDING_CAPACITY_DEFAULT_COLOR, GetColor, SetColor);

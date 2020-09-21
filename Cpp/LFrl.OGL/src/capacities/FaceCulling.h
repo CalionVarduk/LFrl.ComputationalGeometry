@@ -21,8 +21,8 @@ namespace FaceCulling
 		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(, Type, GL_FRONT_FACE)
 
 		void Set(Type type) noexcept;
-		void SetCw() noexcept { Set(Type::CW); }
-		void SetCcw() noexcept { Set(Type::CCW); }
+		inline void SetCw() noexcept { Set(Type::CW); }
+		inline void SetCcw() noexcept { Set(Type::CCW); }
 
 		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
 			Type type;);
@@ -33,9 +33,9 @@ namespace FaceCulling
 		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(, FaceType, GL_CULL_FACE_MODE)
 
 		void Set(FaceType face) noexcept;
-		void SetFront() noexcept { Set(FaceType::FRONT); }
-		void SetBack() noexcept { Set(FaceType::BACK); }
-		void SetAll() noexcept { Set(FaceType::ALL); }
+		inline void SetFront() noexcept { Set(FaceType::FRONT); }
+		inline void SetBack() noexcept { Set(FaceType::BACK); }
+		inline void SetAll() noexcept { Set(FaceType::ALL); }
 
 		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
 			FaceType type;);

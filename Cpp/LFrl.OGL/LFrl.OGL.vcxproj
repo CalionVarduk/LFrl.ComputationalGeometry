@@ -225,6 +225,7 @@
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
     <ClCompile Include="src\utils\shader_program_swapper.cpp" />
     <ClCompile Include="src\wnd\Class.cpp" />
+    <ClCompile Include="src\wnd\GLCanvas.cpp" />
     <ClCompile Include="src\wnd\Handle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

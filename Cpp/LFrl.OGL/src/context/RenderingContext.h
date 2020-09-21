@@ -11,7 +11,6 @@ struct RenderingAttributes final
 	LFRL_COMMON::u32 minorVersion;
 	LFRL_COMMON::u32 layerPlane;
 	LFRL_COMMON::u32 flags;
-	bool useCoreProfile;
 
 	RenderingAttributes() noexcept;
 
@@ -34,11 +33,11 @@ struct RenderingContext final
 	static bool Deactivate();
 
 	RenderingContext(RenderingContext const&) = delete;
-	RenderingContext(RenderingContext&&) = delete;
+	RenderingContext(RenderingContext&&) = default;
 	RenderingContext& operator=(RenderingContext const&) = delete;
-	RenderingContext& operator=(RenderingContext&&) = delete;
+	RenderingContext& operator=(RenderingContext&&) = default;
 
-	RenderingContext();
+	RenderingContext() noexcept;
 	~RenderingContext() { Dispose(); }
 
 	HGLRC GetHglrc() const noexcept { return _hglrc; }
@@ -52,6 +51,7 @@ struct RenderingContext final
 	bool IsActive() const;
 
 	ActionResult Dispose();
+	ActionResult Invalidate();
 
 	char const* GetGLVersion() const;
 	char const* GetGLVendor() const;

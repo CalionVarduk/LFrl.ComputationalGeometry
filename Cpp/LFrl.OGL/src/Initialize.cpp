@@ -60,9 +60,9 @@ InitializationResult Initialize()
 		return InitializationResult::ALREADY_INITIALIZED;
 
 	WNDCLASS wndCls;
+	std::memset(&wndCls, 0, sizeof(wndCls));
 	wndCls.style = CS_OWNDC | CS_GLOBALCLASS;
 	wndCls.lpszClassName = "__LFrl::OGL::Initialize::DUMMY_WND_CLASS";
-	std::memset(&wndCls, 0, sizeof(wndCls));
 
 	Wnd::Class cls;
 	auto cInitResult = cls.Initialize(wndCls);

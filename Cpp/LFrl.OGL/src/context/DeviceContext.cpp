@@ -17,14 +17,14 @@ PIXELFORMATDESCRIPTOR __create_default_pxf_descriptor()
 }
 
 PixelFormatAttributes::PixelFormatAttributes() noexcept
-	: drawToWindow(true), supportOpenGL(true), doubleBuffer(true), sampleCount(4), pixelType(WGL_TYPE_RGBA_ARB), colorBits(32), depthBits(24), stencilBits(8)
+	: drawToWindow(true), doubleBuffer(true), sampleCount(4), pixelType(WGL_TYPE_RGBA_ARB), colorBits(32), depthBits(24), stencilBits(8)
 {}
 
 std::array<int, 19> PixelFormatAttributes::encode() const noexcept
 {
 	return {
 	WGL_DRAW_TO_WINDOW_ARB, static_cast<int>(drawToWindow),
-	WGL_SUPPORT_OPENGL_ARB, static_cast<int>(supportOpenGL),
+	WGL_SUPPORT_OPENGL_ARB, 1,
 	WGL_DOUBLE_BUFFER_ARB, static_cast<int>(doubleBuffer),
 	WGL_PIXEL_TYPE_ARB, static_cast<int>(pixelType),
 	WGL_COLOR_BITS_ARB, static_cast<int>(colorBits),
@@ -41,13 +41,6 @@ DeviceContext::DeviceContext() noexcept
 	: _hdc(NULL), _handle(NULL), _pxfDescriptor(), _pxfAttributes(), _pxf(0), _state(ObjectState::CREATED)
 {
 	std::memset(&_pxfDescriptor, 0, sizeof(_pxfDescriptor));
-}
-
-DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes)
-{
-	PIXELFORMATDESCRIPTOR descriptor;
-	std::memcpy(&descriptor, &DEFAULT_PIXEL_FORMAT_DESCRIPTOR, sizeof(descriptor));
-	return Initialize(handle, attributes, descriptor);
 }
 
 DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor)
@@ -121,6 +114,19 @@ DeviceContext::ActionResult DeviceContext::Dispose()
 
 	if (!::ReleaseDC(_handle->GetHwnd(), _hdc))
 		return ActionResult::HDC_DISPOSAL_FAILURE;
+
+	_hdc = NULL;
+	_state = ObjectState::DISPOSED;
+	return ActionResult::OK;
+}
+
+DeviceContext::ActionResult DeviceContext::Invalidate()
+{
+	if (_state == ObjectState::DISPOSED)
+		return ActionResult::ALREADY_DISPOSED;
+
+	if (_state != ObjectState::READY)
+		return ActionResult::NOT_READY;
 
 	_hdc = NULL;
 	_state = ObjectState::DISPOSED;

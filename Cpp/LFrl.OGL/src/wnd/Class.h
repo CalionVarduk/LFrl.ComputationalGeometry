@@ -14,14 +14,14 @@ struct Class final
 		ALREADY_REGISTERED = 1,
 		REGISTRATION_FAILURE = 2,
 		ALREADY_DISPOSED = 3,
-		NOT_REGISTERED = 4,
+		NOT_READY = 4,
 		UNREGISTRATION_FAILURE = 5
 	};
 
 	Class(Class const&) = delete;
-	Class(Class&&) = delete;
+	Class(Class&&) = default;
 	Class& operator=(Class const&) = delete;
-	Class& operator=(Class&&) = delete;
+	Class& operator=(Class&&) = default;
 
 	Class() noexcept;
 	~Class() { Dispose(); }

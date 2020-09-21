@@ -2,7 +2,7 @@
 #define __LFRL_OGL_CAPACITIES_MACROS_GUARD__
 
 #define __LFRL_OGL_DEFINE_CAPACITY_GETTER(CNAME, CTYPE, GL_ENUM, GL_TYPE, GL_GET_FUNC_NAME)\
-CTYPE CNAME() noexcept { GL_TYPE result; GL_GET_FUNC_NAME(GL_ENUM, &result); return static_cast<CTYPE>(result); }
+inline CTYPE CNAME() noexcept { GL_TYPE result; GL_GET_FUNC_NAME(GL_ENUM, &result); return static_cast<CTYPE>(result); }
 
 #define __LFRL_OGL_DEFINE_TOGGLE_CAPACITY_SETTER(VALUE)\
 if (VALUE) Enable(); \
@@ -21,9 +21,9 @@ __LFRL_OGL_DEFINE_CAPACITY_GETTER(Get##CNAME, CTYPE, GL_ENUM, GLdouble, glGetDou
 __LFRL_OGL_DEFINE_CAPACITY_GETTER(CNAME, bool, GL_ENUM, GLboolean, glGetBooleanv)
 
 #define LFRL_OGL_DEFINE_BOOL_CAPACITY_FUNCTIONS(GL_ENUM)\
-bool IsEnabled() noexcept { return static_cast<bool>(glIsEnabled(GL_ENUM)); } \
-void Enable() noexcept { glEnable(GL_ENUM); } \
-void Disable() noexcept { glDisable(GL_ENUM); }
+inline bool IsEnabled() noexcept { return static_cast<bool>(glIsEnabled(GL_ENUM)); } \
+inline void Enable() noexcept { glEnable(GL_ENUM); } \
+inline void Disable() noexcept { glDisable(GL_ENUM); }
 
 #define LFRL_OGL_DEFINE_CAPACITY_SNAPSHOT_STRUCT(CNAME, CTYPE, CDEFAULT_VALUE, VALUE_GETTER, VALUE_SETTER)\
 struct CNAME##Snapshot final { \

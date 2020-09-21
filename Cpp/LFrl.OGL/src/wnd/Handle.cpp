@@ -6,7 +6,7 @@ HandleParams::HandleParams() noexcept
 	: style(WS_VISIBLE), x(0), y(0), width(0), height(0), parent(NULL)
 {}
 
-Handle::Handle()
+Handle::Handle() noexcept
 	: _hwnd(NULL), _cls(NULL), _params(), _state(ObjectState::CREATED)
 {}
 
@@ -55,6 +55,11 @@ POINT Handle::GetSize() const
 {
 	auto rect = GetRect();
 	return { rect.right - rect.left, rect.bottom - rect.top };
+}
+
+bool Handle::SetPos(RECT pos, UINT flags)
+{
+	return ::SetWindowPos(_hwnd, NULL, pos.left, pos.top, pos.right - pos.left, pos.bottom - pos.top, flags | SWP_NOZORDER);
 }
 
 bool Handle::Validate(RECT const* rect)

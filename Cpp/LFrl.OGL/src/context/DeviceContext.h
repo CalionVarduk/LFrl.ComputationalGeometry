@@ -10,7 +10,6 @@ BEGIN_LFRL_OGL_NAMESPACE
 struct PixelFormatAttributes final
 {
 	bool drawToWindow;
-	bool supportOpenGL;
 	bool doubleBuffer;
 	LFRL_COMMON::u32 sampleCount;
 	LFRL_COMMON::u32 pixelType;
@@ -41,9 +40,9 @@ struct DeviceContext final
 	static const PIXELFORMATDESCRIPTOR DEFAULT_PIXEL_FORMAT_DESCRIPTOR;
 
 	DeviceContext(DeviceContext const&) = delete;
-	DeviceContext(DeviceContext&&) = delete;
+	DeviceContext(DeviceContext&&) = default;
 	DeviceContext& operator=(DeviceContext const&) = delete;
-	DeviceContext& operator=(DeviceContext&&) = delete;
+	DeviceContext& operator=(DeviceContext&&) = default;
 
 	DeviceContext() noexcept;
 	~DeviceContext() { Dispose(); }
@@ -55,13 +54,14 @@ struct DeviceContext final
 	LFRL_COMMON::i32 GetPixelFormat() const noexcept { return _pxf; }
 	ObjectState GetState() const noexcept { return _state; }
 
-	ActionResult Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes);
 	ActionResult Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
+	ActionResult Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes) { return Initialize(handle, attributes, DEFAULT_PIXEL_FORMAT_DESCRIPTOR); }
 
 	bool IsActive() const;
 	bool SwapBuffers();
 
 	ActionResult Dispose();
+	ActionResult Invalidate();
 
 private:
 	HDC _hdc;

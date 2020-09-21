@@ -39,7 +39,7 @@ namespace Depth
 
 		data Get() noexcept;
 		void Set(GLdouble zNear, GLdouble zFar) noexcept;
-		void Set(data value) noexcept { Set(value.zNear, value.zFar); }
+		inline void Set(data value) noexcept { Set(value.zNear, value.zFar); }
 
 		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
 			data data;);
@@ -55,14 +55,14 @@ namespace Depth
 		LFRL_OGL_DEFINE_CAPACITY_GETTER_I32(, FuncType, GL_DEPTH_FUNC)
 
 		void Set(FuncType func) noexcept;
-		void SetNever() noexcept { Set(FuncType::NEVER); }
-		void SetLt() noexcept { Set(FuncType::LESS_THAN); }
-		void SetEq() noexcept { Set(FuncType::EQUAL_TO); }
-		void SetLe() noexcept { Set(FuncType::LESS_THAN_OR_EQUAL_TO); }
-		void SetGt() noexcept { Set(FuncType::GREATER_THAN); }
-		void SetNe() noexcept { Set(FuncType::NOT_EQUAL_TO); }
-		void SetGe() noexcept { Set(FuncType::GREATER_THAN_OR_EQUAL_TO); }
-		void SetAlways() noexcept { Set(FuncType::ALWAYS); }
+		inline void SetNever() noexcept { Set(FuncType::NEVER); }
+		inline void SetLt() noexcept { Set(FuncType::LESS_THAN); }
+		inline void SetEq() noexcept { Set(FuncType::EQUAL_TO); }
+		inline void SetLe() noexcept { Set(FuncType::LESS_THAN_OR_EQUAL_TO); }
+		inline void SetGt() noexcept { Set(FuncType::GREATER_THAN); }
+		inline void SetNe() noexcept { Set(FuncType::NOT_EQUAL_TO); }
+		inline void SetGe() noexcept { Set(FuncType::GREATER_THAN_OR_EQUAL_TO); }
+		inline void SetAlways() noexcept { Set(FuncType::ALWAYS); }
 
 		LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(
 			FuncType type;);

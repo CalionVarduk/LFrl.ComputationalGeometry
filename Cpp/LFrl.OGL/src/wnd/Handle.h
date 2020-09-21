@@ -32,11 +32,11 @@ struct Handle final
 	};
 
 	Handle(Handle const&) = delete;
-	Handle(Handle&&) = delete;
+	Handle(Handle&&) = default;
 	Handle& operator=(Handle const&) = delete;
-	Handle& operator=(Handle&&) = delete;
+	Handle& operator=(Handle&&) = default;
 
-	Handle();
+	Handle() noexcept;
 	~Handle() { Dispose(); }
 
 	HWND GetParentHwnd() const;
@@ -52,6 +52,8 @@ struct Handle final
 	RECT GetRect() const;
 	POINT GetPosition() const;
 	POINT GetSize() const;
+
+	bool SetPos(RECT pos, UINT flags = 0);
 
 	bool Validate(RECT const* rect = NULL);
 

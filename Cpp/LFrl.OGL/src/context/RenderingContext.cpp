@@ -27,7 +27,7 @@ GLint __get_gl_integer(RenderingContext const& ctx, GLenum value)
 }
 
 RenderingAttributes::RenderingAttributes() noexcept
-	: majorVersion(3), minorVersion(3), layerPlane(0), flags(0), useCoreProfile(true)
+	: majorVersion(3), minorVersion(3), layerPlane(0), flags(WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB)
 {}
 
 std::array<int, 11> RenderingAttributes::encode() const noexcept
@@ -37,7 +37,7 @@ std::array<int, 11> RenderingAttributes::encode() const noexcept
 	WGL_CONTEXT_MINOR_VERSION_ARB, static_cast<int>(minorVersion),
 	WGL_CONTEXT_LAYER_PLANE_ARB, static_cast<int>(layerPlane),
 	WGL_CONTEXT_FLAGS_ARB, static_cast<int>(flags),
-	WGL_CONTEXT_PROFILE_MASK_ARB, useCoreProfile ? WGL_CONTEXT_CORE_PROFILE_BIT_ARB : WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
+	WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
 	0 };
 }
 
@@ -46,7 +46,7 @@ bool RenderingContext::Deactivate()
 	return wglMakeCurrent(NULL, NULL);
 }
 
-RenderingContext::RenderingContext()
+RenderingContext::RenderingContext() noexcept
 	: _hglrc(NULL), _dc(NULL), _attributes(), _state(ObjectState::CREATED)
 {}
 
@@ -97,6 +97,19 @@ RenderingContext::ActionResult RenderingContext::Dispose()
 
 	if ((IsActive() && !Deactivate()) || !wglDeleteContext(_hglrc))
 		return ActionResult::HGLRC_DISPOSAL_FAILURE;
+
+	_hglrc = NULL;
+	_state = ObjectState::DISPOSED;
+	return ActionResult::OK;
+}
+
+RenderingContext::ActionResult RenderingContext::Invalidate()
+{
+	if (_state == ObjectState::DISPOSED)
+		return ActionResult::ALREADY_DISPOSED;
+
+	if (_state != ObjectState::READY)
+		return ActionResult::NOT_READY;
 
 	_hglrc = NULL;
 	_state = ObjectState::DISPOSED;

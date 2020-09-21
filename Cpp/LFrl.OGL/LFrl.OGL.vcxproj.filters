@@ -222,5 +222,8 @@
     <ClCompile Include="src\utils\buffer_object_range_mapper.cpp">
       <Filter>utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\wnd\GLCanvas.cpp">
+      <Filter>wnd</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
