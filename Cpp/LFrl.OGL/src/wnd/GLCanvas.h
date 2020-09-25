@@ -1,7 +1,8 @@
 #ifndef __LFRL_OGL_WND_GL_CANVAS_GUARD__
 #define __LFRL_OGL_WND_GL_CANVAS_GUARD__
 
-#include "../context/RenderingContext.h"
+#include "GLCanvasEventHandlerFactory.h"
+#include "../context/GLCanvasContextFactory.h"
 
 BEGIN_LFRL_OGL_WND_NAMESPACE
 
@@ -17,12 +18,14 @@ public:
 		HANDLE_INIT_FAILURE = 2,
 		DC_INIT_FAILURE = 3,
 		RC_INIT_FAILURE = 4,
-		NO_CHANGE = 5,
-		ALREADY_DISPOSED = 6,
-		HANDLE_DISPOSAL_FAILURE = 7,
-		DC_DISPOSAL_FAILURE = 8,
-		RC_DISPOSAL_FAILURE = 9,
-		NOT_READY = 10
+		CONTEXT_INIT_FAILURE = 5,
+		EVENT_HANDLER_INIT_FAILURE = 6,
+		NO_CHANGE = 7,
+		ALREADY_DISPOSED = 8,
+		HANDLE_DISPOSAL_FAILURE = 9,
+		DC_DISPOSAL_FAILURE = 10,
+		RC_DISPOSAL_FAILURE = 11,
+		NOT_READY = 12
 	};
 
 	static Class const& GetClass() noexcept { return _Class; }
@@ -37,13 +40,17 @@ public:
 	GLCanvas() noexcept;
 	~GLCanvas() { Dispose(); }
 
-	Handle const& GetHandle() const noexcept { return _handle; }
-	DeviceContext const& GetDc() const noexcept { return _dc; }
-	RenderingContext const& GetRc() const noexcept { return _rc; }
+	Handle* GetHandle() noexcept { return &_handle; }
+	Handle const* GetHandle() const noexcept { return &_handle; }
+	DeviceContext* GetDc() noexcept { return &_dc; }
+	DeviceContext const* GetDc() const noexcept { return &_dc; }
+	RenderingContext* GetRc() noexcept { return &_rc; }
+	RenderingContext const* GetRc() const noexcept { return &_rc; }
+	GLCanvasContext* GetContext() noexcept { return _context; }
+	GLCanvasContext const* GetContext() const noexcept { return _context; }
 	ObjectState GetState() const noexcept { return _state; }
 
-	// init ( with context factory? or just a pointer to context? factory would be nicer, i think )
-	ActionResult Initialize(HWND parent, RECT bounds);
+	ActionResult Initialize(HWND parent, RECT bounds, GLCanvasContextFactory* contextFactory, GLCanvasEventHandlerFactory* eventHandlerFactory = nullptr);
 	ActionResult ChangePixelFormat(PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
 	ActionResult ChangePixelFormat(PixelFormatAttributes attributes) { return ChangePixelFormat(attributes, DeviceContext::DEFAULT_PIXEL_FORMAT_DESCRIPTOR); }
 
@@ -58,6 +65,8 @@ private:
 	Handle _handle;
 	DeviceContext _dc;
 	RenderingContext _rc;
+	GLCanvasContext* _context;
+	GLCanvasEventHandler* _eventHandler;
 	ObjectState _state;
 
 	static LRESULT CALLBACK _WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);

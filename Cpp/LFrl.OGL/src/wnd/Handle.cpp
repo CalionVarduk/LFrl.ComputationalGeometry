@@ -119,6 +119,7 @@ Handle::ActionResult Handle::Dispose()
 		return ActionResult::HWND_DISPOSAL_FAILURE;
 
 	_hwnd = NULL;
+	_cls = nullptr;
 	_state = ObjectState::DISPOSED;
 	return ActionResult::OK;
 }

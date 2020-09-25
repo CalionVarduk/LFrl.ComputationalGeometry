@@ -171,8 +171,10 @@
     <ClInclude Include="src\capacities\Stencil.h" />
     <ClInclude Include="src\capacities\Viewport.h" />
     <ClInclude Include="src\context\DeviceContext.h" />
+    <ClInclude Include="src\context\GLCanvasContextFactory.h" />
     <ClInclude Include="src\context\RenderingContext.h" />
-    <ClInclude Include="src\context\CanvasContext.h" />
+    <ClInclude Include="src\context\GLCanvasContext.h" />
+    <ClInclude Include="src\context\RenderingPipeline.h" />
     <ClInclude Include="src\Initialize.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
     <ClInclude Include="src\ObjectState.h" />
@@ -196,6 +198,8 @@
     <ClInclude Include="src\wnd\Class.h" />
     <ClInclude Include="src\wnd\GLCanvas.h" />
     <ClInclude Include="src\wnd\Handle.h" />
+    <ClInclude Include="src\wnd\GLCanvasEventHandler.h" />
+    <ClInclude Include="src\wnd\GLCanvasEventHandlerFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\capacities\Blending.cpp" />
@@ -211,7 +215,9 @@
     <ClCompile Include="src\capacities\Stencil.cpp" />
     <ClCompile Include="src\capacities\Viewport.cpp" />
     <ClCompile Include="src\context\DeviceContext.cpp" />
+    <ClCompile Include="src\context\GLCanvasContext.cpp" />
     <ClCompile Include="src\context\RenderingContext.cpp" />
+    <ClCompile Include="src\context\RenderingPipeline.cpp" />
     <ClCompile Include="src\Initialize.cpp" />
     <ClCompile Include="src\primitives\BufferObject.cpp" />
     <ClCompile Include="src\primitives\Projection.cpp" />
@@ -228,6 +234,7 @@
     <ClCompile Include="src\utils\shader_program_swapper.cpp" />
     <ClCompile Include="src\wnd\Class.cpp" />
     <ClCompile Include="src\wnd\GLCanvas.cpp" />
+    <ClCompile Include="src\wnd\GLCanvasEventHandler.cpp" />
     <ClCompile Include="src\wnd\Handle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,7 +1,6 @@
 #include "GLCanvas.h"
 
 #include "../capacities/Viewport.h"
-#include "../utils/rendering_context_swapper.h"
 
 BEGIN_LFRL_OGL_WND_NAMESPACE
 
@@ -22,7 +21,7 @@ GLCanvas::GLCanvas() noexcept
 	: _handle(), _dc(), _rc(), _state(ObjectState::CREATED)
 {}
 
-GLCanvas::ActionResult GLCanvas::Initialize(HWND parent, RECT bounds)
+GLCanvas::ActionResult GLCanvas::Initialize(HWND parent, RECT bounds, GLCanvasContextFactory* contextFactory, GLCanvasEventHandlerFactory* eventHandlerFactory)
 {
 	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
@@ -45,7 +44,6 @@ GLCanvas::ActionResult GLCanvas::Initialize(HWND parent, RECT bounds)
 		}
 		if (!handle.SetData(0, reinterpret_cast<LONG_PTR>(this)))
 		{
-			handle.Dispose();
 			_state = ObjectState::INIT_FAILURE;
 			return ActionResult::HANDLE_INIT_FAILURE;
 		}
@@ -61,18 +59,44 @@ GLCanvas::ActionResult GLCanvas::Initialize(HWND parent, RECT bounds)
 			return ActionResult::DC_INIT_FAILURE;
 		}
 	}
-
-	RenderingAttributes rAttribs;
-	auto rcInitResult = _rc.Initialize(_dc, rAttribs);
-	if (rcInitResult != RenderingContext::ActionResult::OK)
+	if (_rc.GetState() != ObjectState::READY)
 	{
-		_state = ObjectState::INIT_FAILURE;
-		return ActionResult::RC_INIT_FAILURE;
+		RenderingAttributes rAttribs;
+		auto rcInitResult = _rc.Initialize(_dc, rAttribs);
+		if (rcInitResult != RenderingContext::ActionResult::OK)
+		{
+			_state = ObjectState::INIT_FAILURE;
+			return ActionResult::RC_INIT_FAILURE;
+		}
+	}
+	if (_context == nullptr)
+	{
+		if (contextFactory == nullptr)
+		{
+			_state = ObjectState::INIT_FAILURE;
+			return ActionResult::CONTEXT_INIT_FAILURE;
+		}
+
+		_context = contextFactory->Create(_rc);
+		if (_context == nullptr)
+		{
+			_state = ObjectState::INIT_FAILURE;
+			return ActionResult::CONTEXT_INIT_FAILURE;
+		}
+		_context->Initialize();
+	}
+	if (eventHandlerFactory == nullptr)
+		_eventHandler = new GLCanvasEventHandler(*this);
+	else
+	{
+		_eventHandler = eventHandlerFactory->Create(*this);
+		if (_eventHandler == nullptr)
+		{
+			_state = ObjectState::INIT_FAILURE;
+			return ActionResult::EVENT_HANDLER_INIT_FAILURE;
+		}
 	}
 
-	// TODO: add context factory param + use it to create context, if fails, fail transactionally, add new canvas method for recreating context (accepts one context factory param)
-
-	// TODO: update gl viewport via context (not immediately here, though, but when window is actually shown)
 	_state = ObjectState::READY;
 	return ActionResult::OK;
 }
@@ -118,7 +142,8 @@ GLCanvas::ActionResult GLCanvas::ChangePixelFormat(PixelFormatAttributes attribu
 		_dc = std::move(dc);
 		_rc = std::move(rc);
 	}
-	// TODO: update context rc reference
+
+	_context->_UpdateRc(_rc);
 	return ActionResult::OK;
 }
 
@@ -130,14 +155,9 @@ bool GLCanvas::SetBounds(RECT value)
 	if (!_handle.SetPos(value))
 		return false;
 
-	rendering_context_swapper swapper(_rc);
-	// TODO: update gl viewport via context
-	if (swapper.swapped())
-	{
-		// TODO: prepare context (context preparation = enable/disable gl flags, prepare global settings shared between all context renderers, updating projection matrix, background color, all that jazz)
-	}
-
-	// TODO: draw context
+	auto position = glm::ivec2(value.left, value.right);
+	auto size = glm::ivec2(value.right - value.left, value.bottom - value.top);
+	_context->_UpdateBounds(position, size);
 	return true;
 }
 
@@ -146,13 +166,7 @@ bool GLCanvas::Draw()
 	if (_state != ObjectState::READY)
 		return false;
 
-	rendering_context_swapper swapper(_rc);
-	if (swapper.swapped())
-	{
-		// TODO: prepare context
-	}
-	
-	// TODO: draw context
+	_context->Draw();
 	return true;
 }
 
@@ -164,8 +178,16 @@ GLCanvas::ActionResult GLCanvas::Dispose()
 	if (_state != ObjectState::READY)
 		return ActionResult::NOT_READY;
 
-	// TODO: dispose context
-
+	if (_context != nullptr)
+	{
+		delete _context;
+		_context = nullptr;
+	}
+	if (_eventHandler != nullptr)
+	{
+		delete _eventHandler;
+		_eventHandler = nullptr;
+	}
 	if (_rc.GetState() == ObjectState::READY)
 	{
 		auto rcDisposalResult = _rc.Dispose();
@@ -203,11 +225,39 @@ LRESULT CALLBACK GLCanvas::_WndProc(HWND hwnd, UINT message, WPARAM wParam, LPAR
 
 	switch (message)
 	{
-		// TODO: implement
+	case WM_NCDESTROY:
+	case WM_CLOSE:
+		canvas->Dispose();
+		break;
+	case WM_SHOWWINDOW:
+		if (canvas->GetState() == ObjectState::READY)
+		{
+			auto bounds = canvas->GetHandle()->GetRect();
+			auto position = glm::ivec2(bounds.left, bounds.top);
+			auto size = glm::ivec2(bounds.right - bounds.left, bounds.bottom - bounds.top);
+			canvas->_context->_UpdateBounds(position, size);
+		}
+		break;
+	case WM_WINDOWPOSCHANGED:
+	{
+		auto wpos = (WINDOWPOS*)lParam;
+		if (canvas->GetState() == ObjectState::READY)
+		{
+			auto position = glm::ivec2(wpos->x, wpos->y);
+			auto size = glm::ivec2(wpos->cx, wpos->cy);
+			if (canvas->_context->_UpdateBounds(position, size))
+				canvas->_context->Draw();
+		}
+		break;
+	}
+	case WM_PAINT:
+		canvas->Draw();
+		break;
 	}
 
-	// TODO: send to IGLCanvasEventHandler (add generic implementation with T being the concrete convas context type - allows handler implementation to access context type & methods directly, without any fiddling with casting etc.)
-	return DefWindowProc(hwnd, message, wParam, lParam); // TODO: don't do this if canvas event handler is defined
+	return canvas->_eventHandler != nullptr ?
+		canvas->_eventHandler->Handle(message, wParam, lParam) :
+		DefWindowProc(hwnd, message, wParam, lParam);
 }
 
 END_LFRL_OGL_WND_NAMESPACE

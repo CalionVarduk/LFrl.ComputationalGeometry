@@ -50,7 +50,7 @@ RenderingContext::RenderingContext() noexcept
 	: _hglrc(NULL), _dc(NULL), _attributes(), _state(ObjectState::CREATED)
 {}
 
-RenderingContext::ActionResult RenderingContext::Initialize(DeviceContext const& dc, RenderingAttributes attributes)
+RenderingContext::ActionResult RenderingContext::Initialize(DeviceContext& dc, RenderingAttributes attributes)
 {
 	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
@@ -99,6 +99,7 @@ RenderingContext::ActionResult RenderingContext::Dispose()
 		return ActionResult::HGLRC_DISPOSAL_FAILURE;
 
 	_hglrc = NULL;
+	_dc = nullptr;
 	_state = ObjectState::DISPOSED;
 	return ActionResult::OK;
 }

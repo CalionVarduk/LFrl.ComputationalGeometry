@@ -43,7 +43,7 @@ DeviceContext::DeviceContext() noexcept
 	std::memset(&_pxfDescriptor, 0, sizeof(_pxfDescriptor));
 }
 
-DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor)
+DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor)
 {
 	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
@@ -116,6 +116,7 @@ DeviceContext::ActionResult DeviceContext::Dispose()
 		return ActionResult::HDC_DISPOSAL_FAILURE;
 
 	_hdc = NULL;
+	_handle = nullptr;
 	_state = ObjectState::DISPOSED;
 	return ActionResult::OK;
 }

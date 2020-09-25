@@ -48,14 +48,15 @@ struct DeviceContext final
 	~DeviceContext() { Dispose(); }
 
 	HDC GetHdc() const noexcept { return _hdc; }
+	Wnd::Handle* GetHandle() noexcept { return _handle; }
 	Wnd::Handle const* GetHandle() const noexcept { return _handle; }
 	PIXELFORMATDESCRIPTOR const& GetPixelFormatDescriptor() const noexcept { return _pxfDescriptor; }
 	PixelFormatAttributes const& GetPixelFormatAttributes() const noexcept { return _pxfAttributes; }
 	LFRL_COMMON::i32 GetPixelFormat() const noexcept { return _pxf; }
 	ObjectState GetState() const noexcept { return _state; }
 
-	ActionResult Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
-	ActionResult Initialize(Wnd::Handle const& handle, PixelFormatAttributes attributes) { return Initialize(handle, attributes, DEFAULT_PIXEL_FORMAT_DESCRIPTOR); }
+	ActionResult Initialize(Wnd::Handle& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
+	ActionResult Initialize(Wnd::Handle& handle, PixelFormatAttributes attributes) { return Initialize(handle, attributes, DEFAULT_PIXEL_FORMAT_DESCRIPTOR); }
 
 	bool IsActive() const;
 	bool SwapBuffers();
@@ -65,7 +66,7 @@ struct DeviceContext final
 
 private:
 	HDC _hdc;
-	Wnd::Handle const* _handle;
+	Wnd::Handle* _handle;
 	PIXELFORMATDESCRIPTOR _pxfDescriptor;
 	PixelFormatAttributes _pxfAttributes;
 	LFRL_COMMON::i32 _pxf;

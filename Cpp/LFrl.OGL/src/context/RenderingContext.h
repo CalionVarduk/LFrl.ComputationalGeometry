@@ -41,11 +41,12 @@ struct RenderingContext final
 	~RenderingContext() { Dispose(); }
 
 	HGLRC GetHglrc() const noexcept { return _hglrc; }
+	DeviceContext* GetDeviceContext() noexcept { return _dc; }
 	DeviceContext const* GetDeviceContext() const noexcept { return _dc; }
 	RenderingAttributes const& GetAttributes() const noexcept { return _attributes; }
 	ObjectState GetState() const noexcept { return _state; }
 
-	ActionResult Initialize(DeviceContext const& dc, RenderingAttributes attributes);
+	ActionResult Initialize(DeviceContext& dc, RenderingAttributes attributes);
 
 	bool Activate();
 	bool IsActive() const;
@@ -64,7 +65,7 @@ struct RenderingContext final
 
 private:
 	HGLRC _hglrc;
-	DeviceContext const* _dc;
+	DeviceContext* _dc;
 	RenderingAttributes _attributes;
 	ObjectState _state;
 };
