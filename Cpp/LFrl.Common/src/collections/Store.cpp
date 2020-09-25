@@ -1,6 +1,6 @@
 #include "Store.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 bool Store::Contains(uPtr address) const
 {
@@ -32,4 +32,4 @@ void Store::Clear()
 	_map.clear();
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE

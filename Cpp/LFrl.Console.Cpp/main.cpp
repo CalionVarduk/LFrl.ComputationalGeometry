@@ -4,8 +4,11 @@
 #include "LFrl.Common/src/diagnostics/IMeasurable.h"
 #include "LFrl.Common/src/diagnostics/IRepeatMeasurable.h"
 #include "LFrl.Common/src/diagnostics/Stopwatch.h"
+#include "LFrl.Common/src/utils/is_iterable.h"
+#include "LFrl.Common/src/utils/reverse.h"
+#include "LFrl.Common/src/memory/array_ptr.h"
 
-using namespace LFRLCOMMON;
+using namespace LFRL_COMMON;
 
 u64 ans = 0;
 
@@ -36,7 +39,7 @@ protected:
 		StopWatch watch;
 		watch.Start();
 
-		auto c = 1;
+		auto c = 1U;
 		for (u32 i = 0; i < c; ++i)
 			ans = _rng.NextUint64();
 
@@ -49,6 +52,14 @@ private:
 
 int main()
 {
+	std::vector<int> vvvv;
+
+	auto iter = is_iterable<std::vector<int>>::value;
+	auto iter_of = is_iterable_of<std::vector<int>, int>::value;
+	auto iter2 = is_iterable<array_ptr<int>>::value;
+	auto iter_of2 = is_iterable_of<array_ptr<int>, int>::value;
+	auto riter = is_iterable_of<reverse<std::vector<int>>, int>::value;
+
 	TestMeasure m;
 	auto d = m.Measure();
 	auto dms = d.get_ms();

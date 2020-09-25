@@ -1,0 +1,16 @@
+#ifndef __LFRL_OGL_CAPACITIES_DITHERING_GUARD__
+#define __LFRL_OGL_CAPACITIES_DITHERING_GUARD__
+
+#include "macros.h"
+#include "../internal/namespace_macros.h"
+
+BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
+
+namespace Dithering
+{
+	LFRL_OGL_DEFINE_BOOL_CAPACITY_SNAPSHOT_STRUCT(, GL_DITHER, true);
+}
+
+END_LFRL_OGL_CAPACITIES_NAMESPACE
+
+#endif

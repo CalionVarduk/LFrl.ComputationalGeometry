@@ -3,7 +3,7 @@
 
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class Out, class In>
 Out union_cast(In val) noexcept
@@ -12,6 +12,6 @@ Out union_cast(In val) noexcept
 	return u.o;
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

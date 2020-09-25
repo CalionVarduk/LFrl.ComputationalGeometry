@@ -1,6 +1,6 @@
 #include "FileLoggerListener.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 FileLoggerListener::FileLoggerListener(std::string const& path, FileLoggerListener::StreamMode mode)
 	: path(path), mode(mode), _stream()
@@ -38,4 +38,4 @@ void FileLoggerListener::Invoke(LogMessage const& message)
 		_isOk = false;
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE

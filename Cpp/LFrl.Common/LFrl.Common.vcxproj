@@ -47,6 +47,7 @@
     <ClInclude Include="src\utils\hash.h" />
     <ClInclude Include="src\utils\is_any_char.h" />
     <ClInclude Include="src\utils\is_function_pointer.h" />
+    <ClInclude Include="src\utils\is_iterable.h" />
     <ClInclude Include="src\utils\is_passed_by_const_ref.h" />
     <ClInclude Include="src\utils\is_process_32bit.h" />
     <ClInclude Include="src\utils\is_process_64bit.h" />
@@ -63,6 +64,7 @@
     <ClInclude Include="src\utils\pass_by_mode.h" />
     <ClInclude Include="src\utils\product.h" />
     <ClInclude Include="src\utils\requires.h" />
+    <ClInclude Include="src\utils\reverse.h" />
     <ClInclude Include="src\utils\static_ctor.h" />
     <ClInclude Include="src\utils\sum.h" />
     <ClInclude Include="src\utils\typedefs.h" />
@@ -78,6 +80,7 @@
     <ClCompile Include="src\diagnostics\IRepeatMeasurable.cpp" />
     <ClCompile Include="src\diagnostics\Stopwatch.cpp" />
     <ClCompile Include="src\logging\FileLoggerListener.cpp" />
+    <ClCompile Include="src\logging\ILoggerListener.cpp" />
     <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\logging\LogMessage.cpp" />
     <ClCompile Include="src\logging\StreamLoggerListener.cpp" />

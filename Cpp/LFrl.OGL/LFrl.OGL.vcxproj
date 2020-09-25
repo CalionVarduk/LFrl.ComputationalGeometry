@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -151,6 +151,91 @@
     <ProjectReference Include="..\LFrl.Common\LFrl.Common.vcxproj">
       <Project>{116336F6-7273-4490-8107-6E182303C843}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\capacities\Buffer.h" />
+    <ClInclude Include="src\capacities\Blending.h" />
+    <ClInclude Include="src\capacities\Color.h" />
+    <ClInclude Include="src\capacities\Debug.h" />
+    <ClInclude Include="src\capacities\Depth.h" />
+    <ClInclude Include="src\capacities\Dithering.h" />
+    <ClInclude Include="src\capacities\FaceCulling.h" />
+    <ClInclude Include="src\capacities\FaceType.h" />
+    <ClInclude Include="src\capacities\FuncType.h" />
+    <ClInclude Include="src\capacities\HintType.h" />
+    <ClInclude Include="src\capacities\Lines.h" />
+    <ClInclude Include="src\capacities\macros.h" />
+    <ClInclude Include="src\capacities\Points.h" />
+    <ClInclude Include="src\capacities\Polygons.h" />
+    <ClInclude Include="src\capacities\Sampling.h" />
+    <ClInclude Include="src\capacities\Stencil.h" />
+    <ClInclude Include="src\capacities\Viewport.h" />
+    <ClInclude Include="src\context\DeviceContext.h" />
+    <ClInclude Include="src\context\GLCanvasContextFactory.h" />
+    <ClInclude Include="src\context\RenderingContext.h" />
+    <ClInclude Include="src\context\GLCanvasContext.h" />
+    <ClInclude Include="src\context\RenderingPipeline.h" />
+    <ClInclude Include="src\Initialize.h" />
+    <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\ObjectState.h" />
+    <ClInclude Include="src\primitives\AccessFlag.h" />
+    <ClInclude Include="src\primitives\AccessType.h" />
+    <ClInclude Include="src\primitives\CachedTimerQuery.h" />
+    <ClInclude Include="src\primitives\BufferObject.h" />
+    <ClInclude Include="src\primitives\Projection.h" />
+    <ClInclude Include="src\primitives\ShaderObject.h" />
+    <ClInclude Include="src\primitives\ShaderProgram.h" />
+    <ClInclude Include="src\primitives\TimerQuery.h" />
+    <ClInclude Include="src\primitives\Transform.h" />
+    <ClInclude Include="src\primitives\VertexArrayObject.h" />
+    <ClInclude Include="src\ShaderObjectStore.h" />
+    <ClInclude Include="src\ShaderProgramStore.h" />
+    <ClInclude Include="src\utils\buffer_object_mapper.h" />
+    <ClInclude Include="src\utils\buffer_object_range_mapper.h" />
+    <ClInclude Include="src\utils\object_store_base.h" />
+    <ClInclude Include="src\utils\rendering_context_swapper.h" />
+    <ClInclude Include="src\utils\shader_program_swapper.h" />
+    <ClInclude Include="src\wnd\Class.h" />
+    <ClInclude Include="src\wnd\GLCanvas.h" />
+    <ClInclude Include="src\wnd\Handle.h" />
+    <ClInclude Include="src\wnd\GLCanvasEventHandler.h" />
+    <ClInclude Include="src\wnd\GLCanvasEventHandlerFactory.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\capacities\Blending.cpp" />
+    <ClCompile Include="src\capacities\Buffer.cpp" />
+    <ClCompile Include="src\capacities\Color.cpp" />
+    <ClCompile Include="src\capacities\Debug.cpp" />
+    <ClCompile Include="src\capacities\Depth.cpp" />
+    <ClCompile Include="src\capacities\FaceCulling.cpp" />
+    <ClCompile Include="src\capacities\Lines.cpp" />
+    <ClCompile Include="src\capacities\Points.cpp" />
+    <ClCompile Include="src\capacities\Polygons.cpp" />
+    <ClCompile Include="src\capacities\Sampling.cpp" />
+    <ClCompile Include="src\capacities\Stencil.cpp" />
+    <ClCompile Include="src\capacities\Viewport.cpp" />
+    <ClCompile Include="src\context\DeviceContext.cpp" />
+    <ClCompile Include="src\context\GLCanvasContext.cpp" />
+    <ClCompile Include="src\context\RenderingContext.cpp" />
+    <ClCompile Include="src\context\RenderingPipeline.cpp" />
+    <ClCompile Include="src\Initialize.cpp" />
+    <ClCompile Include="src\primitives\BufferObject.cpp" />
+    <ClCompile Include="src\primitives\Projection.cpp" />
+    <ClCompile Include="src\primitives\ShaderObject.cpp" />
+    <ClCompile Include="src\primitives\ShaderProgram.cpp" />
+    <ClCompile Include="src\primitives\TimerQuery.cpp" />
+    <ClCompile Include="src\primitives\Transform.cpp" />
+    <ClCompile Include="src\primitives\VertexArrayObject.cpp" />
+    <ClCompile Include="src\ShaderObjectStore.cpp" />
+    <ClCompile Include="src\ShaderProgramStore.cpp" />
+    <ClCompile Include="src\utils\buffer_object_mapper.cpp" />
+    <ClCompile Include="src\utils\buffer_object_range_mapper.cpp" />
+    <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
+    <ClCompile Include="src\utils\shader_program_swapper.cpp" />
+    <ClCompile Include="src\wnd\Class.cpp" />
+    <ClCompile Include="src\wnd\GLCanvas.cpp" />
+    <ClCompile Include="src\wnd\GLCanvasEventHandler.cpp" />
+    <ClCompile Include="src\wnd\Handle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

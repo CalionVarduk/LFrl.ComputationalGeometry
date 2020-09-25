@@ -2,7 +2,7 @@
 
 #include "ILoggerListener.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 void __begin_buffer(char* buffer)
 {
@@ -22,7 +22,7 @@ void __append_separator(std::string& dest, char separator, u32& cur_count)
 	if (separator != '\0')
 	{
 		dest.push_back(separator);
-		cur_count = (u32)dest.size();
+		cur_count = static_cast<u32>(dest.size());
 	}
 }
 
@@ -38,7 +38,7 @@ void __append_separator(std::string& dest, char separator, u32& cur_count, u32& 
 void __append_format(std::string& dest, char const* format, u32& cur_count)
 {
 	dest.append(format);
-	cur_count = (u32)dest.size();
+	cur_count = static_cast<u32>(dest.size());
 }
 
 void __append_year_format(std::string& dest, Logger::DateTimeFormat::Year year, u32& cur_count, u32& last_count)
@@ -178,7 +178,7 @@ void __append_date_format(std::string& dest, Logger::DateTimeFormat::DateFormat 
 		__append_year_format(dest, date.year, date_cur_count, date_last_count);
 		break;
 	}
-	cur_count = (u32)dest.size();
+	cur_count = static_cast<u32>(dest.size());
 }
 
 void __apend_time_format(std::string& dest, Logger::DateTimeFormat::TimeFormat time, char component_separator, u32& cur_count, u32& last_count)
@@ -194,7 +194,7 @@ void __apend_time_format(std::string& dest, Logger::DateTimeFormat::TimeFormat t
 	__append_millisecond_format_mock(dest, time.millisecond, time.separator, time_cur_count, time_last_count);
 	__append_clock_format(dest, time.clock, component_separator, time_cur_count, time_last_count);
 	__append_timezone_format(dest, time.timezone, component_separator, time_cur_count, time_last_count);
-	cur_count = (u32)dest.size();
+	cur_count = static_cast<u32>(dest.size());
 }
 
 Logger::DateTimeFormat::DateFormat::DateFormat(
@@ -286,10 +286,10 @@ u32 Logger::RemoveListener(ILoggerListener const* listener)
 		if (_listeners[i] == listener)
 			indexes.push_back(i);
 
-	for (i32 i = (i32)indexes.size() - 1; i >= 0; --i)
+	for (i32 i = static_cast<i32>(indexes.size()) - 1; i >= 0; --i)
 		_listeners.erase(_listeners.begin() + indexes[i]);
 
-	return (u32)indexes.size();
+	return static_cast<u32>(indexes.size());
 }
 
 void Logger::ClearListeners()
@@ -368,12 +368,12 @@ void Logger::DisableError() noexcept
 
 void Logger::Enable(LogMessage::Type type) noexcept
 {
-	_EnableConfigurationFlag((u8)type);
+	_EnableConfigurationFlag(static_cast<u8>(type));
 }
 
 void Logger::Disable(LogMessage::Type type) noexcept
 {
-	_DisableConfigurationFlag((u8)type);
+	_DisableConfigurationFlag(static_cast<u8>(type));
 }
 
 bool Logger::IsDebugEnabled() const noexcept
@@ -403,20 +403,20 @@ bool Logger::IsErrorEnabled() const noexcept
 
 bool Logger::IsEnabled(LogMessage::Type type) const noexcept
 {
-	return _GetConfigurationFlag((u8)type);
+	return _GetConfigurationFlag(static_cast<u8>(type));
 }
 
 bool Logger::IsDatetimeIncluded() const noexcept
 {
-	return _GetConfigurationFlag((i32)LogMessage::Type::ERROR + 1);
+	return _GetConfigurationFlag(static_cast<i32>(LogMessage::Type::ERROR) + 1);
 }
 
 void Logger::IncludeDatetime(bool value) noexcept
 {
 	if (value)
-		_EnableConfigurationFlag((i32)LogMessage::Type::ERROR + 1);
+		_EnableConfigurationFlag(static_cast<i32>(LogMessage::Type::ERROR) + 1);
 	else
-		_DisableConfigurationFlag((i32)LogMessage::Type::ERROR + 1);
+		_DisableConfigurationFlag(static_cast<i32>(LogMessage::Type::ERROR) + 1);
 }
 
 void Logger::ExcludeDatetime(bool value) noexcept
@@ -426,15 +426,15 @@ void Logger::ExcludeDatetime(bool value) noexcept
 
 bool Logger::IsTypeIncluded() const noexcept
 {
-	return _GetConfigurationFlag((i32)LogMessage::Type::ERROR + 2);
+	return _GetConfigurationFlag(static_cast<i32>(LogMessage::Type::ERROR) + 2);
 }
 
 void Logger::IncludeType(bool value) noexcept
 {
 	if (value)
-		_EnableConfigurationFlag((i32)LogMessage::Type::ERROR + 2);
+		_EnableConfigurationFlag(static_cast<i32>(LogMessage::Type::ERROR) + 2);
 	else
-		_DisableConfigurationFlag((i32)LogMessage::Type::ERROR + 2);
+		_DisableConfigurationFlag(static_cast<i32>(LogMessage::Type::ERROR) + 2);
 }
 
 void Logger::ExcludeType(bool value) noexcept
@@ -654,7 +654,7 @@ u32 Logger::_GetParsedDatetime(char* buffer, u32 buffer_size) const
 	else
 		gmtime_s(&tm, &timeT);
 
-	auto count = (u32)strftime(buffer, buffer_size, _datetimeFormat.c_str(), &tm);
+	auto count = static_cast<u32>(strftime(buffer, buffer_size, _datetimeFormat.c_str(), &tm));
 
 	if (_datetimeFormatDescriptor.time.millisecond == DateTimeFormat::Numeric::DISABLED || count >= buffer_size - 1)
 		return count;
@@ -740,4 +740,4 @@ void Logger::_Log(LogMessage::Type type, std::string&& message) const
 			listener->Invoke(msg);
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE

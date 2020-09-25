@@ -4,7 +4,7 @@
 #include <type_traits>
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class Trait>
 struct not_trait
@@ -12,6 +12,6 @@ struct not_trait
 	static constexpr bool value = !Trait::value;
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

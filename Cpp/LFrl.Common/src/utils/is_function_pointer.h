@@ -3,7 +3,7 @@
 
 #include "all_traits.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class T>
 struct is_function_pointer
@@ -12,6 +12,6 @@ struct is_function_pointer
 	static constexpr bool value = all_traits<std::is_pointer<T>, std::is_function<typename std::remove_pointer<T>::type>>::value;
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

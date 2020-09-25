@@ -4,7 +4,7 @@
 #include <iterator>
 #include "../utils/typedefs.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class T>
 struct array_ptr final
@@ -32,7 +32,7 @@ struct array_ptr final
 
 	array_ptr<const T> to_const() const noexcept { return array_ptr<const T>(_begin, _end); }
 
-	size_type size() const noexcept { return (size_type)(_end - _begin); }
+	size_type size() const noexcept { return static_cast<size_type>(_end - _begin); }
 	bool empty() const noexcept { return _end <= _begin; }
 
 	iterator begin() noexcept { return _begin; }
@@ -119,6 +119,6 @@ array_ptr<const T> make_const_array_ptr(typename array_ptr<const T>::pointer beg
 	return array_ptr<const T>(begin, size);
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

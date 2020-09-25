@@ -1,6 +1,6 @@
 #include "Stopwatch.h"
 
-using namespace LFRLCOMMON;
+using namespace LFRL_COMMON;
 
 StopWatch::StopWatch() noexcept
 	: _duration(), _end(_duration.get_start()), _isRunning(false)

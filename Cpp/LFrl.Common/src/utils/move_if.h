@@ -4,7 +4,7 @@
 #include <type_traits>
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <bool test, class T>
 constexpr typename std::conditional<test, typename std::remove_reference<T>::type&&, T>::type
@@ -13,6 +13,6 @@ constexpr typename std::conditional<test, typename std::remove_reference<T>::typ
 	return static_cast<typename std::conditional<test, typename std::remove_reference<T>::type&&, T>::type>(x);
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

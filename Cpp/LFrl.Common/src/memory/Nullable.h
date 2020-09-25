@@ -4,7 +4,7 @@
 #include <utility>
 #include "../utils/typedefs.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class T> class Nullable;
 
@@ -31,7 +31,7 @@ public:
 	bool HasValue() const noexcept { return _ptr != nullptr; }
 	reference GetValue() const noexcept(false) { return *_ptr; }
 	pointer Get() const noexcept { return _ptr; }
-	uPtr GetAddress() const noexcept { return (uPtr)_ptr; }
+	uPtr GetAddress() const noexcept { return reinterpret_cast<uPtr>(_ptr); }
 
 	void Set(pointer ptr) noexcept { _ptr = ptr; }
 	void Set(reference value) noexcept { Set(&value); }
@@ -80,7 +80,7 @@ public:
 	bool HasValue() const noexcept { return _ptr != nullptr; }
 	reference GetValue() const noexcept(false) { return *_ptr; }
 	pointer Get() const noexcept { return _ptr; }
-	uPtr GetAddress() const noexcept { return (uPtr)_ptr; }
+	uPtr GetAddress() const noexcept { return reinterpret_cast<uPtr>(_ptr); }
 
 	void Set(pointer ptr);
 	void Set(WeakNullable<T> const& other) { Set(other.Get()); }
@@ -257,6 +257,6 @@ Nullable<T> MakeNullable(typename Nullable<T>::pointer ptr) noexcept
 	return Nullable<T>(ptr);
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

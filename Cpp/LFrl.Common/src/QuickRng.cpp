@@ -1,6 +1,6 @@
 #include "QuickRng.h"
 
-using namespace LFRLCOMMON;
+using namespace LFRL_COMMON;
 
 QuickRng::QuickRng() noexcept
 	: _seed(0)
@@ -24,9 +24,9 @@ void QuickRng::SetSeed(u32 v) noexcept
 	if (v == 0)
 	{
 		auto t = time(nullptr);
-		_seed = (u32)(t * (u64)(this - 1) * (u64)(&v - 1) * (u64)(&t - 1));
+		_seed = static_cast<u32>(t * reinterpret_cast<u64>(this - 1) * reinterpret_cast<u64>(&v - 1) * reinterpret_cast<u64>(&t - 1));
 		if (_seed == 0)
-			_seed = (u32)t;
+			_seed = static_cast<u32>(t);
 	}
 	else
 		_seed = v;
@@ -49,7 +49,7 @@ u32 QuickRng::NextUint32(u32 min, u32 max) noexcept
 
 u64 QuickRng::NextUint64() noexcept
 {
-	return (u64)_Next() | ((u64)_Next() << 32);
+	return static_cast<u64>(_Next()) | (static_cast<u64>(_Next()) << 32);
 }
 
 u64 QuickRng::NextUint64(u64 max) noexcept
@@ -64,37 +64,37 @@ u64 QuickRng::NextUint64(u64 min, u64 max) noexcept
 
 i32 QuickRng::NextInt32() noexcept
 {
-	return (i32)NextUint32();
+	return static_cast<i32>(NextUint32());
 }
 
 i32 QuickRng::NextInt32(i32 max) noexcept
 {
-	return (i32)NextUint32((u32)max);
+	return static_cast<i32>(NextUint32(static_cast<u32>(max)));
 }
 
 i32 QuickRng::NextInt32(i32 min, i32 max) noexcept
 {
-	return (i32)NextUint32((u32)min, (u32)max);
+	return static_cast<i32>(NextUint32(static_cast<u32>(min), static_cast<u32>(max)));
 }
 
 i64 QuickRng::NextInt64() noexcept
 {
-	return (i64)NextUint64();
+	return static_cast<i64>(NextUint64());
 }
 
 i64 QuickRng::NextInt64(i64 max) noexcept
 {
-	return (i64)NextUint64((u64)max);
+	return static_cast<i64>(NextUint64(static_cast<u64>(max)));
 }
 
 i64 QuickRng::NextInt64(i64 min, i64 max) noexcept
 {
-	return (i64)NextUint64((u64)min, (u64)max);
+	return static_cast<i64>(NextUint64(static_cast<u64>(min), static_cast<u64>(max)));
 }
 
 u8 QuickRng::NextByte() noexcept
 {
-	return (u8)_Next();
+	return static_cast<u8>(_Next());
 }
 
 bool QuickRng::NextBool() noexcept
@@ -104,12 +104,12 @@ bool QuickRng::NextBool() noexcept
 
 f32 QuickRng::NextFloat() noexcept
 {
-	return (f32)_Next() / std::numeric_limits<u32>::max();
+	return static_cast<f32>(_Next()) / std::numeric_limits<u32>::max();
 }
 
 f64 QuickRng::NextDouble() noexcept
 {
-	return (f64)_Next() / std::numeric_limits<u32>::max();
+	return static_cast<f64>(_Next()) / std::numeric_limits<u32>::max();
 }
 
 void QuickRng::NextByteRange(array_ptr<u8> buffer)

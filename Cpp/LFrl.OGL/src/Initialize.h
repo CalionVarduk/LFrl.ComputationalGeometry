@@ -1,0 +1,27 @@
+#ifndef __LFRL_OGL_INITIALIZE_GUARD__
+#define __LFRL_OGL_INITIALIZE_GUARD__
+
+#include "internal/namespace_macros.h"
+
+BEGIN_LFRL_OGL_NAMESPACE
+
+enum struct InitializationResult
+{
+	OK = 0,
+	ALREADY_INITIALIZED = 1,
+	WND_CLASS_INIT_FAILURE = 2,
+	HWND_INIT_FAILURE = 3,
+	HDC_INIT_FAILURE = 4,
+	HGLRC_INIT_FAILURE = 5,
+	GLEW_INIT_FAILURE = 6,
+	HGLRC_DISPOSAL_FAILURE = 7,
+	HDC_RELEASE_FAILURE = 8,
+	HWND_DISPOSAL_FAILURE = 9,
+	WND_CLASS_DISPOSAL_FAILURE = 10
+};
+
+InitializationResult Initialize();
+
+END_LFRL_OGL_NAMESPACE
+
+#endif

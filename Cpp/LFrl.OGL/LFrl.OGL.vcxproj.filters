@@ -1,4 +1,256 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+  <ItemGroup>
+    <Filter Include="primitives">
+      <UniqueIdentifier>{32fa2967-0ca5-4345-9fb0-91670a3da220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="internal">
+      <UniqueIdentifier>{ef8a95f9-365d-4f44-920d-ded0d82d24e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="context">
+      <UniqueIdentifier>{bbeffeb9-e7d1-4a5a-89a9-6ca967af0a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wnd">
+      <UniqueIdentifier>{2e71de69-56a5-4802-97a1-6e5af303087d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{6c2e5e81-e766-493c-8e8c-10d583bd748b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="capacities">
+      <UniqueIdentifier>{d4d8ffa4-cdfd-4ace-920d-332ff3f667a6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\internal\namespace_macros.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\DeviceContext.h">
+      <Filter>context</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\rendering_context_swapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\RenderingContext.h">
+      <Filter>context</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Initialize.h" />
+    <ClInclude Include="src\wnd\Handle.h">
+      <Filter>wnd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wnd\Class.h">
+      <Filter>wnd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\Projection.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Depth.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Dithering.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\FaceCulling.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Lines.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Points.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Polygons.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Sampling.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Stencil.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\FuncType.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\HintType.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\FaceType.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Blending.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\macros.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Viewport.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Color.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Buffer.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\capacities\Debug.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\BufferObject.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\AccessType.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\VertexArrayObject.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjectState.h" />
+    <ClInclude Include="src\primitives\ShaderObject.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\ShaderProgram.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderObjectStore.h" />
+    <ClInclude Include="src\ShaderProgramStore.h" />
+    <ClInclude Include="src\utils\object_store_base.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\TimerQuery.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\CachedTimerQuery.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wnd\GLCanvas.h">
+      <Filter>wnd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\shader_program_swapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\buffer_object_mapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\buffer_object_range_mapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\AccessFlag.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\Transform.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wnd\GLCanvasEventHandler.h">
+      <Filter>wnd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wnd\GLCanvasEventHandlerFactory.h">
+      <Filter>wnd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\RenderingPipeline.h">
+      <Filter>context</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\GLCanvasContext.h">
+      <Filter>context</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\GLCanvasContextFactory.h">
+      <Filter>context</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\context\DeviceContext.cpp">
+      <Filter>context</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\rendering_context_swapper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context\RenderingContext.cpp">
+      <Filter>context</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Initialize.cpp" />
+    <ClCompile Include="src\wnd\Class.cpp">
+      <Filter>wnd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wnd\Handle.cpp">
+      <Filter>wnd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\Projection.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Depth.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\FaceCulling.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Lines.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Points.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Polygons.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Sampling.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Stencil.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Blending.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Viewport.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Color.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Buffer.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\capacities\Debug.cpp">
+      <Filter>capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\BufferObject.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\VertexArrayObject.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\ShaderObject.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\ShaderProgram.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderObjectStore.cpp" />
+    <ClCompile Include="src\ShaderProgramStore.cpp" />
+    <ClCompile Include="src\primitives\TimerQuery.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\shader_program_swapper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\buffer_object_mapper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\buffer_object_range_mapper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wnd\GLCanvas.cpp">
+      <Filter>wnd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\Transform.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wnd\GLCanvasEventHandler.cpp">
+      <Filter>wnd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context\RenderingPipeline.cpp">
+      <Filter>context</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context\GLCanvasContext.cpp">
+      <Filter>context</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

@@ -161,6 +161,12 @@
     <ClInclude Include="src\diagnostics\convertible_duration.h">
       <Filter>diagnostics</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\is_iterable.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\reverse.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\logging\logger.cpp">
@@ -197,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="src\collections\Store.cpp">
       <Filter>collections</Filter>
+    </ClCompile>
+    <ClCompile Include="src\logging\ILoggerListener.cpp">
+      <Filter>logging</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

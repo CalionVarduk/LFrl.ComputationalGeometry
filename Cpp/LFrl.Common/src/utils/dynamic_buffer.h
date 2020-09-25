@@ -4,7 +4,7 @@
 #include <cstring>
 #include "typedefs.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 template <class T>
 struct dynamic_buffer final
@@ -31,7 +31,7 @@ struct dynamic_buffer final
 
 	void reset();
 
-	bool ok() const noexcept { return _data !== nullptr; }
+	bool ok() const noexcept { return _data != nullptr; }
 	size_type size() const noexcept { return _size; }
 	pointer data() const noexcept { return _data; }
 
@@ -67,7 +67,7 @@ dynamic_buffer<T>::dynamic_buffer(typename dynamic_buffer<T>::size_type size)
 	: _size(size),
 	_data([size]() -> auto {
 		if (size == 0)
-			return (T*)nullptr;
+			return static_cast<T*>(nullptr);
 
 		auto result = new T[size];
 		std::memset(result, 0, size);
@@ -90,6 +90,6 @@ void dynamic_buffer<T>::reset()
 		std::memset(_data, 0, _size);
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

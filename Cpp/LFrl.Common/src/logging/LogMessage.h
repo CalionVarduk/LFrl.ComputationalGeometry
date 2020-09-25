@@ -5,7 +5,7 @@
 #include <string>
 #include "../utils/typedefs.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 class Logger;
 
@@ -35,6 +35,6 @@ struct LogMessage final
 	LogMessage(Logger const* source, std::string const& message, Type type, u64 timestamp);
 };
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

@@ -3,7 +3,7 @@
 
 #include "convertible_duration.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 struct duration_calculator final
 {
@@ -50,6 +50,6 @@ Rep duration_calculator::get_elapsed_time_as(typename duration_calculator::time_
 	return calculate(end).get_as<Rep, Period>();
 }
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif

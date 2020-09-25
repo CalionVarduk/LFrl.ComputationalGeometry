@@ -4,7 +4,7 @@
 #include <cstdint>
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRLCOMMON_NAMESPACE
+BEGIN_LFRL_COMMON_NAMESPACE
 
 typedef int8_t i8;
 typedef uint8_t u8;
@@ -47,6 +47,6 @@ typedef float f32;
 typedef double f64;
 typedef std::nullptr_t Null;
 
-END_LFRLCOMMON_NAMESPACE
+END_LFRL_COMMON_NAMESPACE
 
 #endif
