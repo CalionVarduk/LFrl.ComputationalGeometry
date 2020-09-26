@@ -1,4 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+  <ItemGroup>
+    <Filter Include="internal">
+      <UniqueIdentifier>{0b7ea843-e38b-4397-a3ca-84a8a09611fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{c4b9b8e2-4275-46ab-a18a-b3e0676a1826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="context">
+      <UniqueIdentifier>{7ea1a8ae-19aa-4eb0-bf17-2f8a1fd1fc29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vertexes">
+      <UniqueIdentifier>{da309b9c-7a88-440c-9061-ca397940ef2e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\internal\namespace_macros.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\PointTestContext.h">
+      <Filter>context</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vertexes\PointVertex.h">
+      <Filter>vertexes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shaders\ShaderStore.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\context\PointTestContextFactory.h">
+      <Filter>context</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\points_v_1.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\points_f_1.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\points_g_1.glsl">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\context\PointTestContext.cpp">
+      <Filter>context</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shaders\ShaderStore.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

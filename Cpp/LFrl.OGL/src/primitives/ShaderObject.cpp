@@ -67,7 +67,7 @@ bool ShaderObject::IsFlaggedForDeletion(GLuint id)
 }
 
 ShaderObject::ShaderObject() noexcept
-	: _id(0), _type(Type::UNDEFINED), _state(ObjectState::CREATED)
+	: _id(0), _type(Type::UNDEFINED), _isCompiled(false), _state(ObjectState::CREATED)
 {}
 
 ShaderObject::ActionResult ShaderObject::Initialize(ShaderObject::Type type, const char* source)
@@ -97,16 +97,21 @@ ShaderObject::ActionResult ShaderObject::Initialize(ShaderObject::Type type, con
 	char const* sources[1] = { source };
 	glShaderSource(id, 1, sources, NULL);
 
-	if (!Compile(id))
-	{
-		glDeleteShader(id);
-		_state = ObjectState::INIT_FAILURE;
-		return ActionResult::COMPILATION_FAILURE;
-	}
-
 	_id = id;
 	_type = type;
 	_state = ObjectState::READY;
+	return ActionResult::OK;
+}
+
+ShaderObject::ActionResult ShaderObject::Compile()
+{
+	if (_isCompiled)
+		return ActionResult::ALREADY_COMPILED;
+
+	if (!Compile(_id))
+		return ActionResult::COMPILATION_FAILURE;
+
+	_isCompiled = true;
 	return ActionResult::OK;
 }
 

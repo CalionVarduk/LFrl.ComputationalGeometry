@@ -5,14 +5,14 @@
 
 BEGIN_LFRL_OGL_NAMESPACE
 
-struct GLCanvasContextFactory
+struct IGLCanvasContextFactory
 {
-	virtual ~GLCanvasContextFactory() {}
+	virtual ~IGLCanvasContextFactory() {}
 
 	virtual GLCanvasContext* Create(RenderingContext& rc) = 0;
 
 protected:
-	GLCanvasContextFactory() noexcept = default;
+	IGLCanvasContextFactory() noexcept = default;
 };
 
 END_LFRL_OGL_NAMESPACE

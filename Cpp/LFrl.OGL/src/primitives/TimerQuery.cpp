@@ -32,7 +32,7 @@ std::chrono::duration<GLdouble, std::chrono::nanoseconds::period> TimerQuery::Ge
 
 TimerQuery::ActionResult TimerQuery::Initialize()
 {
-	if (_state >= ObjectState::CREATED)
+	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
 
 	GLuint ids[2] = { 0, 0 };

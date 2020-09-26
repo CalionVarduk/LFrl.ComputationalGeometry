@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="src\collections\Store.h" />
     <ClInclude Include="src\Container.h" />
+    <ClInclude Include="src\diagnostics\diagnostics.h" />
     <ClInclude Include="src\diagnostics\duration_calculator.h" />
     <ClInclude Include="src\diagnostics\convertible_duration.h" />
     <ClInclude Include="src\diagnostics\duration_snapshot.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="src\logging\FileLoggerListener.h" />
     <ClInclude Include="src\logging\ILoggerListener.h" />
     <ClInclude Include="src\logging\Logger.h" />
+    <ClInclude Include="src\logging\logging.h" />
     <ClInclude Include="src\logging\LogMessage.h" />
     <ClInclude Include="src\logging\StreamLoggerListener.h" />
     <ClInclude Include="src\memory\array_ptr.h" />

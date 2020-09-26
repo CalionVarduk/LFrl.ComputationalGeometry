@@ -6,7 +6,7 @@ ShaderProgramStore::ShaderProgramStore() noexcept
 	: __detail::object_store_base<ShaderProgramStore, ShaderProgram>()
 {}
 
-ShaderProgram* ShaderProgramStore::Create()
+ShaderProgram* ShaderProgramStore::Create(std::string const& name)
 {
 	auto program = new ShaderProgram();
 	auto initResult = program->Initialize();
@@ -16,7 +16,11 @@ ShaderProgram* ShaderProgramStore::Create()
 		delete program;
 		return nullptr;
 	}
-	Insert(program);
+	if (!Insert(name, program))
+	{
+		delete program;
+		return nullptr;
+	}
 	return program;
 }
 

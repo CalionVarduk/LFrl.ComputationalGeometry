@@ -18,9 +18,8 @@ public:
 
 	ShaderObjectStore() noexcept;
 
-	ShaderObject* Create(ShaderObject::Type type, char const* source);
-	ShaderObject* Create(ShaderObject::Type type, std::string const& source) { return Create(type, source.data()); }
-	ShaderObject* Load(ShaderObject::Type type, std::string const& filePath);
+	ShaderObject* Create(std::string const& name, ShaderObject::Type type, char const* source);
+	ShaderObject* Create(std::string const& name, ShaderObject::Type type, std::string const& source) { return Create(name, type, source.data()); }
 
 private:
 	static ObjectState GetState(ShaderObject* shader) noexcept { return shader->GetState(); }

@@ -1,0 +1,20 @@
+#ifndef __LFRL_CG_API_ACTION_RESULT_GUARD__
+#define __LFRL_CG_API_ACTION_RESULT_GUARD__
+
+#include "../internal/namespace_macros.h"
+
+BEGIN_LFRL_CG_API_NAMESPACE
+
+enum struct ActionResult
+{
+	OK = 0,
+	OBJECT_NOT_FOUND = 1,
+	OBJECT_ALREADY_EXISTS = 2,
+	TYPE_MISMATCH = 3,
+	NULL_REFERENCE = 4,
+	OTHER_FAILURE = 5
+};
+
+END_LFRL_CG_API_NAMESPACE
+
+#endif

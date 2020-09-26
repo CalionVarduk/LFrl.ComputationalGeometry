@@ -1,0 +1,10 @@
+#ifndef __LFRL_OGL_CG_NAMESPACE_MACROS_GUARD__
+#define __LFRL_OGL_CG_NAMESPACE_MACROS_GUARD__
+
+#include "LFrl.OGL/src/internal/namespace_macros.h"
+
+#define BEGIN_LFRL_OGL_CG_NAMESPACE BEGIN_LFRL_OGL_NAMESPACE namespace CG {
+#define END_LFRL_OGL_CG_NAMESPACE }END_LFRL_OGL_NAMESPACE
+#define LFRL_OGL_CG LFRL_OGL::CG
+
+#endif

@@ -32,11 +32,11 @@ struct Handle final
 	};
 
 	Handle(Handle const&) = delete;
-	Handle(Handle&&) = default;
 	Handle& operator=(Handle const&) = delete;
-	Handle& operator=(Handle&&) = default;
 
 	Handle() noexcept;
+	Handle(Handle&&) noexcept;
+	Handle& operator=(Handle&&) noexcept;
 	~Handle() { Dispose(); }
 
 	HWND GetParentHwnd() const;

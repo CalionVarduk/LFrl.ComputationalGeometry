@@ -2,12 +2,10 @@
 #define __LFRL_OGL_WND_GL_CANVAS_GUARD__
 
 #include "GLCanvasEventHandlerFactory.h"
-#include "../context/GLCanvasContextFactory.h"
+#include "../context/IGLCanvasContextFactory.h"
 
 BEGIN_LFRL_OGL_WND_NAMESPACE
 
-// TODO: ASAP, before ICanvasContext, so that I know what am I working with winapi-wise
-// and what needs to be abstracted away via the context
 class GLCanvas
 {
 public:
@@ -50,7 +48,7 @@ public:
 	GLCanvasContext const* GetContext() const noexcept { return _context; }
 	ObjectState GetState() const noexcept { return _state; }
 
-	ActionResult Initialize(HWND parent, RECT bounds, GLCanvasContextFactory* contextFactory, GLCanvasEventHandlerFactory* eventHandlerFactory = nullptr);
+	ActionResult Initialize(HWND parent, RECT bounds, IGLCanvasContextFactory* contextFactory, GLCanvasEventHandlerFactory* eventHandlerFactory = nullptr);
 	ActionResult ChangePixelFormat(PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
 	ActionResult ChangePixelFormat(PixelFormatAttributes attributes) { return ChangePixelFormat(attributes, DeviceContext::DEFAULT_PIXEL_FORMAT_DESCRIPTOR); }
 

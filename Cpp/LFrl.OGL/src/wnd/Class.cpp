@@ -8,6 +8,23 @@ Class::Class() noexcept
 	std::memset(&_params, 0, sizeof(_params));
 }
 
+Class::Class(Class&& other) noexcept
+	: _params(other._params), _state(other._state)
+{
+	std::memset(&other._params, 0, sizeof(other._params));
+	other._state = ObjectState::CREATED;
+}
+
+Class& Class::operator=(Class&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_params, other._params);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 Class::ActionResult Class::Initialize(WNDCLASS params)
 {
 	if (_state >= ObjectState::READY)

@@ -18,7 +18,7 @@ public:
 
 	ShaderProgramStore() noexcept;
 
-	ShaderProgram* Create();
+	ShaderProgram* Create(std::string const& name);
 
 private:
 	static ObjectState GetState(ShaderProgram* program) noexcept { return program->GetState(); }

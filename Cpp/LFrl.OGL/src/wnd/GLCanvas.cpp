@@ -21,7 +21,7 @@ GLCanvas::GLCanvas() noexcept
 	: _handle(), _dc(), _rc(), _state(ObjectState::CREATED)
 {}
 
-GLCanvas::ActionResult GLCanvas::Initialize(HWND parent, RECT bounds, GLCanvasContextFactory* contextFactory, GLCanvasEventHandlerFactory* eventHandlerFactory)
+GLCanvas::ActionResult GLCanvas::Initialize(HWND parent, RECT bounds, IGLCanvasContextFactory* contextFactory, GLCanvasEventHandlerFactory* eventHandlerFactory)
 {
 	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
@@ -246,7 +246,7 @@ LRESULT CALLBACK GLCanvas::_WndProc(HWND hwnd, UINT message, WPARAM wParam, LPAR
 			auto position = glm::ivec2(wpos->x, wpos->y);
 			auto size = glm::ivec2(wpos->cx, wpos->cy);
 			if (canvas->_context->_UpdateBounds(position, size))
-				canvas->_context->Draw();
+				canvas->_context->Draw(); // TODO: not needed? WM_PAINT seems to be called right after
 		}
 		break;
 	}

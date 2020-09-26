@@ -10,6 +10,27 @@ Handle::Handle() noexcept
 	: _hwnd(NULL), _cls(NULL), _params(), _state(ObjectState::CREATED)
 {}
 
+Handle::Handle(Handle&& other) noexcept
+	: _hwnd(other._hwnd), _cls(other._cls), _params(other._params), _state(other._state)
+{
+	other._hwnd = NULL;
+	other._cls = NULL;
+	other._params = HandleParams();
+	other._state = ObjectState::CREATED;
+}
+
+Handle& Handle::operator=(Handle&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_hwnd, other._hwnd);
+		std::swap(_cls, other._cls);
+		std::swap(_params, other._params);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 HWND Handle::GetParentHwnd() const
 {
 	return ::GetParent(_hwnd);
@@ -27,7 +48,7 @@ HWND Handle::GetRootOwnerHwnd() const
 
 bool Handle::SetData(int index, LONG_PTR data)
 {
-	return SetWindowLongPtr(_hwnd, 0, data);
+	return SetWindowLongPtr(_hwnd, 0, data), true; // TODO: check if actually valid?
 }
 
 LONG_PTR Handle::GetData(int index) const

@@ -151,9 +151,16 @@
     <ClInclude Include="src\context\GLCanvasContext.h">
       <Filter>context</Filter>
     </ClInclude>
-    <ClInclude Include="src\context\GLCanvasContextFactory.h">
+    <ClInclude Include="src\context\IGLCanvasContextFactory.h">
       <Filter>context</Filter>
     </ClInclude>
+    <ClInclude Include="src\capacities\capacities.h">
+      <Filter>capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\primitives.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderStore.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -252,5 +259,6 @@
     <ClCompile Include="src\context\GLCanvasContext.cpp">
       <Filter>context</Filter>
     </ClCompile>
+    <ClCompile Include="src\ShaderStore.cpp" />
   </ItemGroup>
 </Project>

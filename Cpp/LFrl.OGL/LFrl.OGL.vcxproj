@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="src\capacities\Buffer.h" />
     <ClInclude Include="src\capacities\Blending.h" />
+    <ClInclude Include="src\capacities\capacities.h" />
     <ClInclude Include="src\capacities\Color.h" />
     <ClInclude Include="src\capacities\Debug.h" />
     <ClInclude Include="src\capacities\Depth.h" />
@@ -171,7 +172,7 @@
     <ClInclude Include="src\capacities\Stencil.h" />
     <ClInclude Include="src\capacities\Viewport.h" />
     <ClInclude Include="src\context\DeviceContext.h" />
-    <ClInclude Include="src\context\GLCanvasContextFactory.h" />
+    <ClInclude Include="src\context\IGLCanvasContextFactory.h" />
     <ClInclude Include="src\context\RenderingContext.h" />
     <ClInclude Include="src\context\GLCanvasContext.h" />
     <ClInclude Include="src\context\RenderingPipeline.h" />
@@ -182,12 +183,14 @@
     <ClInclude Include="src\primitives\AccessType.h" />
     <ClInclude Include="src\primitives\CachedTimerQuery.h" />
     <ClInclude Include="src\primitives\BufferObject.h" />
+    <ClInclude Include="src\primitives\primitives.h" />
     <ClInclude Include="src\primitives\Projection.h" />
     <ClInclude Include="src\primitives\ShaderObject.h" />
     <ClInclude Include="src\primitives\ShaderProgram.h" />
     <ClInclude Include="src\primitives\TimerQuery.h" />
     <ClInclude Include="src\primitives\Transform.h" />
     <ClInclude Include="src\primitives\VertexArrayObject.h" />
+    <ClInclude Include="src\ShaderStore.h" />
     <ClInclude Include="src\ShaderObjectStore.h" />
     <ClInclude Include="src\ShaderProgramStore.h" />
     <ClInclude Include="src\utils\buffer_object_mapper.h" />
@@ -228,6 +231,7 @@
     <ClCompile Include="src\primitives\VertexArrayObject.cpp" />
     <ClCompile Include="src\ShaderObjectStore.cpp" />
     <ClCompile Include="src\ShaderProgramStore.cpp" />
+    <ClCompile Include="src\ShaderStore.cpp" />
     <ClCompile Include="src\utils\buffer_object_mapper.cpp" />
     <ClCompile Include="src\utils\buffer_object_range_mapper.cpp" />
     <ClCompile Include="src\utils\rendering_context_swapper.cpp" />
