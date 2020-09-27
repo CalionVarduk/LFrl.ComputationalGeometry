@@ -4,6 +4,7 @@
 #include "../internal/api_macros.h"
 #include "utils.h"
 #include "LFrl.OGL/src/Initialize.h"
+#include "LFrl.OGL/src/ShaderStore.h"
 #include "LFrl.OGL/src/wnd/GLCanvas.h"
 
 BEGIN_LFRL_CG_API

@@ -11,11 +11,11 @@ struct GLCanvasEventHandler
 {
 	GLCanvasEventHandler() = delete;
 	GLCanvasEventHandler(GLCanvasEventHandler const&) = delete;
-	GLCanvasEventHandler(GLCanvasEventHandler&&) = default;
 	GLCanvasEventHandler& operator=(GLCanvasEventHandler const&) = delete;
-	GLCanvasEventHandler& operator=(GLCanvasEventHandler&&) = default;
 
 	explicit GLCanvasEventHandler(GLCanvas& canvas) noexcept;
+	GLCanvasEventHandler(GLCanvasEventHandler&&) noexcept = default;
+	GLCanvasEventHandler& operator=(GLCanvasEventHandler&&) noexcept = default;
 	virtual ~GLCanvasEventHandler() { _canvas = nullptr; }
 
 	virtual LRESULT Handle(UINT message, WPARAM wParam, LPARAM lParam);

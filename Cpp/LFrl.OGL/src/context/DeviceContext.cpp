@@ -43,6 +43,33 @@ DeviceContext::DeviceContext() noexcept
 	std::memset(&_pxfDescriptor, 0, sizeof(_pxfDescriptor));
 }
 
+DeviceContext::DeviceContext(DeviceContext&& other) noexcept
+	: _hdc(NULL), _handle(NULL), _pxfDescriptor(), _pxfAttributes(), _pxf(0), _state(ObjectState::CREATED)
+{
+	std::memset(&_pxfDescriptor, 0, sizeof(_pxfDescriptor));
+
+	std::swap(_hdc, other._hdc);
+	std::swap(_handle, other._handle);
+	std::swap(_pxfDescriptor, other._pxfDescriptor);
+	std::swap(_pxfAttributes, other._pxfAttributes);
+	std::swap(_pxf, other._pxf);
+	std::swap(_state, other._state);
+}
+
+DeviceContext& DeviceContext::operator= (DeviceContext&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_hdc, other._hdc);
+		std::swap(_handle, other._handle);
+		std::swap(_pxfDescriptor, other._pxfDescriptor);
+		std::swap(_pxfAttributes, other._pxfAttributes);
+		std::swap(_pxf, other._pxf);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 DeviceContext::ActionResult DeviceContext::Initialize(Wnd::Handle& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor)
 {
 	if (_state >= ObjectState::READY)

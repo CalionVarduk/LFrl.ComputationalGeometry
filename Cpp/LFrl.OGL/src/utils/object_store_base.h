@@ -42,9 +42,9 @@ namespace __detail
 		T* operator[] (std::string const& name) const { return Get(name); }
 
 	protected:
-		object_store_base() noexcept;
-		object_store_base(object_store_base<Store, T>&&) = default;
-		object_store_base<Store, T>& operator=(object_store_base<Store, T>&&) = default;
+		object_store_base();
+		object_store_base(object_store_base<Store, T>&&);
+		object_store_base<Store, T>& operator=(object_store_base<Store, T>&&);
 
 		bool Insert(std::string const& name, T* obj);
 
@@ -123,9 +123,28 @@ namespace __detail
 	}
 
 	template <class Store, class T>
-	object_store_base<Store, T>::object_store_base() noexcept
+	object_store_base<Store, T>::object_store_base()
 		: _map(), _nameIndex()
 	{}
+
+	template <class Store, class T>
+	object_store_base<Store, T>::object_store_base(object_store_base<Store, T>&& other)
+		: _map(), _nameIndex()
+	{
+		std::swap(_map, other._map);
+		std::swap(_nameIndex, other._nameIndex);
+	}
+
+	template <class Store, class T>
+	object_store_base<Store, T>& object_store_base<Store, T>::operator= (object_store_base<Store, T>&& other)
+	{
+		if (this != &other)
+		{
+			std::swap(_map, other._map);
+			std::swap(_nameIndex, other._nameIndex);
+		}
+		return *this;
+	}
 
 	template <class Store, class T>
 	bool object_store_base<Store, T>::Insert(std::string const& name, T* obj)

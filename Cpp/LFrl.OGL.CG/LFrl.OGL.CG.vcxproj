@@ -153,7 +153,6 @@
     <ClInclude Include="src\context\PointTestContext.h" />
     <ClInclude Include="src\context\PointTestContextFactory.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
-    <ClInclude Include="src\shaders\ShaderStore.h" />
     <ClInclude Include="src\vertexes\PointVertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\PointTestContext.cpp" />
-    <ClCompile Include="src\shaders\ShaderStore.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

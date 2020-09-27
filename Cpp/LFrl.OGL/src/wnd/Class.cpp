@@ -9,10 +9,12 @@ Class::Class() noexcept
 }
 
 Class::Class(Class&& other) noexcept
-	: _params(other._params), _state(other._state)
+	: _params(), _state(ObjectState::CREATED)
 {
-	std::memset(&other._params, 0, sizeof(other._params));
-	other._state = ObjectState::CREATED;
+	std::memset(&_params, 0, sizeof(_params));
+
+	std::swap(_params, other._params);
+	std::swap(_state, other._state);
 }
 
 Class& Class::operator=(Class&& other) noexcept

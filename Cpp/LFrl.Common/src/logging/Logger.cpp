@@ -255,6 +255,33 @@ Logger::Logger()
 	IncludeType(true);
 }
 
+Logger::Logger(Logger&& other)
+	: _listeners(), _datetimeFormatDescriptor(), _datetimeFormat(_datetimeFormatDescriptor.create_format()), _stopwatch(true), _configuration(0)
+{
+	EnableAll();
+	IncludeDatetime(true);
+	IncludeType(true);
+
+	std::swap(_listeners, other._listeners);
+	std::swap(_datetimeFormatDescriptor, other._datetimeFormatDescriptor);
+	std::swap(_datetimeFormat, other._datetimeFormat);
+	std::swap(_stopwatch, other._stopwatch);
+	std::swap(_configuration, other._configuration);
+}
+
+Logger& Logger::operator= (Logger&& other)
+{
+	if (this != &other)
+	{
+		std::swap(_listeners, other._listeners);
+		std::swap(_datetimeFormatDescriptor, other._datetimeFormatDescriptor);
+		std::swap(_datetimeFormat, other._datetimeFormat);
+		std::swap(_stopwatch, other._stopwatch);
+		std::swap(_configuration, other._configuration);
+	}
+	return *this;
+}
+
 Logger::~Logger()
 {
 	_DisposeListeners();

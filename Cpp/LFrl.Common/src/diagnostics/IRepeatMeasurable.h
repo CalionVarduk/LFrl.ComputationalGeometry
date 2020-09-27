@@ -35,9 +35,7 @@ struct measurement_range_result final
 struct IRepeatMeasurable
 {
 	IRepeatMeasurable(IRepeatMeasurable const&) = delete;
-	IRepeatMeasurable(IRepeatMeasurable&&) = default;
 	IRepeatMeasurable& operator=(IRepeatMeasurable const&) = delete;
-	IRepeatMeasurable& operator=(IRepeatMeasurable&&) = default;
 
 	virtual ~IRepeatMeasurable() = default;
 
@@ -46,6 +44,8 @@ struct IRepeatMeasurable
 
 protected:
 	IRepeatMeasurable() noexcept;
+	IRepeatMeasurable(IRepeatMeasurable&&) noexcept;
+	IRepeatMeasurable& operator=(IRepeatMeasurable&&) noexcept;
 
 	virtual void OnStarting(u32 count) {}
 	virtual convertible_duration::duration Prepare(u32 index, u32 count) { return convertible_duration::duration::zero(); }

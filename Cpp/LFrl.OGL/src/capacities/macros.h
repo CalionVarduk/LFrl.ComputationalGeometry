@@ -34,6 +34,10 @@ return result; \
 } \
 CTYPE value; \
 CNAME##Snapshot() noexcept : value(CDEFAULT_VALUE) {} \
+CNAME##Snapshot(CNAME##Snapshot const&) = default; \
+CNAME##Snapshot(CNAME##Snapshot&&) = default; \
+CNAME##Snapshot& operator= (CNAME##Snapshot const&) = default; \
+CNAME##Snapshot& operator= (CNAME##Snapshot&&) = default; \
 void Apply() noexcept { \
 VALUE_SETTER(value); \
 } \
@@ -51,6 +55,10 @@ struct Snapshot final { \
 static Snapshot Load() noexcept; \
 __VA_ARGS__ \
 Snapshot() noexcept; \
+Snapshot(Snapshot const&) = default; \
+Snapshot(Snapshot&&) = default; \
+Snapshot& operator= (Snapshot const&) = default; \
+Snapshot& operator= (Snapshot&&) = default; \
 void Apply() noexcept; \
 }
 

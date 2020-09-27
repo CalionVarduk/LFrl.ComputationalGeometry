@@ -40,11 +40,11 @@ struct ShaderObject final
 	static bool IsFlaggedForDeletion(GLuint id);
 
 	ShaderObject(ShaderObject const&) = delete;
-	ShaderObject(ShaderObject&&) = default;
 	ShaderObject& operator=(ShaderObject const&) = delete;
-	ShaderObject& operator=(ShaderObject&&) = default;
 
 	ShaderObject() noexcept;
+	ShaderObject(ShaderObject&&) noexcept;
+	ShaderObject& operator=(ShaderObject&&) noexcept;
 	~ShaderObject() { Dispose(); }
 
 	GLuint GetId() const noexcept { return _id; }

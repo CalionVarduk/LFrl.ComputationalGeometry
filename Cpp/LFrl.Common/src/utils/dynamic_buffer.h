@@ -22,11 +22,11 @@ struct dynamic_buffer final
 
 	dynamic_buffer() = delete;
 	dynamic_buffer(dynamic_buffer<T> const&) = delete;
-	dynamic_buffer(dynamic_buffer<T>&&) noexcept = default;
 	dynamic_buffer<T>& operator= (dynamic_buffer<T> const&) = delete;
-	dynamic_buffer<T>& operator= (dynamic_buffer<T>&&) noexcept = default;
 
 	explicit dynamic_buffer(size_type size);
+	dynamic_buffer(dynamic_buffer<T>&&) noexcept;
+	dynamic_buffer<T>& operator= (dynamic_buffer<T>&&) noexcept;
 	~dynamic_buffer();
 
 	void reset();
@@ -74,6 +74,25 @@ dynamic_buffer<T>::dynamic_buffer(typename dynamic_buffer<T>::size_type size)
 		return result;
 	}())
 {}
+
+template <class T>
+dynamic_buffer<T>::dynamic_buffer(dynamic_buffer<T>&& other) noexcept
+	: _size(0), _data(nullptr)
+{
+	std::swap(_size, other._size);
+	std::swap(_data, other._data);
+}
+
+template <class T>
+dynamic_buffer<T>& dynamic_buffer<T>::operator= (dynamic_buffer<T>&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_size, other._size);
+		std::swap(_data, other._data);
+	}
+	return *this;
+}
 
 template <class T>
 dynamic_buffer<T>::~dynamic_buffer()

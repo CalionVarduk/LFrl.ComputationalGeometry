@@ -9,6 +9,25 @@ GLCanvasContext::GLCanvasContext(RenderingContext& rc) noexcept
 	: _state(ObjectState::CREATED), _rc(&rc), _pipeline()
 {}
 
+GLCanvasContext::GLCanvasContext(GLCanvasContext&& other)
+	: _state(ObjectState::CREATED), _rc(nullptr), _pipeline()
+{
+	std::swap(_state, other._state);
+	std::swap(_rc, other._rc);
+	std::swap(_pipeline, other._pipeline);
+}
+
+GLCanvasContext& GLCanvasContext::operator= (GLCanvasContext&& other)
+{
+	if (this != &other)
+	{
+		std::swap(_state, other._state);
+		std::swap(_rc, other._rc);
+		std::swap(_pipeline, other._pipeline);
+	}
+	return *this;
+}
+
 bool GLCanvasContext::Initialize()
 {
 	if (_state >= ObjectState::READY)

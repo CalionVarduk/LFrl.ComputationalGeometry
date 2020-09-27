@@ -18,6 +18,11 @@ inline Common::u32 CombineResult(ActionResult result, Common::u16 internalResult
 	return static_cast<Common::u32>(result) | (static_cast<Common::u32>(internalResult) << 16);
 }
 
+inline Common::u32 GetOtherFailureResult(Common::u16 internalResult) noexcept
+{
+	return CombineResult(ActionResult::OTHER_FAILURE, internalResult);
+}
+
 template <class T>
 ActionResult TrySafeCast(void* pThis, T*& result)
 {

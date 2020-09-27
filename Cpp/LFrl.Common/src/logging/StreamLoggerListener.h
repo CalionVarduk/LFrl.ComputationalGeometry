@@ -9,13 +9,12 @@ BEGIN_LFRL_COMMON_NAMESPACE
 class StreamLoggerListener : public ILoggerListener
 {
 	StreamLoggerListener() = delete;
+	StreamLoggerListener(StreamLoggerListener const&) = delete;
+	StreamLoggerListener(StreamLoggerListener&&) = delete;
 	StreamLoggerListener& operator= (StreamLoggerListener const&) = delete;
 	StreamLoggerListener& operator= (StreamLoggerListener&&) = delete;
 
 public:
-	StreamLoggerListener(StreamLoggerListener const&) = default;
-	StreamLoggerListener(StreamLoggerListener&&) = default;
-
 	std::ostream& stream;
 
 	explicit StreamLoggerListener(std::ostream& stream);

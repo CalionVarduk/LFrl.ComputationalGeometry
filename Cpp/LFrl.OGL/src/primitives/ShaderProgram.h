@@ -405,11 +405,11 @@ struct ShaderProgram final
 	static GLuint GetUniforms(GLuint id, LFRL_COMMON::array_ptr<Uniform> buffer);
 
 	ShaderProgram(ShaderProgram const&) = delete;
-	ShaderProgram(ShaderProgram&&) = default;
 	ShaderProgram& operator=(ShaderProgram const&) = delete;
-	ShaderProgram& operator=(ShaderProgram&&) = default;
 
 	ShaderProgram() noexcept;
+	ShaderProgram(ShaderProgram&&) noexcept;
+	ShaderProgram& operator=(ShaderProgram&&) noexcept;
 	~ShaderProgram() { Dispose(); }
 
 	GLuint GetId() const noexcept { return _id; }

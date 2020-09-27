@@ -25,6 +25,6 @@ namespace Services
 END_LFRL_CG_API_NAMESPACE
 
 #define sStore LFRL_CG_API::Services::GetObjectStore()
-#define sServices LFRL_CG_API::Services::GetDynamic()
+#define sServices LFRL_CG_API::Services::GetContainer()
 
 #endif

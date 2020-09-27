@@ -10,9 +10,7 @@ BEGIN_LFRL_COMMON_NAMESPACE
 struct IMeasurable
 {
 	IMeasurable(IMeasurable const&) = delete;
-	IMeasurable(IMeasurable&&) = default;
 	IMeasurable& operator=(IMeasurable const&) = delete;
-	IMeasurable& operator=(IMeasurable&&) = default;
 
 	virtual ~IMeasurable() = default;
 
@@ -21,6 +19,8 @@ struct IMeasurable
 
 protected:
 	IMeasurable() noexcept;
+	IMeasurable(IMeasurable&&) noexcept;
+	IMeasurable& operator=(IMeasurable&&) noexcept;
 
 	virtual convertible_duration Invoke() = 0;
 

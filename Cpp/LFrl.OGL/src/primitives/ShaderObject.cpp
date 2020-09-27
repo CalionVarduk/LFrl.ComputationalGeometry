@@ -70,6 +70,27 @@ ShaderObject::ShaderObject() noexcept
 	: _id(0), _type(Type::UNDEFINED), _isCompiled(false), _state(ObjectState::CREATED)
 {}
 
+ShaderObject::ShaderObject(ShaderObject&& other) noexcept
+	: _id(0), _type(Type::UNDEFINED), _isCompiled(false), _state(ObjectState::CREATED)
+{
+	std::swap(_id, other._id);
+	std::swap(_type, other._type);
+	std::swap(_isCompiled, other._isCompiled);
+	std::swap(_state, other._state);
+}
+
+ShaderObject& ShaderObject::operator= (ShaderObject&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_id, other._id);
+		std::swap(_type, other._type);
+		std::swap(_isCompiled, other._isCompiled);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 ShaderObject::ActionResult ShaderObject::Initialize(ShaderObject::Type type, const char* source)
 {
 	if (_state >= ObjectState::READY)

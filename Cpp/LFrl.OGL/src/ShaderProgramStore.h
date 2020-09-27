@@ -8,17 +8,19 @@ BEGIN_LFRL_OGL_NAMESPACE
 
 class ShaderProgramStore : public __detail::object_store_base<ShaderProgramStore, ShaderProgram>
 {
+	typedef __detail::object_store_base<ShaderProgramStore, ShaderProgram> base;
 	friend class __detail::object_store_base<ShaderProgramStore, ShaderProgram>;
 
 public:
 	ShaderProgramStore(ShaderProgramStore const&) = delete;
-	ShaderProgramStore(ShaderProgramStore&&) = default;
 	ShaderProgramStore& operator=(ShaderProgramStore const&) = delete;
-	ShaderProgramStore& operator=(ShaderProgramStore&&) = default;
 
-	ShaderProgramStore() noexcept;
+	ShaderProgramStore();
+	ShaderProgramStore(ShaderProgramStore&&);
+	ShaderProgramStore& operator=(ShaderProgramStore&&);
 
 	ShaderProgram* Create(std::string const& name);
+	ShaderProgram* GetOrCreate(std::string const& name);
 
 private:
 	static ObjectState GetState(ShaderProgram* program) noexcept { return program->GetState(); }

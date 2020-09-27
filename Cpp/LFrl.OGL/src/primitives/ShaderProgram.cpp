@@ -499,6 +499,23 @@ ShaderProgram::ShaderProgram() noexcept
 	: _id(0), _state(ObjectState::CREATED)
 {}
 
+ShaderProgram::ShaderProgram(ShaderProgram&& other) noexcept
+	: _id(0), _state(ObjectState::CREATED)
+{
+	std::swap(_id, other._id);
+	std::swap(_state, other._state);
+}
+
+ShaderProgram& ShaderProgram::operator= (ShaderProgram&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_id, other._id);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 ShaderProgram::ActionResult ShaderProgram::Initialize()
 {
 	if (_state >= ObjectState::READY)

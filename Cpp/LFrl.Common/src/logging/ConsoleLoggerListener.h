@@ -9,14 +9,13 @@ BEGIN_LFRL_COMMON_NAMESPACE
 class ConsoleLoggerListener : public StreamLoggerListener
 {
 	ConsoleLoggerListener() = delete;
+	ConsoleLoggerListener(ConsoleLoggerListener const&) = delete;
+	ConsoleLoggerListener(ConsoleLoggerListener&&) = delete;
 	ConsoleLoggerListener& operator= (ConsoleLoggerListener const&) = delete;
 	ConsoleLoggerListener& operator= (ConsoleLoggerListener&&) = delete;
 
 public:
 	typedef StreamLoggerListener base;
-
-	ConsoleLoggerListener(ConsoleLoggerListener const&) = default;
-	ConsoleLoggerListener(ConsoleLoggerListener&&) = default;
 
 	ConsoleLoggerListener() : base(std::cout) {}
 	virtual ~ConsoleLoggerListener() = default;

@@ -102,4 +102,21 @@ IRepeatMeasurable::IRepeatMeasurable() noexcept
 	: _isRunning(false)
 {}
 
+IRepeatMeasurable::IRepeatMeasurable(IRepeatMeasurable&& other) noexcept
+	: _isRunning(other._isRunning.load())
+{
+	_isRunning.store(false);
+}
+
+IRepeatMeasurable& IRepeatMeasurable::operator=(IRepeatMeasurable&& other) noexcept
+{
+	if (this != &other)
+	{
+		auto value = _isRunning.load();
+		_isRunning.store(other._isRunning);
+		other._isRunning.store(value);
+	}
+	return *this;
+}
+
 END_LFRL_COMMON_NAMESPACE

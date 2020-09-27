@@ -8,20 +8,20 @@ BEGIN_LFRL_OGL_NAMESPACE
 
 class ShaderStore
 {
-public:
 	ShaderStore(ShaderStore const&) = delete;
-	ShaderStore(ShaderStore&&) = default;
 	ShaderStore& operator=(ShaderStore const&) = delete;
-	ShaderStore& operator=(ShaderStore&&) = default;
 
-	ShaderStore() noexcept;
+public:
+	ShaderStore();
 	explicit ShaderStore(std::string const& shaderDirectory);
 	ShaderStore(std::string const& shaderDirectory, std::string const& shaderExtension);
+	ShaderStore(ShaderStore&&);
+	ShaderStore& operator=(ShaderStore&&);
 
-	ShaderObjectStore& GetObjects() noexcept { return _objects; }
-	ShaderObjectStore const& GetObjects() const noexcept { return _objects; }
-	ShaderProgramStore& GetPrograms() noexcept { return _programs; }
-	ShaderProgramStore const& GetPrograms() const noexcept { return _programs; }
+	ShaderObjectStore* GetObjects() noexcept { return &_objects; }
+	ShaderObjectStore const* GetObjects() const noexcept { return &_objects; }
+	ShaderProgramStore* GetPrograms() noexcept { return &_programs; }
+	ShaderProgramStore const* GetPrograms() const noexcept { return &_programs; }
 
 	std::string const& GetShaderDirectory() const noexcept { return _shaderDirectory; }
 	void SetShaderDirectory(std::string const& value) { _shaderDirectory = value; }

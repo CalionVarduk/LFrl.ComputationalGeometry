@@ -10,13 +10,12 @@ BEGIN_LFRL_COMMON_NAMESPACE
 class FileLoggerListener : public ILoggerListener
 {
 	FileLoggerListener() = delete;
+	FileLoggerListener(FileLoggerListener const&) = delete;
+	FileLoggerListener(FileLoggerListener&&) = delete;
 	FileLoggerListener& operator= (FileLoggerListener const&) = delete;
 	FileLoggerListener& operator= (FileLoggerListener&&) = delete;
 
 public:
-	FileLoggerListener(FileLoggerListener const&) = default;
-	FileLoggerListener(FileLoggerListener&&) = default;
-
 	enum struct StreamMode
 	{
 		TEMPORARY = 0,

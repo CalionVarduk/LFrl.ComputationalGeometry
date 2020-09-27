@@ -13,6 +13,10 @@ struct IGLCanvasContextFactory
 
 protected:
 	IGLCanvasContextFactory() noexcept = default;
+	IGLCanvasContextFactory(IGLCanvasContextFactory const&) noexcept = default;
+	IGLCanvasContextFactory(IGLCanvasContextFactory&&) noexcept = default;
+	IGLCanvasContextFactory& operator= (IGLCanvasContextFactory const&) noexcept = default;
+	IGLCanvasContextFactory& operator= (IGLCanvasContextFactory&&) noexcept = default;
 };
 
 END_LFRL_OGL_NAMESPACE

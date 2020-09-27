@@ -11,12 +11,12 @@ Handle::Handle() noexcept
 {}
 
 Handle::Handle(Handle&& other) noexcept
-	: _hwnd(other._hwnd), _cls(other._cls), _params(other._params), _state(other._state)
+	: _hwnd(NULL), _cls(NULL), _params(), _state(ObjectState::CREATED)
 {
-	other._hwnd = NULL;
-	other._cls = NULL;
-	other._params = HandleParams();
-	other._state = ObjectState::CREATED;
+	std::swap(_hwnd, other._hwnd);
+	std::swap(_cls, other._cls);
+	std::swap(_params, other._params);
+	std::swap(_state, other._state);
 }
 
 Handle& Handle::operator=(Handle&& other) noexcept

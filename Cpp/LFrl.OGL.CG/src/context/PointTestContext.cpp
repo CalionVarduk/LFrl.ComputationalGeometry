@@ -30,8 +30,8 @@ protected:
 	}
 };
 
-PointTestContext::PointTestContext(RenderingContext& rc) noexcept
-	: base(rc), _timer(), _sProgram(nullptr), _projection(), _backgroundColor(), _clearBuffers()
+PointTestContext::PointTestContext(RenderingContext& rc, ShaderStore* shaders) noexcept
+	: base(rc), _shaders(shaders), _timer(), _sProgram(nullptr), _projection(), _backgroundColor(), _clearBuffers()
 {}
 
 void PointTestContext::OnInitializing()
@@ -39,16 +39,19 @@ void PointTestContext::OnInitializing()
 	base::OnInitializing();
 	_timer.Initialize();
 
-	auto vShader = sShaders.Load(ShaderObject::Type::VERTEX, "points_v_1");
+	auto vShader = _shaders->Load(ShaderObject::Type::VERTEX, "points_v_1");
 	auto vCompileResult = vShader->Compile();
 
-	auto fShader = sShaders.Load(ShaderObject::Type::FRAGMENT, "points_f_1");
+	auto fShader = _shaders->Load(ShaderObject::Type::FRAGMENT, "points_f_1");
 	auto fCompileResult = fShader->Compile();
 
-	_sProgram = sShaderPrograms.Create("points_1");
-	_sProgram->AttachShader(*vShader);
-	_sProgram->AttachShader(*fShader);
-	auto linkResult = _sProgram->Link();
+	_sProgram = _shaders->GetPrograms()->GetOrCreate("points_1");
+	if (_sProgram->GetState() != ObjectState::READY)
+	{
+		_sProgram->AttachShader(*vShader);
+		_sProgram->AttachShader(*fShader);
+		auto linkResult = _sProgram->Link();
+	}
 
 	auto attributes = _sProgram->GetAttributes();
 	auto uniforms = _sProgram->GetUniforms();

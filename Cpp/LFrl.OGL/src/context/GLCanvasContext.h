@@ -20,8 +20,8 @@ class GLCanvasContext
 	GLCanvasContext& operator=(GLCanvasContext const&) = delete;
 
 public:
-	GLCanvasContext(GLCanvasContext&&) = default;
-	GLCanvasContext& operator=(GLCanvasContext&&) = default;
+	GLCanvasContext(GLCanvasContext&&);
+	GLCanvasContext& operator=(GLCanvasContext&&);
 
 	explicit GLCanvasContext(RenderingContext& rc) noexcept;
 	~GLCanvasContext() { Dispose(); }

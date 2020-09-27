@@ -116,13 +116,13 @@ struct BufferObject final
 	static void SetSubData(Target target, GLint offset, T const& data) { SetSubData(target, offset, sizeof(T), &data); }
 
 	BufferObject(BufferObject const&) = delete;
-	BufferObject(BufferObject&&) = default;
 	BufferObject& operator=(BufferObject const&) = delete;
-	BufferObject& operator=(BufferObject&&) = default;
 
 	BufferObject() noexcept;
 	explicit BufferObject(Target target) noexcept;
 	BufferObject(Target target, Usage usage) noexcept;
+	BufferObject(BufferObject&&) noexcept;
+	BufferObject& operator=(BufferObject&&) noexcept;
 	~BufferObject() { Dispose(); }
 
 	GLuint GetId() const noexcept { return _id; }

@@ -24,9 +24,6 @@
     <ClInclude Include="src\vertexes\PointVertex.h">
       <Filter>vertexes</Filter>
     </ClInclude>
-    <ClInclude Include="src\shaders\ShaderStore.h">
-      <Filter>shaders</Filter>
-    </ClInclude>
     <ClInclude Include="src\context\PointTestContextFactory.h">
       <Filter>context</Filter>
     </ClInclude>
@@ -45,9 +42,6 @@
   <ItemGroup>
     <ClCompile Include="src\context\PointTestContext.cpp">
       <Filter>context</Filter>
-    </ClCompile>
-    <ClCompile Include="src\shaders\ShaderStore.cpp">
-      <Filter>shaders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

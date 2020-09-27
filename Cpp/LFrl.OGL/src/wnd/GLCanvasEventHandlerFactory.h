@@ -8,6 +8,10 @@ BEGIN_LFRL_OGL_WND_NAMESPACE
 struct GLCanvasEventHandlerFactory
 {
 	GLCanvasEventHandlerFactory() noexcept = default;
+	GLCanvasEventHandlerFactory(GLCanvasEventHandlerFactory const&) noexcept = default;
+	GLCanvasEventHandlerFactory(GLCanvasEventHandlerFactory&&) noexcept = default;
+	GLCanvasEventHandlerFactory& operator= (GLCanvasEventHandlerFactory const&) noexcept = default;
+	GLCanvasEventHandlerFactory& operator= (GLCanvasEventHandlerFactory&&) noexcept = default;
 
 	virtual ~GLCanvasEventHandlerFactory() {}
 

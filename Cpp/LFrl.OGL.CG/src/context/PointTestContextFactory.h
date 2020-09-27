@@ -9,7 +9,12 @@ BEGIN_LFRL_OGL_CG_NAMESPACE
 class PointTestContextFactory : public IGLCanvasContextFactory
 {
 public:
-	virtual GLCanvasContext* Create(RenderingContext& rc) override { return new PointTestContext(rc); }
+	explicit PointTestContextFactory(ShaderStore* shaders) noexcept : _shaders(shaders) {}
+
+	virtual GLCanvasContext* Create(RenderingContext& rc) override { return new PointTestContext(rc, _shaders); }
+
+private:
+	ShaderStore* _shaders;
 };
 
 END_LFRL_OGL_CG_NAMESPACE

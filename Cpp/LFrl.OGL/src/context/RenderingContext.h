@@ -33,11 +33,11 @@ struct RenderingContext final
 	static bool Deactivate();
 
 	RenderingContext(RenderingContext const&) = delete;
-	RenderingContext(RenderingContext&&) = default;
 	RenderingContext& operator=(RenderingContext const&) = delete;
-	RenderingContext& operator=(RenderingContext&&) = default;
 
 	RenderingContext() noexcept;
+	RenderingContext(RenderingContext&&) noexcept;
+	RenderingContext& operator=(RenderingContext&&) noexcept;
 	~RenderingContext() { Dispose(); }
 
 	HGLRC GetHglrc() const noexcept { return _hglrc; }
