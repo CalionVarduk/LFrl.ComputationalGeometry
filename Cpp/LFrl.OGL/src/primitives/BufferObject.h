@@ -101,7 +101,7 @@ struct BufferObject final
 	static void SetData(Target target, std::array<T, count> const& data, Usage usage) { SetData(target, count * sizeof(T), data.data(), usage); }
 
 	template <class T>
-	static void SetData(Target target, std::vector<T> const& data, Usage usage) { SetData(target, data.size() * sizeof(T), data.data(), usage); }
+	static void SetData(Target target, std::vector<T> const& data, Usage usage) { SetData(target, static_cast<GLuint>(data.size() * sizeof(T)), data.data(), usage); }
 
 	template <class T>
 	static void SetData(Target target, T const& data, Usage usage) { SetData(target, sizeof(T), &data, usage); }

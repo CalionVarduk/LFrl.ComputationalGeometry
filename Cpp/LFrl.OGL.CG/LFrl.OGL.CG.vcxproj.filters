@@ -38,6 +38,15 @@
     <None Include="src\shaders\points_g_1.glsl">
       <Filter>shaders</Filter>
     </None>
+    <None Include="src\shaders\points_g_2.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\points_g_3.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\points_v_2.glsl">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\PointTestContext.cpp">

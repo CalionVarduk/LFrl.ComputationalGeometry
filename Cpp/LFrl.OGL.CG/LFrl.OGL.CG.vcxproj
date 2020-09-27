@@ -158,7 +158,10 @@
   <ItemGroup>
     <None Include="src\shaders\points_f_1.glsl" />
     <None Include="src\shaders\points_g_1.glsl" />
+    <None Include="src\shaders\points_g_2.glsl" />
+    <None Include="src\shaders\points_g_3.glsl" />
     <None Include="src\shaders\points_v_1.glsl" />
+	<None Include="src\shaders\points_v_2.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\PointTestContext.cpp" />

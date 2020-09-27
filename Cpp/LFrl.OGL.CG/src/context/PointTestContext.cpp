@@ -8,8 +8,15 @@ struct PointTestRenderingAction : public IRenderingAction
 {
 	typedef IRenderingAction base;
 
-	PointTestRenderingAction() noexcept : base() {}
+	PointTestRenderingAction() noexcept : base(), vao(), vbo()
+	{
+		vao.Initialize();
+		vbo.Initialize();
+	}
 
+	VertexArrayObject vao;
+	BufferObject vbo;
+	ShaderProgram::Uniform uProjection;
 	ShaderProgram* program;
 	Projection* projection;
 	Color::ClearValueSnapshot* backgroundColor;
@@ -22,11 +29,20 @@ protected:
 		FaceCulling::Enable();
 		FaceCulling::Cull::SetBack();
 		Sampling::Multi::Enable();
-		Points::SetSize(5);
+		Points::ProgramSize::Enable();
 		wglSwapIntervalEXT(0);
 
 		backgroundColor->Apply();
 		Buffer::Clear(*clearBuffers);
+
+		program->Use();
+		uProjection.SetMat4(projection->Get());
+
+		vao.Bind();
+		glDrawArrays(GL_POINTS, 0, 3);
+		vao.Unbind();
+
+		program->Unuse();
 	}
 };
 
@@ -39,19 +55,23 @@ void PointTestContext::OnInitializing()
 	base::OnInitializing();
 	_timer.Initialize();
 
-	auto vShader = _shaders->Load(ShaderObject::Type::VERTEX, "points_v_1");
+	auto vShader = _shaders->Load(ShaderObject::Type::VERTEX, "points_v_2");
 	auto vCompileResult = vShader->Compile();
+
+	auto gShader = _shaders->Load(ShaderObject::Type::GEOMETRY, "points_g_3");
+	auto gCompileResult = gShader->Compile();
 
 	auto fShader = _shaders->Load(ShaderObject::Type::FRAGMENT, "points_f_1");
 	auto fCompileResult = fShader->Compile();
 
 	_sProgram = _shaders->GetPrograms()->GetOrCreate("points_1");
-	if (_sProgram->GetState() != ObjectState::READY)
-	{
+	//if (_sProgram->GetState() != ObjectState::READY)
+	//{
 		_sProgram->AttachShader(*vShader);
+		_sProgram->AttachShader(*gShader);
 		_sProgram->AttachShader(*fShader);
 		auto linkResult = _sProgram->Link();
-	}
+	//}
 
 	auto attributes = _sProgram->GetAttributes();
 	auto uniforms = _sProgram->GetUniforms();
@@ -59,11 +79,38 @@ void PointTestContext::OnInitializing()
 	_backgroundColor.value = glm::vec4(0.3f, 0.3f, 0.3f, 1.0f);
 	_clearBuffers = static_cast<GLbitfield>(Buffer::Type::COLOR);
 
+	auto colorAttr = attributes[0];
+	auto positionAttr = attributes[1];
+	auto sizeAttr = attributes[2];
+
+	auto uProjection = uniforms[0];
+
 	auto action = new PointTestRenderingAction();
 	action->program = _sProgram;
 	action->projection = &_projection;
 	action->clearBuffers = &_clearBuffers;
 	action->backgroundColor = &_backgroundColor;
+	action->uProjection = uProjection;
+
+	// TODO test points setup
+	std::vector<PointVertex> points;
+	points.push_back({ glm::vec3(100, 50, 0), glm::vec4(1, 1, 1, 1), 7 });
+	points.push_back({ glm::vec3(80, 270, 0), glm::vec4(1, 0, 0, 1), 4 });
+	points.push_back({ glm::vec3(220, 140, 0), glm::vec4(0, 1, 1, 1), 12 });
+
+	action->vao.Bind();
+	action->vbo.Bind();
+
+	action->vbo.SetData(points);
+
+	positionAttr.Enable();
+	positionAttr.Configure(sizeof(PointVertex));
+	colorAttr.Enable();
+	colorAttr.Configure(sizeof(PointVertex), sizeof(glm::vec3));
+	sizeAttr.Enable();
+	sizeAttr.Configure(sizeof(PointVertex), sizeof(glm::vec3) + sizeof(glm::vec4));
+
+	action->vao.Unbind();
 
 	GetPipeline()->Add(action);
 }

@@ -7,6 +7,8 @@
 #include "LFrl.OGL/src/capacities/capacities.h"
 #include "LFrl.OGL/src/context/GLCanvasContext.h"
 
+#include "../vertexes/PointVertex.h"
+
 BEGIN_LFRL_OGL_CG_NAMESPACE
 
 class PointTestContext : public GLCanvasContext

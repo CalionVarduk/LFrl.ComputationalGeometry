@@ -1,10 +1,12 @@
 #version 330 core
 
-in vec4 v_color;
+in GS_OUT {
+	vec4 color;
+} fs_in;
 
-out vec4 f_color;
+out vec4 fColor;
 
 void main()
 {
-	f_color = v_color;
+	fColor = fs_in.color;
 }
