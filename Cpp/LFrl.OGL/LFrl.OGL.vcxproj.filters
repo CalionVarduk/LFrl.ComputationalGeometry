@@ -94,9 +94,6 @@
     <ClInclude Include="src\capacities\Debug.h">
       <Filter>capacities</Filter>
     </ClInclude>
-    <ClInclude Include="src\primitives\BufferObject.h">
-      <Filter>primitives</Filter>
-    </ClInclude>
     <ClInclude Include="src\primitives\AccessType.h">
       <Filter>primitives</Filter>
     </ClInclude>
@@ -127,12 +124,6 @@
     <ClInclude Include="src\utils\shader_program_swapper.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\buffer_object_mapper.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\buffer_object_range_mapper.h">
-      <Filter>utils</Filter>
-    </ClInclude>
     <ClInclude Include="src\primitives\AccessFlag.h">
       <Filter>primitives</Filter>
     </ClInclude>
@@ -161,6 +152,15 @@
       <Filter>primitives</Filter>
     </ClInclude>
     <ClInclude Include="src\ShaderStore.h" />
+    <ClInclude Include="src\primitives\VertexBufferObject.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\vertex_buffer_object_mapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\vertex_buffer_object_range_mapper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">
@@ -218,9 +218,6 @@
     <ClCompile Include="src\capacities\Debug.cpp">
       <Filter>capacities</Filter>
     </ClCompile>
-    <ClCompile Include="src\primitives\BufferObject.cpp">
-      <Filter>primitives</Filter>
-    </ClCompile>
     <ClCompile Include="src\primitives\VertexArrayObject.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
@@ -236,12 +233,6 @@
       <Filter>primitives</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\shader_program_swapper.cpp">
-      <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\buffer_object_mapper.cpp">
-      <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\buffer_object_range_mapper.cpp">
       <Filter>utils</Filter>
     </ClCompile>
     <ClCompile Include="src\wnd\GLCanvas.cpp">
@@ -260,5 +251,14 @@
       <Filter>context</Filter>
     </ClCompile>
     <ClCompile Include="src\ShaderStore.cpp" />
+    <ClCompile Include="src\primitives\VertexBufferObject.cpp">
+      <Filter>primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\vertex_buffer_object_mapper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\vertex_buffer_object_range_mapper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

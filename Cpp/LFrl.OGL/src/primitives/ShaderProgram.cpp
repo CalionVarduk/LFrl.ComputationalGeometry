@@ -140,11 +140,11 @@ GLuint ShaderProgram::Attribute::GetConfiguredBufferObjectIdAt(GLuint index) con
 	return static_cast<GLuint>(result);
 }
 
-BufferObject::Binding ShaderProgram::Attribute::GetConfiguredBindingAt(GLuint index) const
+VertexBufferObject::Binding ShaderProgram::Attribute::GetConfiguredBindingAt(GLuint index) const
 {
 	GLint result;
 	glGetVertexAttribiv(_location + index, GL_VERTEX_ATTRIB_BINDING, &result);
-	return static_cast<BufferObject::Binding>(result);
+	return static_cast<VertexBufferObject::Binding>(result);
 }
 
 void ShaderProgram::Attribute::ConfigureAt(GLuint index, GLuint stride, GLuint offset)

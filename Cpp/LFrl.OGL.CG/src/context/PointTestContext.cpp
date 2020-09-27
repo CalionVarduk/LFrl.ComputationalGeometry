@@ -15,7 +15,7 @@ struct PointTestRenderingAction : public IRenderingAction
 	}
 
 	VertexArrayObject vao;
-	BufferObject vbo;
+	VertexBufferObject vbo;
 	ShaderProgram::Uniform uProjection;
 	ShaderProgram* program;
 	Projection* projection;

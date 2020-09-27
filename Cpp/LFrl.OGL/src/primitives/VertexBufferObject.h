@@ -1,5 +1,5 @@
-#ifndef __LFRL_OGL_BUFFER_OBJECT_GUARD__
-#define __LFRL_OGL_BUFFER_OBJECT_GUARD__
+#ifndef __LFRL_OGL_VERTEX_BUFFER_OBJECT_GUARD__
+#define __LFRL_OGL_VERTEX_BUFFER_OBJECT_GUARD__
 
 #include <array>
 #include <vector>
@@ -12,7 +12,7 @@
 
 BEGIN_LFRL_OGL_NAMESPACE
 
-struct BufferObject final
+struct VertexBufferObject final
 {
 	enum struct ActionResult
 	{
@@ -85,45 +85,45 @@ struct BufferObject final
 	static void FlushMappedRange(Target target, GLint offset, GLuint size);
 	static bool Unmap(Target target);
 	
-	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, BufferObject*>::value> = 0>
+	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexBufferObject*>::value> = 0>
 	static void InitializeRange(TIterable const& iterable);
 
 	template <GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
-	static void InitializeRange(std::array<BufferObject*, count>& buffers);
+	static void InitializeRange(std::array<VertexBufferObject*, count>& buffers);
 
-	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, BufferObject*>::value> = 0>
+	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexBufferObject*>::value> = 0>
 	static void DisposeRange(TIterable const& iterable);
 
 	template <GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
-	static void DisposeRange(std::array<BufferObject*, count>& buffers);
+	static void DisposeRange(std::array<VertexBufferObject*, count>& buffers);
 
 	template <class T, GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
-	static void SetData(Target target, std::array<T, count> const& data, Usage usage) { SetData(target, count * sizeof(T), data.data(), usage); }
+	static void SetData(Target target, std::array<T, count> const& data, Usage usage) { SetData(target, static_cast<GLuint>(count * sizeof(T)), data.data(), usage); }
 
 	template <class T>
 	static void SetData(Target target, std::vector<T> const& data, Usage usage) { SetData(target, static_cast<GLuint>(data.size() * sizeof(T)), data.data(), usage); }
 
 	template <class T>
-	static void SetData(Target target, T const& data, Usage usage) { SetData(target, sizeof(T), &data, usage); }
+	static void SetData(Target target, T const& data, Usage usage) { SetData(target, static_cast<GLuint>(sizeof(T)), &data, usage); }
 
 	template <class T, GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
-	static void SetSubData(Target target, GLint offset, std::array<T, count> const& data) { SetSubData(target, offset, count * sizeof(T), data.data()); }
+	static void SetSubData(Target target, GLint offset, std::array<T, count> const& data) { SetSubData(target, offset, static_cast<GLuint>(count * sizeof(T)), data.data()); }
 
 	template <class T>
-	static void SetSubData(Target target, GLint offset, std::vector<T> const& data) { SetSubData(target, offset, data.size() * sizeof(T), data.data()); }
+	static void SetSubData(Target target, GLint offset, std::vector<T> const& data) { SetSubData(target, offset, static_cast<GLuint>(data.size() * sizeof(T)), data.data()); }
 
 	template <class T>
-	static void SetSubData(Target target, GLint offset, T const& data) { SetSubData(target, offset, sizeof(T), &data); }
+	static void SetSubData(Target target, GLint offset, T const& data) { SetSubData(target, offset, static_cast<GLuint>(sizeof(T)), &data); }
 
-	BufferObject(BufferObject const&) = delete;
-	BufferObject& operator=(BufferObject const&) = delete;
+	VertexBufferObject(VertexBufferObject const&) = delete;
+	VertexBufferObject& operator=(VertexBufferObject const&) = delete;
 
-	BufferObject() noexcept;
-	explicit BufferObject(Target target) noexcept;
-	BufferObject(Target target, Usage usage) noexcept;
-	BufferObject(BufferObject&&) noexcept;
-	BufferObject& operator=(BufferObject&&) noexcept;
-	~BufferObject() { Dispose(); }
+	VertexBufferObject() noexcept;
+	explicit VertexBufferObject(Target target) noexcept;
+	VertexBufferObject(Target target, Usage usage) noexcept;
+	VertexBufferObject(VertexBufferObject&&) noexcept;
+	VertexBufferObject& operator=(VertexBufferObject&&) noexcept;
+	~VertexBufferObject() { Dispose(); }
 
 	GLuint GetId() const noexcept { return _id; }
 	ObjectState GetState() const noexcept { return _state; }
@@ -143,7 +143,7 @@ struct BufferObject final
 	void SetData(GLuint size, void const* data) { SetData(_target, size, data, _usage); }
 	void Reserve(GLuint size) { SetData(size, NULL); }
 	void SetSubData(GLint offset, GLuint size, void const* data) { SetSubData(_target, offset, size, data); }
-	bool CopySubData(BufferObject const& source, GLint readOffset, GLint writeOffset, GLuint size) { return CopySubData(source._target, _target, readOffset, writeOffset, size); }
+	bool CopySubData(VertexBufferObject const& source, GLint readOffset, GLint writeOffset, GLuint size) { return CopySubData(source._target, _target, readOffset, writeOffset, size); }
 	void* Map(AccessType access) { return Map(_target, access); }
 	void* MapRange(GLint offset, GLuint size, GLbitfield access) { return MapRange(_target, offset, size, access); }
 	void FlushMappedRange(GLint offset, GLuint size) { FlushMappedRange(_target, offset, size); }
@@ -176,8 +176,8 @@ private:
 	ObjectState _state;
 };
 
-template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, BufferObject*>::value>>
-void BufferObject::InitializeRange(TIterable const& iterable)
+template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexBufferObject*>::value>>
+void VertexBufferObject::InitializeRange(TIterable const& iterable)
 {
 	auto count = 0;
 	for (auto current = iterable.begin(); current != iterable.end(); ++current)
@@ -198,7 +198,7 @@ void BufferObject::InitializeRange(TIterable const& iterable)
 }
 
 template <GLuint count, LFRL_COMMON::requires<!(count <= 0)>>
-void BufferObject::InitializeRange(std::array<BufferObject*, count>& buffers)
+void VertexBufferObject::InitializeRange(std::array<VertexBufferObject*, count>& buffers)
 {
 	std::array<GLuint, count> ids;
 	glGenBuffers(count, ids.data());
@@ -210,8 +210,8 @@ void BufferObject::InitializeRange(std::array<BufferObject*, count>& buffers)
 	}
 }
 
-template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, BufferObject*>::value>>
-void BufferObject::DisposeRange(TIterable const& iterable)
+template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexBufferObject*>::value>>
+void VertexBufferObject::DisposeRange(TIterable const& iterable)
 {
 	auto count = 0;
 	for (auto current = iterable.begin(); current != iterable.end(); ++current)
@@ -233,7 +233,7 @@ void BufferObject::DisposeRange(TIterable const& iterable)
 }
 
 template <GLuint count, LFRL_COMMON::requires<!(count <= 0)>>
-void BufferObject::DisposeRange(std::array<BufferObject*, count>& buffers)
+void VertexBufferObject::DisposeRange(std::array<VertexBufferObject*, count>& buffers)
 {
 	std::array<GLuint, count> ids;
 

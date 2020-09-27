@@ -1,32 +1,32 @@
-#include "BufferObject.h"
+#include "VertexBufferObject.h"
 
 #define INITIALIZE(TARGET, USAGE) _id(0), _target(TARGET), _usage(USAGE), _state(ObjectState::CREATED)
 
 BEGIN_LFRL_OGL_NAMESPACE
 
-void BufferObject::Bind(BufferObject::Target target, GLuint id)
+void VertexBufferObject::Bind(VertexBufferObject::Target target, GLuint id)
 {
 	glBindBuffer(static_cast<GLenum>(target), id);
 }
 
-GLuint BufferObject::GetBoundId(BufferObject::Binding binding)
+GLuint VertexBufferObject::GetBoundId(VertexBufferObject::Binding binding)
 {
 	GLint result;
 	glGetIntegerv(static_cast<GLenum>(binding), &result);
 	return static_cast<GLuint>(result);
 }
 
-void BufferObject::SetData(BufferObject::Target target, GLuint size, void const* data, BufferObject::Usage usage)
+void VertexBufferObject::SetData(VertexBufferObject::Target target, GLuint size, void const* data, VertexBufferObject::Usage usage)
 {
 	glBufferData(static_cast<GLenum>(target), static_cast<GLsizeiptr>(size), data, static_cast<GLenum>(usage));
 }
 
-void BufferObject::SetSubData(BufferObject::Target target, GLint offset, GLuint size, void const* data)
+void VertexBufferObject::SetSubData(VertexBufferObject::Target target, GLint offset, GLuint size, void const* data)
 {
 	glBufferSubData(static_cast<GLenum>(target), static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), data);
 }
 
-bool BufferObject::CopySubData(BufferObject::Target source, BufferObject::Target destination, GLint readOffset, GLint writeOffset, GLuint size)
+bool VertexBufferObject::CopySubData(VertexBufferObject::Target source, VertexBufferObject::Target destination, GLint readOffset, GLint writeOffset, GLuint size)
 {
 	if (source == destination)
 		return false;
@@ -35,39 +35,39 @@ bool BufferObject::CopySubData(BufferObject::Target source, BufferObject::Target
 	return true;
 }
 
-void* BufferObject::Map(BufferObject::Target target, AccessType access)
+void* VertexBufferObject::Map(VertexBufferObject::Target target, AccessType access)
 {
 	return glMapBuffer(static_cast<GLenum>(target), static_cast<GLenum>(access));
 }
 
-void* BufferObject::MapRange(BufferObject::Target target, GLint offset, GLuint size, GLbitfield access)
+void* VertexBufferObject::MapRange(VertexBufferObject::Target target, GLint offset, GLuint size, GLbitfield access)
 {
 	return glMapBufferRange(static_cast<GLenum>(target), static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), access);
 }
 
-void BufferObject::FlushMappedRange(BufferObject::Target target, GLint offset, GLuint size)
+void VertexBufferObject::FlushMappedRange(VertexBufferObject::Target target, GLint offset, GLuint size)
 {
 	glFlushMappedBufferRange(static_cast<GLenum>(target), static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size));
 }
 
-bool BufferObject::Unmap(BufferObject::Target target)
+bool VertexBufferObject::Unmap(VertexBufferObject::Target target)
 {
 	return glUnmapBuffer(static_cast<GLenum>(target));
 }
 
-BufferObject::BufferObject() noexcept
+VertexBufferObject::VertexBufferObject() noexcept
 	: INITIALIZE(Target::ARRAY_BUFFER, Usage::STATIC_DRAW)
 {}
 
-BufferObject::BufferObject(BufferObject::Target target) noexcept
+VertexBufferObject::VertexBufferObject(VertexBufferObject::Target target) noexcept
 	: INITIALIZE(target, Usage::STATIC_DRAW)
 {}
 
-BufferObject::BufferObject(BufferObject::Target target, BufferObject::Usage usage) noexcept
+VertexBufferObject::VertexBufferObject(VertexBufferObject::Target target, VertexBufferObject::Usage usage) noexcept
 	: INITIALIZE(target, usage)
 {}
 
-BufferObject::BufferObject(BufferObject&& other) noexcept
+VertexBufferObject::VertexBufferObject(VertexBufferObject&& other) noexcept
 	: INITIALIZE(Target::ARRAY_BUFFER, Usage::STATIC_DRAW)
 {
 	std::swap(_id, other._id);
@@ -76,7 +76,7 @@ BufferObject::BufferObject(BufferObject&& other) noexcept
 	std::swap(_state, other._state);
 }
 
-BufferObject& BufferObject::operator= (BufferObject&& other) noexcept
+VertexBufferObject& VertexBufferObject::operator= (VertexBufferObject&& other) noexcept
 {
 	if (this != &other)
 	{
@@ -88,7 +88,7 @@ BufferObject& BufferObject::operator= (BufferObject&& other) noexcept
 	return *this;
 }
 
-BufferObject::ActionResult BufferObject::Initialize()
+VertexBufferObject::ActionResult VertexBufferObject::Initialize()
 {
 	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
@@ -104,7 +104,7 @@ BufferObject::ActionResult BufferObject::Initialize()
 	return ActionResult::OK;
 }
 
-BufferObject::ActionResult BufferObject::Dispose()
+VertexBufferObject::ActionResult VertexBufferObject::Dispose()
 {
 	if (_state == ObjectState::DISPOSED)
 		return ActionResult::ALREADY_DISPOSED;

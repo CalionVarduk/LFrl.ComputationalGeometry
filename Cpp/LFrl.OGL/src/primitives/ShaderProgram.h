@@ -2,7 +2,7 @@
 #define __LFRL_OGL_SHADER_PROGRAM_GUARD__
 
 #include <vector>
-#include "BufferObject.h"
+#include "VertexBufferObject.h"
 #include "ShaderObject.h"
 #include "LFrl.Common/src/memory/array_ptr.h"
 
@@ -173,7 +173,7 @@ struct ShaderProgram final
 		GLuint GetConfiguredStrideAt(GLuint index) const;
 		GLuint GetConfiguredOffsetAt(GLuint index) const;
 		GLuint GetConfiguredBufferObjectIdAt(GLuint index) const; // TODO: check if this actually returns an id
-		BufferObject::Binding GetConfiguredBindingAt(GLuint index) const; // TODO: check if correct enum is used
+		VertexBufferObject::Binding GetConfiguredBindingAt(GLuint index) const; // TODO: check if correct enum is used
 
 		GLuint GetConfiguredSize() const { return GetConfiguredSizeAt(0); }
 		ConfigurableType GetConfiguredType() const { return GetConfiguredTypeAt(0); }
@@ -181,7 +181,7 @@ struct ShaderProgram final
 		GLuint GetConfiguredStride() const { return GetConfiguredStrideAt(0); }
 		GLuint GetConfiguredOffset() const { return GetConfiguredOffsetAt(0); }
 		GLuint GetConfiguredBufferObjectId() const { return GetConfiguredBufferObjectIdAt(0); }
-		BufferObject::Binding GetConfiguredBinding() const { return GetConfiguredBindingAt(0); }
+		VertexBufferObject::Binding GetConfiguredBinding() const { return GetConfiguredBindingAt(0); }
 
 		void ConfigureAt(GLuint index, GLuint stride, GLuint offset = 0);
 		void ConfigureAt(GLuint index, GLuint size, ConfigurableType type, GLuint stride, GLuint offset = 0, bool normalized = false);
