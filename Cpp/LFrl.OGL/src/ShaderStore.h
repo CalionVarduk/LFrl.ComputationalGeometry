@@ -30,6 +30,7 @@ public:
 	void SetShaderExtension(std::string const& value) { _shaderExtension = value; }
 
 	ShaderObject* Load(ShaderObject::Type type, std::string const& fileName);
+	std::string GetSource(std::string const& fileName) const;
 
 private:
 	std::string _shaderDirectory;

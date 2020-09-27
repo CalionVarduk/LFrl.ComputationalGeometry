@@ -20,10 +20,10 @@ struct dynamic_buffer final
 	typedef std::reverse_iterator<iterator> reverse_iterator;
 	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
-	dynamic_buffer() = delete;
 	dynamic_buffer(dynamic_buffer<T> const&) = delete;
 	dynamic_buffer<T>& operator= (dynamic_buffer<T> const&) = delete;
 
+	dynamic_buffer() noexcept;
 	explicit dynamic_buffer(size_type size);
 	dynamic_buffer(dynamic_buffer<T>&&) noexcept;
 	dynamic_buffer<T>& operator= (dynamic_buffer<T>&&) noexcept;
@@ -61,6 +61,11 @@ private:
 	size_type _size;
 	pointer _data;
 };
+
+template <class T>
+dynamic_buffer<T>::dynamic_buffer() noexcept
+	: _size(0), _data(nullptr)
+{}
 
 template <class T>
 dynamic_buffer<T>::dynamic_buffer(typename dynamic_buffer<T>::size_type size)
