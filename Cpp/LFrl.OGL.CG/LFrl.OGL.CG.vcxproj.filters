@@ -27,6 +27,9 @@
     <ClInclude Include="src\context\PointTestContextFactory.h">
       <Filter>context</Filter>
     </ClInclude>
+    <ClInclude Include="src\vertexes\GridLineVertex.h">
+      <Filter>vertexes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\points_v_1.glsl">
@@ -45,6 +48,18 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="src\shaders\points_v_2.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\grid_v_1.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\grid_g_1.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\grid_v_2.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\grid_f_1.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

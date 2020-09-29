@@ -8,6 +8,7 @@
 #include "LFrl.OGL/src/context/GLCanvasContext.h"
 
 #include "../vertexes/PointVertex.h"
+#include "../vertexes/GridLineVertex.h"
 
 BEGIN_LFRL_OGL_CG_NAMESPACE
 
@@ -30,11 +31,14 @@ protected:
 private:
 	ShaderStore* _shaders;
 	CachedTimerQuery<32> _timer;
-	ShaderProgram* _sProgram;
-	Projection _projection;
+	OrthogonalView _view;
 	Capacities::Color::ClearValueSnapshot _backgroundColor;
 	GLbitfield _clearBuffers;
+	std::vector<GridLineVertex> _gridLines;
 
+	void _init_setup_action();
+	void _init_grid_action();
+	void _init_points_action();
 };
 
 END_LFRL_OGL_CG_NAMESPACE

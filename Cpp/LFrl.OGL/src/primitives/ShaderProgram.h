@@ -2,7 +2,9 @@
 #define __LFRL_OGL_SHADER_PROGRAM_GUARD__
 
 #include <vector>
-#include "VertexBufferObject.h"
+#include <unordered_map>
+#include <unordered_set>
+#include "BufferObject.h"
 #include "ShaderObject.h"
 #include "LFrl.Common/src/memory/array_ptr.h"
 
@@ -173,7 +175,7 @@ struct ShaderProgram final
 		GLuint GetConfiguredStrideAt(GLuint index) const;
 		GLuint GetConfiguredOffsetAt(GLuint index) const;
 		GLuint GetConfiguredBufferObjectIdAt(GLuint index) const; // TODO: check if this actually returns an id
-		VertexBufferObject::Binding GetConfiguredBindingAt(GLuint index) const; // TODO: check if correct enum is used
+		BufferObject::Binding GetConfiguredBindingAt(GLuint index) const; // TODO: check if correct enum is used
 
 		GLuint GetConfiguredSize() const { return GetConfiguredSizeAt(0); }
 		ConfigurableType GetConfiguredType() const { return GetConfiguredTypeAt(0); }
@@ -181,7 +183,7 @@ struct ShaderProgram final
 		GLuint GetConfiguredStride() const { return GetConfiguredStrideAt(0); }
 		GLuint GetConfiguredOffset() const { return GetConfiguredOffsetAt(0); }
 		GLuint GetConfiguredBufferObjectId() const { return GetConfiguredBufferObjectIdAt(0); }
-		VertexBufferObject::Binding GetConfiguredBinding() const { return GetConfiguredBindingAt(0); }
+		BufferObject::Binding GetConfiguredBinding() const { return GetConfiguredBindingAt(0); }
 
 		void ConfigureAt(GLuint index, GLuint stride, GLuint offset = 0);
 		void ConfigureAt(GLuint index, GLuint size, ConfigurableType type, GLuint stride, GLuint offset = 0, bool normalized = false);
@@ -428,14 +430,17 @@ struct ShaderProgram final
 
 	GLuint GetAttachedShaderCount() const { return GetAttachedShaderCount(_id); }
 	std::vector<GLuint> GetAttachedShaderIds() const;
+	std::unordered_set<GLuint> GetAttachedShaderIdsSet() const;
 	GLuint GetAttachedShaderIds(LFRL_COMMON::array_ptr<GLuint> buffer) const { return GetAttachedShaderIds(_id, buffer); }
 	
 	GLuint GetAttributeCount() const { return GetAttributeCount(_id); }
 	std::vector<Attribute> GetAttributes() const;
+	std::unordered_map<std::string, Attribute> GetAttributesMap() const;
 	GLuint GetAttributes(LFRL_COMMON::array_ptr<Attribute> buffer) const { return GetAttributes(_id, buffer); }
 
 	GLuint GetUniformCount() const { return GetUniformCount(_id); }
 	std::vector<Uniform> GetUniforms() const;
+	std::unordered_map<std::string, Uniform> GetUniformsMap() const;
 	GLuint GetUniforms(LFRL_COMMON::array_ptr<Uniform> buffer) const { return GetUniforms(_id, buffer); }
 
 	void Use() { Use(_id); }

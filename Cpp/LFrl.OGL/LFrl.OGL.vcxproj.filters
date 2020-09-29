@@ -152,14 +152,17 @@
       <Filter>primitives</Filter>
     </ClInclude>
     <ClInclude Include="src\ShaderStore.h" />
-    <ClInclude Include="src\primitives\VertexBufferObject.h">
+    <ClInclude Include="src\primitives\BufferObject.h">
       <Filter>primitives</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\vertex_buffer_object_mapper.h">
+    <ClInclude Include="src\utils\buffer_object_range_mapper.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\vertex_buffer_object_range_mapper.h">
+    <ClInclude Include="src\utils\buffer_object_mapper.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\primitives\OrthogonalView.h">
+      <Filter>primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,14 +254,17 @@
       <Filter>context</Filter>
     </ClCompile>
     <ClCompile Include="src\ShaderStore.cpp" />
-    <ClCompile Include="src\primitives\VertexBufferObject.cpp">
+    <ClCompile Include="src\primitives\BufferObject.cpp">
       <Filter>primitives</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\vertex_buffer_object_mapper.cpp">
+    <ClCompile Include="src\utils\buffer_object_range_mapper.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\vertex_buffer_object_range_mapper.cpp">
+    <ClCompile Include="src\utils\buffer_object_mapper.cpp">
       <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\primitives\OrthogonalView.cpp">
+      <Filter>primitives</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

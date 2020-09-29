@@ -153,15 +153,20 @@
     <ClInclude Include="src\context\PointTestContext.h" />
     <ClInclude Include="src\context\PointTestContextFactory.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\vertexes\GridLineVertex.h" />
     <ClInclude Include="src\vertexes\PointVertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\shaders\grid_f_1.glsl" />
+    <None Include="src\shaders\grid_g_1.glsl" />
+    <None Include="src\shaders\grid_v_1.glsl" />
+    <None Include="src\shaders\grid_v_2.glsl" />
     <None Include="src\shaders\points_f_1.glsl" />
     <None Include="src\shaders\points_g_1.glsl" />
     <None Include="src\shaders\points_g_2.glsl" />
     <None Include="src\shaders\points_g_3.glsl" />
     <None Include="src\shaders\points_v_1.glsl" />
-	<None Include="src\shaders\points_v_2.glsl" />
+    <None Include="src\shaders\points_v_2.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\PointTestContext.cpp" />

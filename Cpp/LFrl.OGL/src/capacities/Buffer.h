@@ -16,6 +16,7 @@ namespace Buffer
 	};
 
 	void Clear(GLbitfield buffers) noexcept;
+	inline void Clear(Type type) noexcept { Clear(static_cast<GLbitfield>(type)); }
 
 	inline GLbitfield operator| (Type l, Type r) noexcept { return static_cast<GLbitfield>(l) | static_cast<GLbitfield>(r); }
 	inline GLbitfield operator| (Type l, GLbitfield r) noexcept { return static_cast<GLbitfield>(l) | r; }
