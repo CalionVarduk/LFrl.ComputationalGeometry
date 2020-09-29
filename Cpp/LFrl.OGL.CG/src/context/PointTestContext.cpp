@@ -303,7 +303,7 @@ void PointTestContext::OnFinishDrawing()
 void PointTestContext::OnBoundsChanged(glm::ivec2 const& position, glm::ivec2 const& size)
 {
 	_view.SetProjection(static_cast<GLfloat>(size.x), static_cast<GLfloat>(size.y));
-	_view.MoveTo(120.0f, 250.0f, 0.5f, 0.5f);
+	_view.MoveTo(-50.0f, -120.0f, 0.5f, 0.5f);
 	base::OnBoundsChanged(position, size);
 }
 

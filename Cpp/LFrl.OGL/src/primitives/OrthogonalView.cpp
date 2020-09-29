@@ -47,7 +47,7 @@ void OrthogonalView::MoveTo(GLfloat x, GLfloat y, GLfloat anchorX, GLfloat ancho
 	auto offset = (GetProjectionSize() / GetScale()) * glm::vec2(anchorX, anchorY);
 
 	_view.Reset();
-	_view.Translate(x + offset.x, y + offset.y, 0);
+	_view.Translate(-x + offset.x, -y + offset.y, 0);
 }
 
 void OrthogonalView::Reset() noexcept
