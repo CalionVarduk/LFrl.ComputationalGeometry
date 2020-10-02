@@ -66,16 +66,6 @@ protected:
 		auto bounds = view->GetBounds();
 		auto scale = view->GetScale();
 
-		uProjection.SetMat4(view->GetMatrix());
-		uNormalColor.SetVec4(0.09f, 0.11f, 0.13f, 1.0f);
-		uGroupColor.SetVec4(0.18f, 0.21f, 0.24f, 1.0f);
-		uAxisColor.SetVec4(0.25f, 0.3f, 0.4f, 1.0f);
-		uNormalHalfWidth.Set(0.5f / scale.x);
-		uGroupHalfWidth.Set(0.5f / scale.x);
-		uAxisHalfWidth.Set(1.0f / scale.x);
-		uGroupSize.Set(10.0f);
-		uLineOffset.Set((float)lineOffset);
-
 		vbo.Bind();
 		GridLineVertex gt[2];
 		gt[0].positionOffset = glm::vec2(0, bounds.GetCentreY());
@@ -92,9 +82,25 @@ protected:
 		auto xCount = (int)glm::ceil(bounds.GetWidth() / lineOffset) + 2;
 		auto yCount = (int)glm::ceil(bounds.GetHeight() / lineOffset) + 2;
 
+		uProjection.SetMat4(view->GetMatrix());
+		uNormalColor.SetVec4(0.09f, 0.11f, 0.13f, 1.0f);
+		uGroupColor.SetVec4(0.18f, 0.21f, 0.24f, 1.0f);
+		uAxisColor.SetVec4(0.25f, 0.3f, 0.4f, 1.0f);
+		uGroupSize.Set(10.0f);
+		uLineOffset.Set((float)lineOffset);
+
 		vao.Bind();
+
+		uNormalHalfWidth.Set(0.5f / scale.x);
+		uGroupHalfWidth.Set(0.5f / scale.x);
+		uAxisHalfWidth.Set(1.0f / scale.x);
 		glDrawArraysInstanced(GL_POINTS, 0, 1, xCount);
+
+		uNormalHalfWidth.Set(0.5f / scale.y);
+		uGroupHalfWidth.Set(0.5f / scale.y);
+		uAxisHalfWidth.Set(1.0f / scale.y);
 		glDrawArraysInstanced(GL_POINTS, 1, 1, yCount);
+
 		vao.Unbind();
 
 		program->Unuse();
@@ -116,6 +122,7 @@ struct PointTestRenderingAction : public IRenderingAction
 	VertexArrayObject vao;
 	BufferObject vbo;
 	ShaderProgram::Uniform uProjection;
+	ShaderProgram::Uniform uScale;
 	ShaderProgram* program;
 	OrthogonalView* view;
 
@@ -125,7 +132,9 @@ protected:
 		Depth::Test::Disable();
 
 		program->Use();
+
 		uProjection.SetMat4(view->GetMatrix());
+		uScale.SetVec2(view->GetScale());
 
 		vao.Bind();
 		glDrawArrays(GL_POINTS, 0, 10000);
@@ -239,6 +248,7 @@ void PointTestContext::_init_points_action()
 	action->program = program;
 	action->view = &_view;
 	action->uProjection = uniforms["uProjection"];
+	action->uScale = uniforms["uScale"];
 	action->view = &_view;
 
 	std::vector<PointVertex> points;

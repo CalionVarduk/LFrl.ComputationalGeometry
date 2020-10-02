@@ -9,6 +9,7 @@ in VS_OUT {
 } gs_in[];
 
 uniform mat4 uProjection;
+uniform vec2 uScale;
 
 out GS_OUT {
 	out vec4 color;
@@ -26,10 +27,12 @@ void main()
 	float halfSize = gs_in[0].halfSize;
 	gs_out.color = gs_in[0].color;
 
-	BuildVertex(position, vec2(-halfSize, -halfSize));
-	BuildVertex(position, vec2(halfSize, -halfSize));
-	BuildVertex(position, vec2(-halfSize, halfSize));
-	BuildVertex(position, vec2(halfSize, halfSize));
+	vec2 baseOffset = vec2(halfSize, halfSize) / uScale;
+
+	BuildVertex(position, vec2(-baseOffset.x, -baseOffset.y));
+	BuildVertex(position, vec2(baseOffset.x, -baseOffset.y));
+	BuildVertex(position, vec2(-baseOffset.x, baseOffset.y));
+	BuildVertex(position, vec2(baseOffset.x, baseOffset.y));
 
 	EndPrimitive();
 }
