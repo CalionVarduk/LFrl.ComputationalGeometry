@@ -2,9 +2,9 @@
 
 layout(location = 0) in vec2 aPositionOffset;
 layout(location = 1) in vec2 aAxisDirection;
-layout(location = 2) in float aBaseLineId;
+layout(location = 2) in vec2 aLineHalfLength;
+layout(location = 3) in float aBaseLineId;
 
-uniform mat4 uProjection;
 uniform vec4 uNormalColor;
 uniform vec4 uGroupColor;
 uniform vec4 uAxisColor;
@@ -16,11 +16,12 @@ uniform float uLineOffset;
 
 out VS_OUT {
 	vec4 color;
+	vec2 halfSize;
 } vs_out;
 
-const float zNormal = 1.0f;
+const float zNormal = 0.0f;
 const float zGroup = 0.5f;
-const float zAxis = 0.0f;
+const float zAxis = 1.0f;
 
 int AreNotEq(int a, int b)
 {
@@ -46,7 +47,6 @@ void main()
 {
 	float groupSize = floor(uGroupSize);
 	int lineId = int(aBaseLineId) + gl_InstanceID;
-	vec2 position = aPositionOffset + aAxisDirection * (uLineOffset * float(lineId));
 
 	int isAxisLine = AreEq(lineId, 0);
 	int isGroupLine = And(Neg(isAxisLine), AreEq(int(mod(float(lineId), groupSize)), 0));
@@ -54,7 +54,10 @@ void main()
 
 	float halfWidth = isNormalLine * uNormalHalfWidth + isGroupLine * uGroupHalfWidth + isAxisLine * uAxisHalfWidth;
 
-	gl_Position = uProjection * vec4(position, 0.0f, 1.0f);
+	vec2 position = aPositionOffset + aAxisDirection * (uLineOffset * float(lineId));
+	float zIndex = isNormalLine * zNormal + isGroupLine * zGroup + isAxisLine * zAxis;
+	gl_Position = vec4(position, zIndex, 1.0f);
 
-	vs_out.color = isAxisLine * uAxisColor + isGroupLine * uGroupColor + isNormalLine * uNormalColor;
+	vs_out.color = isNormalLine * uNormalColor + isGroupLine * uGroupColor + isAxisLine * uAxisColor;
+	vs_out.halfSize = aAxisDirection * halfWidth + aLineHalfLength;
 }

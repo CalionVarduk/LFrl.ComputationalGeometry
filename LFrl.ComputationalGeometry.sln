@@ -14,6 +14,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LFrl.OGL", "Cpp\LFrl.OGL\LFrl.OGL.vcxproj", "{B9BF7E59-4FC9-4480-A046-4E1609A69D29}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LFrl.Console.Cpp", "Cpp\LFrl.Console.Cpp\LFrl.Console.Cpp.vcxproj", "{983A496C-8322-4D69-82C7-690E66E743E8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B9BF7E59-4FC9-4480-A046-4E1609A69D29} = {B9BF7E59-4FC9-4480-A046-4E1609A69D29}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LFrl.CG.Cpp.API", "Cpp\LFrl.CG.Cpp.API\LFrl.CG.Cpp.API.vcxproj", "{FD155C93-6129-4A28-BBDB-D0A13599969F}"
 EndProject

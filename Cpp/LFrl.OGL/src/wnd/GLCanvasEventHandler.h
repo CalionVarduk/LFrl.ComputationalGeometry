@@ -18,6 +18,9 @@ struct GLCanvasEventHandler
 	GLCanvasEventHandler& operator=(GLCanvasEventHandler&&) noexcept = default;
 	virtual ~GLCanvasEventHandler() { _canvas = nullptr; }
 
+	GLCanvas* GetCanvas() noexcept { return _canvas; }
+	GLCanvas const* GetCanvas() const noexcept { return _canvas; }
+
 	virtual LRESULT Handle(UINT message, WPARAM wParam, LPARAM lParam);
 
 private:

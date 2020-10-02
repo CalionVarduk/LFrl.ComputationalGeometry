@@ -184,6 +184,7 @@
     <ClInclude Include="src\primitives\CachedTimerQuery.h" />
     <ClInclude Include="src\primitives\BufferObject.h" />
     <ClInclude Include="src\primitives\OrthogonalView.h" />
+    <ClInclude Include="src\primitives\Point.h" />
     <ClInclude Include="src\primitives\primitives.h" />
     <ClInclude Include="src\primitives\Projection.h" />
     <ClInclude Include="src\primitives\ShaderObject.h" />

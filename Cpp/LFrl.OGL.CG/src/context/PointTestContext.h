@@ -21,6 +21,8 @@ public:
 
 	CachedTimerQuery<32> const& GetTimer() const noexcept { return _timer; }
 
+	OrthogonalView& GetView() noexcept { return _view; }
+
 protected:
 	virtual void OnInitializing() override;
 	virtual void OnDisposing() override;
@@ -34,7 +36,6 @@ private:
 	OrthogonalView _view;
 	Capacities::Color::ClearValueSnapshot _backgroundColor;
 	GLbitfield _clearBuffers;
-	std::vector<GridLineVertex> _gridLines;
 
 	void _init_setup_action();
 	void _init_grid_action();

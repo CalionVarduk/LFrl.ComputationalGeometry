@@ -1,15 +1,10 @@
 #include "PointTestContext.h"
 
+#include "LFrl.Common/src/QuickRng.h"
+
 using namespace LFRL_OGL_CAPACITIES;
 
 BEGIN_LFRL_OGL_CG_NAMESPACE
-
-struct gridtest
-{
-	glm::vec2 positionOffset;
-	glm::vec2 axisDirection;
-	glm::float32 baseLineId;
-};
 
 struct SetupRenderingAction : public IRenderingAction
 {
@@ -25,10 +20,9 @@ struct SetupRenderingAction : public IRenderingAction
 protected:
 	void OnInvoked() override
 	{
-		FaceCulling::Disable();
-		//FaceCulling::Cull::SetBack();
+		FaceCulling::Enable();
+		FaceCulling::Cull::SetBack();
 		Sampling::Multi::Enable();
-		Points::SetSize(4);
 		wglSwapIntervalEXT(0);
 
 		backgroundColor->Apply();
@@ -60,7 +54,6 @@ struct GridTestRenderingAction : public IRenderingAction
 	ShaderProgram::Uniform uLineOffset;
 	ShaderProgram* program;
 	OrthogonalView* view;
-	std::vector<GridLineVertex>* gridLines;
 
 protected:
 	void OnInvoked() override
@@ -69,27 +62,29 @@ protected:
 
 		program->Use();
 		
-		auto lineOffset = 10;
+		auto lineOffset = 20;
+		auto bounds = view->GetBounds();
+		auto scale = view->GetScale();
 
 		uProjection.SetMat4(view->GetMatrix());
-		uNormalColor.SetVec4(0.0f, 0.0f, 1.0f, 1.0f);
-		uGroupColor.SetVec4(0.0f, 1.0f, 0.0f, 1.0f);
-		uAxisColor.SetVec4(1.0f, 0.0f, 0.0f, 1.0f);
-		//uNormalHalfWidth.Set(0.5f);
-		//uGroupHalfWidth.Set(0.5f);
-		//uAxisHalfWidth.Set(1.0f);
-		uGroupSize.Set(5.0f);
+		uNormalColor.SetVec4(0.09f, 0.11f, 0.13f, 1.0f);
+		uGroupColor.SetVec4(0.18f, 0.21f, 0.24f, 1.0f);
+		uAxisColor.SetVec4(0.25f, 0.3f, 0.4f, 1.0f);
+		uNormalHalfWidth.Set(0.5f / scale.x);
+		uGroupHalfWidth.Set(0.5f / scale.x);
+		uAxisHalfWidth.Set(1.0f / scale.x);
+		uGroupSize.Set(10.0f);
 		uLineOffset.Set((float)lineOffset);
 
-		auto bounds = view->GetBounds();
-
 		vbo.Bind();
-		gridtest gt[2];
+		GridLineVertex gt[2];
 		gt[0].positionOffset = glm::vec2(0, bounds.GetCentreY());
 		gt[0].axisDirection = glm::vec2(1, 0);
+		gt[0].lineHalfLength = glm::vec2(0, bounds.GetHeight() + 1);
 		gt[0].baseLineId = glm::ceil(bounds.GetLeft() / lineOffset) - 1;
 		gt[1].positionOffset = glm::vec2(bounds.GetCentreX(), 0);
 		gt[1].axisDirection = glm::vec2(0, 1);
+		gt[1].lineHalfLength = glm::vec2(bounds.GetWidth() + 1, 0);
 		gt[1].baseLineId = glm::ceil(bounds.GetBottom() / lineOffset) - 1;
 		vbo.SetData(gt);
 		vbo.Unbind();
@@ -133,7 +128,7 @@ protected:
 		uProjection.SetMat4(view->GetMatrix());
 
 		vao.Bind();
-		glDrawArrays(GL_POINTS, 0, 3);
+		glDrawArrays(GL_POINTS, 0, 10000);
 		vao.Unbind();
 
 		program->Unuse();
@@ -141,7 +136,7 @@ protected:
 };
 
 PointTestContext::PointTestContext(RenderingContext& rc, ShaderStore* shaders) noexcept
-	: base(rc), _shaders(shaders), _timer(), _view(), _backgroundColor(), _clearBuffers(), _gridLines()
+	: base(rc), _shaders(shaders), _timer(), _view(), _backgroundColor(), _clearBuffers()
 {}
 
 void PointTestContext::_init_setup_action()
@@ -170,7 +165,7 @@ void PointTestContext::_init_grid_action()
 
 	auto program = _shaders->GetPrograms()->GetOrCreate("grid");
 	program->AttachShader(*vShader);
-	//program->AttachShader(*gShader);
+	program->AttachShader(*gShader);
 	program->AttachShader(*fShader);
 	auto linkResult = program->Link();
 
@@ -179,7 +174,7 @@ void PointTestContext::_init_grid_action()
 
 	auto aPositionOffset = attributes["aPositionOffset"];
 	auto aAxisDirection = attributes["aAxisDirection"];
-	//auto aLineHalfLength = attributes["aLineHalfLength"];
+	auto aLineHalfLength = attributes["aLineHalfLength"];
 	auto aBaseLineId = attributes["aBaseLineId"];
 
 	auto action = new GridTestRenderingAction();
@@ -189,28 +184,24 @@ void PointTestContext::_init_grid_action()
 	action->uNormalColor = uniforms["uNormalColor"];
 	action->uGroupColor = uniforms["uGroupColor"];
 	action->uAxisColor = uniforms["uAxisColor"];
-	//action->uNormalHalfWidth = uniforms["uNormalHalfWidth"];
-	//action->uGroupHalfWidth = uniforms["uGroupHalfWidth"];
-	//action->uAxisHalfWidth = uniforms["uAxisHalfWidth"];
+	action->uNormalHalfWidth = uniforms["uNormalHalfWidth"];
+	action->uGroupHalfWidth = uniforms["uGroupHalfWidth"];
+	action->uAxisHalfWidth = uniforms["uAxisHalfWidth"];
 	action->uGroupSize = uniforms["uGroupSize"];
 	action->uLineOffset = uniforms["uLineOffset"];
 	action->view = &_view;
-	action->gridLines = &_gridLines;
-
-	_gridLines.push_back({ glm::vec2(0, 0), glm::vec2(1, 0), glm::vec2(0, 1), 0 });
-	//_gridLines.push_back({ glm::vec2(0, 0), glm::vec2(0, 1), glm::vec2(1, 0), 0 });
 
 	action->vao.Bind();
 	action->vbo.Bind();
 
 	aPositionOffset.Enable();
-	aPositionOffset.Configure(sizeof(gridtest));
+	aPositionOffset.Configure(&GridLineVertex::positionOffset);
 	aAxisDirection.Enable();
-	aAxisDirection.Configure(sizeof(gridtest), sizeof(glm::vec2));
-	//aLineHalfLength.Enable();
-	//aLineHalfLength.Configure(sizeof(GridLineVertex), 2 * sizeof(glm::vec2));
+	aAxisDirection.Configure(&GridLineVertex::axisDirection);
+	aLineHalfLength.Enable();
+	aLineHalfLength.Configure(&GridLineVertex::lineHalfLength);
 	aBaseLineId.Enable();
-	aBaseLineId.Configure(sizeof(gridtest), 2 * sizeof(glm::vec2));
+	aBaseLineId.Configure(&GridLineVertex::baseLineId);
 
 	action->vao.Unbind();
 
@@ -251,9 +242,23 @@ void PointTestContext::_init_points_action()
 	action->view = &_view;
 
 	std::vector<PointVertex> points;
-	points.push_back({ glm::vec3(100, 50, 0), glm::vec4(1, 1, 1, 1), 7 });
-	points.push_back({ glm::vec3(80, 270, 0), glm::vec4(1, 0, 0, 1), 4 });
-	points.push_back({ glm::vec3(220, 140, 0), glm::vec4(0, 1, 1, 1), 12 });
+
+	LFRL_COMMON::QuickRng rng;
+
+	for (int i = 0; i < 10000; ++i)
+	{
+		auto sizeRand = rng.NextInt32(0, 3);
+		auto size = sizeRand == 0 ? 3 : sizeRand == 1 ? 5 : 7;
+
+		auto x = rng.NextFloat() * 200000.0f - 100000.0f;
+		auto y = rng.NextFloat() * 200000.0f - 100000.0f;
+
+		auto r = rng.NextFloat() * 0.4f;
+		auto g = rng.NextFloat() * 0.4f;
+		auto b = rng.NextFloat() * 0.4f;
+
+		points.push_back({ glm::vec3(x, y, 0.0f), glm::vec4(0.5f + r, 0.5f + g, 0.5f + b, 1.0f), (float)size });
+	}
 
 	action->vao.Bind();
 	action->vbo.Bind();
@@ -261,11 +266,11 @@ void PointTestContext::_init_points_action()
 	action->vbo.SetData(points);
 
 	aPosition.Enable();
-	aPosition.Configure(sizeof(PointVertex));
+	aPosition.Configure(&PointVertex::position);
 	aColor.Enable();
-	aColor.Configure(sizeof(PointVertex), sizeof(glm::vec3));
+	aColor.Configure(&PointVertex::color);
 	aSize.Enable();
-	aSize.Configure(sizeof(PointVertex), sizeof(glm::vec3) + sizeof(glm::vec4));
+	aSize.Configure(&PointVertex::size);
 
 	action->vao.Unbind();
 
@@ -276,7 +281,6 @@ void PointTestContext::OnInitializing()
 {
 	base::OnInitializing();
 	_timer.Initialize();
-	_view.Translate(70, 0);
 	_init_setup_action();
 	_init_grid_action();
 	_init_points_action();
@@ -303,7 +307,6 @@ void PointTestContext::OnFinishDrawing()
 void PointTestContext::OnBoundsChanged(glm::ivec2 const& position, glm::ivec2 const& size)
 {
 	_view.SetProjection(static_cast<GLfloat>(size.x), static_cast<GLfloat>(size.y));
-	_view.MoveTo(-50.0f, -120.0f, 0.5f, 0.5f);
 	base::OnBoundsChanged(position, size);
 }
 

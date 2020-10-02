@@ -33,6 +33,9 @@ struct OrthogonalView
 		GLfloat GetCentreY() const noexcept { return _origin.y + (_size.y * 0.5f); }
 		void SetCentreY(GLfloat value) noexcept { _origin.y = value - (_size.y * 0.5f); }
 
+		GLfloat GetX(GLfloat anchor) const noexcept { return _origin.x + (_size.x * anchor); }
+		GLfloat GetY(GLfloat anchor) const noexcept { return _origin.y + (_size.y * anchor); }
+
 		Bounds() noexcept;
 		Bounds(glm::vec2 const& origin, glm::vec2 const& size) noexcept;
 
@@ -56,23 +59,27 @@ struct OrthogonalView
 	GLfloat GetProjectionZFar() const noexcept { return _zFar; }
 
 	void ResetProjection() noexcept;
-	void SetProjection(glm::vec2 const& size, GLfloat zNear = -1000.0f, GLfloat zFar = 1.0f) noexcept { SetProjection(size.x, size.y, zNear, zFar); }
-	void SetProjection(GLfloat width, GLfloat height, GLfloat zNear = -1000.0f, GLfloat zFar = 1.0f) noexcept;
+	void SetProjection(glm::vec2 const& size, GLfloat zNear = -1.0f, GLfloat zFar = 1000.0f) noexcept { SetProjection(size.x, size.y, zNear, zFar); }
+	void SetProjection(GLfloat width, GLfloat height, GLfloat zNear = -1.0f, GLfloat zFar = 1000.0f) noexcept;
 
 	glm::mat4 GetViewMatrix() const noexcept { return _view.Get(); }
 	glm::vec2 GetTranslation() const noexcept { return glm::vec2(_view.Get()[3].x, _view.Get()[3].y); }
-	glm::vec2 GetScale() const noexcept { return glm::vec2(1.0f, 1.0f); }
+	glm::vec2 GetScale() const noexcept { return glm::vec2(_view.Get()[0].x, _view.Get()[1].y); }
 
 	void ResetView() noexcept { _view.Reset(); }
-	void Translate(glm::vec2 const& value) noexcept { Translate(value.x, value.y); }
-	void Translate(GLfloat x, GLfloat y) noexcept { _view.Translate(x, y, 0.0f); }
+	void Translate(glm::vec2 const& value) noexcept;
+	void Translate(GLfloat x, GLfloat y) noexcept { Translate(glm::vec2(x, y)); }
+	void Scale(glm::vec2 const& scale, glm::vec2 const& anchor) noexcept;
+	void Scale(glm::vec2 const& scale) noexcept { Scale(scale, glm::vec2(0.5f, 0.5f)); }
+	void Scale(GLfloat x, GLfloat y, GLfloat anchorX, GLfloat anchorY) noexcept { Scale(glm::vec2(x, y), glm::vec2(anchorX, anchorY)); }
+	void Scale(GLfloat x, GLfloat y) noexcept { Scale(glm::vec2(x, y)); }
 
-	void MoveTo(glm::vec2 const& position) { MoveTo(position.x, position.y); }
-	void MoveTo(glm::vec2 const& position, glm::vec2 const& anchor) { MoveTo(position.x, position.y, anchor.x, anchor.y); }
-	void MoveTo(GLfloat x, GLfloat y) { MoveTo(x, y, 0.0f, 0.0f); }
-	void MoveTo(GLfloat x, GLfloat y, GLfloat anchorX, GLfloat anchorY);
+	void MoveTo(glm::vec2 const& point, glm::vec2 const& anchor) noexcept;
+	void MoveTo(glm::vec2 const& point) noexcept { MoveTo(point, glm::vec2(0.5f, 0.5f)); }
+	void MoveTo(GLfloat x, GLfloat y, GLfloat anchorX, GLfloat anchorY) noexcept { MoveTo(glm::vec2(x, y), glm::vec2(anchorX, anchorY)); }
+	void MoveTo(GLfloat x, GLfloat y) noexcept { MoveTo(glm::vec2(x, y)); }
 
-	glm::mat4 GetMatrix() const noexcept { return _projection.Get() * _view.Get(); }
+	glm::mat4 GetMatrix() const noexcept { return GetProjectionMatrix() * GetViewMatrix(); }
 
 	void Reset() noexcept;
 	Bounds GetBounds() const;

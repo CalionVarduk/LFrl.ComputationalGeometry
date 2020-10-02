@@ -30,6 +30,9 @@
     <ClInclude Include="src\vertexes\GridLineVertex.h">
       <Filter>vertexes</Filter>
     </ClInclude>
+    <ClInclude Include="src\context\PointTestEventHandler.h">
+      <Filter>context</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\points_v_1.glsl">
@@ -65,6 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\PointTestContext.cpp">
+      <Filter>context</Filter>
+    </ClCompile>
+    <ClCompile Include="src\context\PointTestEventHandler.cpp">
       <Filter>context</Filter>
     </ClCompile>
   </ItemGroup>

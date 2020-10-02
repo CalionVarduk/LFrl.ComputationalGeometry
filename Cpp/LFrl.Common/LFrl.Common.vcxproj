@@ -60,6 +60,7 @@
     <ClInclude Include="src\utils\not_any.h" />
     <ClInclude Include="src\utils\not_any_traits.h" />
     <ClInclude Include="src\utils\not_trait.h" />
+    <ClInclude Include="src\utils\offset_of.h" />
     <ClInclude Include="src\utils\param.h" />
     <ClInclude Include="src\utils\param_move.h" />
     <ClInclude Include="src\utils\param_pack_type.h" />

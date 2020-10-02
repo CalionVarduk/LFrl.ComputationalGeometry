@@ -3,6 +3,7 @@
 
 #include "Class.h"
 #include "LFrl.Common/src/utils/typedefs.h"
+#include "../primitives/Point.h"
 
 BEGIN_LFRL_OGL_WND_NAMESPACE
 
@@ -52,6 +53,7 @@ struct Handle final
 	RECT GetRect() const;
 	POINT GetPosition() const;
 	POINT GetSize() const;
+	PointF GetAnchorPoint(POINT point) const;
 
 	bool SetPos(RECT pos, UINT flags = 0);
 

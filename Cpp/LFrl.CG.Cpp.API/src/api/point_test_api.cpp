@@ -6,10 +6,11 @@ PGLCANVAS lfrl_cg_api_point_test_gl_canvas_create(HWND parentHwnd, INT width, IN
 	if (shaders == nullptr)
 		return nullptr;
 
-	LFRL_OGL_CG::PointTestContextFactory factory(shaders);
+	LFRL_OGL_CG::PointTestContextFactory contextFactory(shaders);
+	LFRL_OGL_CG::PointTestEventHandlerFactory eventHandlerFactory;
 
 	auto canvas = sStore->Create<GLCANVAS>();
-	auto result = canvas->Initialize(parentHwnd, { 0, 0, width, height }, &factory);
+	auto result = canvas->Initialize(parentHwnd, { 0, 0, width, height }, &contextFactory, &eventHandlerFactory);
 	if (result != LFRL_OGL_WND::GLCanvas::ActionResult::OK)
 	{
 		sStore->Delete(canvas);

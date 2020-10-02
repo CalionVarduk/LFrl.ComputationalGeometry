@@ -173,6 +173,9 @@
     <ClInclude Include="src\logging\logging.h">
       <Filter>logging</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\offset_of.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\logging\logger.cpp">

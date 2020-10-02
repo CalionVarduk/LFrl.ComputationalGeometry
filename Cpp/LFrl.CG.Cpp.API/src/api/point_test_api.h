@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "LFrl.OGL/src/wnd/GLCanvas.h"
 #include "LFrl.OGL.CG/src/context/PointTestContextFactory.h"
+#include "LFrl.OGL.CG/src/context/PointTestEventHandler.h"
 
 typedef LFRL_OGL_WND::GLCanvas GLCANVAS;
 typedef GLCANVAS* PGLCANVAS;

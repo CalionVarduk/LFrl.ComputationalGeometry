@@ -3,6 +3,7 @@
 
 #include "CachedTimerQuery.h"
 #include "OrthogonalView.h"
+#include "Point.h"
 #include "ShaderProgram.h"
 #include "VertexArrayObject.h"
 

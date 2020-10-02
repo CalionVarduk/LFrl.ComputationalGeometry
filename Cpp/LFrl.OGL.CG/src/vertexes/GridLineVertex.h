@@ -10,7 +10,7 @@ struct GridLineVertex
 	glm::vec2 positionOffset;
 	glm::vec2 axisDirection;
 	glm::vec2 lineHalfLength;
-	glm::int32 baseLineId;
+	GLfloat baseLineId;
 };
 
 END_LFRL_OGL_CG_NAMESPACE

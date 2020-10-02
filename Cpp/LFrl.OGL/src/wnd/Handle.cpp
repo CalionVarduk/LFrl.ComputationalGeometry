@@ -78,6 +78,15 @@ POINT Handle::GetSize() const
 	return { rect.right - rect.left, rect.bottom - rect.top };
 }
 
+PointF Handle::GetAnchorPoint(POINT point) const
+{
+	auto size = GetSize();
+	PointF result;
+	result.x = size.x == 0 ? 0.0f : static_cast<GLfloat>(point.x) / static_cast<GLfloat>(size.x);
+	result.y = size.y == 0 ? 0.0f : static_cast<GLfloat>(point.y) / static_cast<GLfloat>(size.y);
+	return result;
+}
+
 bool Handle::SetPos(RECT pos, UINT flags)
 {
 	return ::SetWindowPos(_hwnd, NULL, pos.left, pos.top, pos.right - pos.left, pos.bottom - pos.top, flags | SWP_NOZORDER);

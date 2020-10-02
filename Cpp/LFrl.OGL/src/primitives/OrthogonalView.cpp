@@ -40,14 +40,42 @@ void OrthogonalView::SetProjection(GLfloat width, GLfloat height, GLfloat zNear,
 	_zFar = zFar;
 }
 
-void OrthogonalView::MoveTo(GLfloat x, GLfloat y, GLfloat anchorX, GLfloat anchorY)
+void OrthogonalView::Translate(glm::vec2 const& value) noexcept
 {
-	anchorX = glm::clamp(anchorX, 0.0f, 1.0f);
-	anchorY = glm::clamp(anchorY, 0.0f, 1.0f);
-	auto offset = (GetProjectionSize() / GetScale()) * glm::vec2(anchorX, anchorY);
+	auto scale = GetScale();
+	auto prevTranslation = GetTranslation();
+
+	auto translation = prevTranslation + value;
 
 	_view.Reset();
-	_view.Translate(-x + offset.x, -y + offset.y, 0);
+	_view.Translate(translation.x, translation.y, 0.0f);
+	_view.Scale(scale.x, scale.y, 1.0f);
+}
+
+void OrthogonalView::Scale(glm::vec2 const& scale, glm::vec2 const& anchor) noexcept
+{
+	auto size = GetProjectionSize();
+	auto prevScale = GetScale();
+	auto prevTranslation = GetTranslation();
+
+	auto translationOffset = (scale / prevScale - 1.0f) * (prevTranslation - anchor * size);
+	auto translation = prevTranslation + translationOffset;
+
+	_view.Reset();
+	_view.Translate(translation.x, translation.y, 0.0f);
+	_view.Scale(scale.x, scale.y, 1.0f);
+}
+
+void OrthogonalView::MoveTo(glm::vec2 const& point, glm::vec2 const& anchor) noexcept
+{
+	auto size = GetProjectionSize();
+	auto scale = GetScale();
+
+	auto translation = -scale * point + anchor * size;
+
+	_view.Reset();
+	_view.Translate(translation.x, translation.y, 0.0f);
+	_view.Scale(scale.x, scale.y, 1.0f);
 }
 
 void OrthogonalView::Reset() noexcept
@@ -58,7 +86,8 @@ void OrthogonalView::Reset() noexcept
 
 OrthogonalView::Bounds OrthogonalView::GetBounds() const
 {
-	return Bounds(-GetTranslation(), GetProjectionSize() / GetScale());
+	auto scale = GetScale();
+	return Bounds(-GetTranslation() / scale, GetProjectionSize() / scale);
 }
 
 END_LFRL_OGL_NAMESPACE

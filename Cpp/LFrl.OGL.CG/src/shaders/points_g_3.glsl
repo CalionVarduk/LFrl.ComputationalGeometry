@@ -25,11 +25,11 @@ void main()
 	vec4 position = gl_in[0].gl_Position;
 	float halfSize = gs_in[0].halfSize;
 	gs_out.color = gs_in[0].color;
-	
-	BuildVertex(position, vec2(-halfSize, halfSize));
+
 	BuildVertex(position, vec2(-halfSize, -halfSize));
-	BuildVertex(position, vec2(halfSize, halfSize));
 	BuildVertex(position, vec2(halfSize, -halfSize));
+	BuildVertex(position, vec2(-halfSize, halfSize));
+	BuildVertex(position, vec2(halfSize, halfSize));
 
 	EndPrimitive();
 }

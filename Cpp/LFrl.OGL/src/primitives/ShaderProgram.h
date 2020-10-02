@@ -7,6 +7,7 @@
 #include "BufferObject.h"
 #include "ShaderObject.h"
 #include "LFrl.Common/src/memory/array_ptr.h"
+#include "LFrl.Common/src/utils/offset_of.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 
@@ -190,6 +191,18 @@ struct ShaderProgram final
 
 		void Configure(GLuint stride, GLuint offset = 0);
 		void Configure(GLuint size, ConfigurableType type, GLuint stride, GLuint offset = 0, bool normalized = false);
+
+		template <class T>
+		void ConfigureAt(GLuint index, GLuint offset = 0) { ConfigureAt(index, static_cast<GLuint>(sizeof(T)), offset); }
+
+		template <class T>
+		void Configure(GLuint offset = 0) { Configure(static_cast<GLuint>(sizeof(T)), offset); }
+
+		template <class T, class MType>
+		void ConfigureAt(GLuint index, MType T::* mPtr) { ConfigureAt(index, static_cast<GLuint>(sizeof(T)), static_cast<GLuint>(LFRL_COMMON::offset_of(mPtr))); }
+
+		template <class T, class MType>
+		void Configure(MType T::* mPtr) { Configure(static_cast<GLuint>(sizeof(T)), static_cast<GLuint>(LFRL_COMMON::offset_of(mPtr))); }
 
 	private:
 		GLuint _programId;

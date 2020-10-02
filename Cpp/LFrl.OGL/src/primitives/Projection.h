@@ -17,7 +17,7 @@ struct Projection : public Transform
 	Projection() noexcept;
 	explicit Projection(glm::mat4 const& value) noexcept;
 
-	void SetOrthogonal(GLfloat width, GLfloat height, GLfloat zNear = -1000.0f, GLfloat zFar = 1.0f);
+	void SetOrthogonal(GLfloat width, GLfloat height, GLfloat zNear = -1.0f, GLfloat zFar = 1000.0f);
 	void SetPerspective(GLfloat fov, GLfloat width, GLfloat height, GLfloat zNear, GLfloat zFar);
 };
 

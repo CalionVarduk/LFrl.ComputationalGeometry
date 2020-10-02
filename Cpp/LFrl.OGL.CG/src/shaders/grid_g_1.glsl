@@ -26,10 +26,10 @@ void main()
 	vec2 halfSize = gs_in[0].halfSize;
 	gs_out.color = gs_in[0].color;
 
-	BuildVertex(position, vec2(-halfSize.x, halfSize.y));
-	BuildVertex(position, vec2(halfSize.x, halfSize.y));
 	BuildVertex(position, vec2(-halfSize.x, -halfSize.y));
 	BuildVertex(position, vec2(halfSize.x, -halfSize.y));
+	BuildVertex(position, vec2(-halfSize.x, halfSize.y));
+	BuildVertex(position, vec2(halfSize.x, halfSize.y));
 
 	EndPrimitive();
 }
