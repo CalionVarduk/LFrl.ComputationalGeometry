@@ -39,6 +39,7 @@ struct GridTestRenderingAction : public IRenderingAction
 		vao.Initialize();
 		vbo.SetUsage(BufferObject::Usage::DYNAMIC_DRAW);
 		vbo.Initialize();
+		zoomLevel = 0;
 	}
 
 	VertexArrayObject vao;
@@ -54,6 +55,7 @@ struct GridTestRenderingAction : public IRenderingAction
 	ShaderProgram::Uniform uLineOffset;
 	ShaderProgram* program;
 	OrthogonalView* view;
+	GLint zoomLevel;
 
 protected:
 	void OnInvoked() override
@@ -62,9 +64,14 @@ protected:
 
 		program->Use();
 		
-		auto lineOffset = 20;
+		auto lineOffset = 20.0f;
 		auto bounds = view->GetBounds();
 		auto scale = view->GetScale();
+
+		if (zoomLevel >= 0)
+			lineOffset /= glm::pow(2, (zoomLevel + 8) >> 4);
+		else
+			lineOffset /= glm::pow(2, (zoomLevel + 3) >> 3);
 
 		vbo.Bind();
 		GridLineVertex gt[2];
@@ -87,7 +94,7 @@ protected:
 		uGroupColor.SetVec4(0.18f, 0.21f, 0.24f, 1.0f);
 		uAxisColor.SetVec4(0.25f, 0.3f, 0.4f, 1.0f);
 		uGroupSize.Set(10.0f);
-		uLineOffset.Set((float)lineOffset);
+		uLineOffset.Set(lineOffset);
 
 		vao.Bind();
 
@@ -158,6 +165,11 @@ void PointTestContext::_init_setup_action()
 	action->clearBuffers = &_clearBuffers;
 
 	GetPipeline()->Add(action);
+}
+
+void PointTestContext::SetZoomLevel(GLint zoomLevel)
+{
+	reinterpret_cast<GridTestRenderingAction*>(GetPipeline()->GetActionAt(1))->zoomLevel = zoomLevel;
 }
 
 void PointTestContext::_init_grid_action()

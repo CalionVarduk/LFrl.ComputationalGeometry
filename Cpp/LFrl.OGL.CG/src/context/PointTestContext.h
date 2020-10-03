@@ -23,6 +23,8 @@ public:
 
 	OrthogonalView& GetView() noexcept { return _view; }
 
+	void SetZoomLevel(GLint zoomLevel);
+
 protected:
 	virtual void OnInitializing() override;
 	virtual void OnDisposing() override;

@@ -79,6 +79,8 @@ struct OrthogonalView
 	void MoveTo(GLfloat x, GLfloat y, GLfloat anchorX, GLfloat anchorY) noexcept { MoveTo(glm::vec2(x, y), glm::vec2(anchorX, anchorY)); }
 	void MoveTo(GLfloat x, GLfloat y) noexcept { MoveTo(glm::vec2(x, y)); }
 
+	void RoundTranslation() noexcept;
+
 	glm::mat4 GetMatrix() const noexcept { return GetProjectionMatrix() * GetViewMatrix(); }
 
 	void Reset() noexcept;

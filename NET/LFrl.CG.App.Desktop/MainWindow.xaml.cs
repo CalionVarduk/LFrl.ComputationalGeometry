@@ -39,23 +39,23 @@ namespace LFrl.CG.App.Desktop
 
             _host.CursorPointChange += (s, p) =>
             {
-                CursorText.Text = $"CURSOR: [X: {p.X.ToString("0.00")}, Y: {p.Y.ToString("0.00")}]";
+                CursorText.Text = $"CURSOR: [X: {p.X.ToString("0.0000")}, Y: {p.Y.ToString("0.0000")}]";
             };
             _host.TranslationChange += (s, p) =>
             {
-                TranslationText.Text = $"TRANSLATION: [X: {p.X.ToString("0.00")}, Y: {p.Y.ToString("0.00")}]";
+                TranslationText.Text = $"TRANSLATION: [X: {p.X.ToString("0.0000")}, Y: {p.Y.ToString("0.0000")}]";
             };
             _host.ScaleChange += (s, p) =>
             {
-                ScaleText.Text = $"SCALE: [X: {p.X.ToString("0.00")}, Y: {p.Y.ToString("0.00")}]";
+                ScaleText.Text = $"SCALE: [X: {p.X.ToString("0.0000")}, Y: {p.Y.ToString("0.0000")}]";
             };
             _host.OriginChange += (s, p) =>
             {
-                BoundsOriginText.Text = $"BOUNDS ORIGIN: [X: {p.X.ToString("0.00")}, Y: {p.Y.ToString("0.00")}]";
+                BoundsOriginText.Text = $"BOUNDS ORIGIN: [X: {p.X.ToString("0.0000")}, Y: {p.Y.ToString("0.0000")}]";
             };
             _host.SizeChange += (s, p) =>
             {
-                BoundsSizeText.Text = $"BOUNDS SIZE: [X: {p.X.ToString("0.00")}, Y: {p.Y.ToString("0.00")}]";
+                BoundsSizeText.Text = $"BOUNDS SIZE: [X: {p.X.ToString("0.0000")}, Y: {p.Y.ToString("0.0000")}]";
             };
         }
     }

@@ -78,6 +78,13 @@ void OrthogonalView::MoveTo(glm::vec2 const& point, glm::vec2 const& anchor) noe
 	_view.Scale(scale.x, scale.y, 1.0f);
 }
 
+void OrthogonalView::RoundTranslation() noexcept
+{
+	auto translation = glm::round(GetTranslation());
+	_view.SetScalar(3, 0, translation.x);
+	_view.SetScalar(3, 1, translation.y);
+}
+
 void OrthogonalView::Reset() noexcept
 {
 	ResetProjection();
