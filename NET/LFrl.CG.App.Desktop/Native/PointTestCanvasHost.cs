@@ -44,6 +44,10 @@ namespace LFrl.CG.App.Desktop.Native
 
         protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            // TODO: these special messages should be handled by the Interop PointTestCanvas class
+            // contracts (and message types) should be defined as separate structs/enums, if needed
+            // either marshal delegates to unmanaged cpp or expose public method for handling messages
+            // Interop class should publish a .NET event
             if (msg == 0x0400 + 1) // cursor relative to bounds
             {
                 handled = true;

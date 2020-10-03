@@ -4,6 +4,13 @@
 
 BEGIN_LFRL_OGL_CG_NAMESPACE
 
+// TODO:
+// move points shader uScale uniform from geometry to vertex shader (send vec2 instead of float size in out data)
+// add translation boundaries
+// add zoom level scaling with boundaries
+// add numerical stability to scaling and translation
+// add line path rendering (represent lines as a 4-vertex square, with normalized line direction and length + normalized line direction rotated by PI/2 - for line width)
+// each line path point should be rendered as a simple point, for now, with slightly bigger size than the line's width
 LRESULT PointTestEventHandler::Handle(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
