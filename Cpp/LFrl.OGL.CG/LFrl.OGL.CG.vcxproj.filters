@@ -33,6 +33,9 @@
     <ClInclude Include="src\context\PointTestEventHandler.h">
       <Filter>context</Filter>
     </ClInclude>
+    <ClInclude Include="src\vertexes\LineSegmentVertex.h">
+      <Filter>vertexes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\points_v_1.glsl">
@@ -63,6 +66,15 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="src\shaders\grid_f_1.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\segments_v_1.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\segments_g_1.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="src\shaders\segments_f_1.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

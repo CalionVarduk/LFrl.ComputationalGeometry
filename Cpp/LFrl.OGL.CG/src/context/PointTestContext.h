@@ -9,6 +9,7 @@
 
 #include "../vertexes/PointVertex.h"
 #include "../vertexes/GridLineVertex.h"
+#include "../vertexes/LineSegmentVertex.h"
 
 BEGIN_LFRL_OGL_CG_NAMESPACE
 
@@ -41,6 +42,7 @@ private:
 
 	void _init_setup_action();
 	void _init_grid_action();
+	void _init_segments_action();
 	void _init_points_action();
 };
 

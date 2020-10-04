@@ -77,11 +77,11 @@ protected:
 		GridLineVertex gt[2];
 		gt[0].positionOffset = glm::vec2(0, bounds.GetCentreY());
 		gt[0].axisDirection = glm::vec2(1, 0);
-		gt[0].lineHalfLength = glm::vec2(0, bounds.GetHeight() + 1);
+		gt[0].lineHalfLength = glm::vec2(0, bounds.GetHeight() * 0.5f + 1);
 		gt[0].baseLineId = glm::ceil(bounds.GetLeft() / lineOffset) - 1;
 		gt[1].positionOffset = glm::vec2(bounds.GetCentreX(), 0);
 		gt[1].axisDirection = glm::vec2(0, 1);
-		gt[1].lineHalfLength = glm::vec2(bounds.GetWidth() + 1, 0);
+		gt[1].lineHalfLength = glm::vec2(bounds.GetWidth() * 0.5f + 1, 0);
 		gt[1].baseLineId = glm::ceil(bounds.GetBottom() / lineOffset) - 1;
 		vbo.SetData(gt);
 		vbo.Unbind();
@@ -145,6 +145,41 @@ protected:
 
 		vao.Bind();
 		glDrawArrays(GL_POINTS, 0, 10000);
+		vao.Unbind();
+
+		program->Unuse();
+	}
+};
+
+struct SegmentTestRenderingAction : public IRenderingAction
+{
+	typedef IRenderingAction base;
+
+	SegmentTestRenderingAction() noexcept : base(), vao(), vbo()
+	{
+		vao.Initialize();
+		vbo.Initialize();
+	}
+
+	VertexArrayObject vao;
+	BufferObject vbo;
+	ShaderProgram::Uniform uProjection;
+	ShaderProgram::Uniform uScale;
+	ShaderProgram* program;
+	OrthogonalView* view;
+
+protected:
+	void OnInvoked() override
+	{
+		Depth::Test::Disable();
+
+		program->Use();
+
+		uProjection.SetMat4(view->GetMatrix());
+		uScale.SetVec2(view->GetScale());
+
+		vao.Bind();
+		glDrawArrays(GL_POINTS, 0, 1000);
 		vao.Unbind();
 
 		program->Unuse();
@@ -229,6 +264,86 @@ void PointTestContext::_init_grid_action()
 	GetPipeline()->Add(action);
 }
 
+void PointTestContext::_init_segments_action()
+{
+	auto vShader = _shaders->Load(ShaderObject::Type::VERTEX, "segments_v_1");
+	auto vCompileResult = vShader->Compile();
+	auto vInfo = vShader->GetInfoLog();
+
+	auto gShader = _shaders->Load(ShaderObject::Type::GEOMETRY, "segments_g_1");
+	auto gCompileResult = gShader->Compile();
+
+	auto fShader = _shaders->Load(ShaderObject::Type::FRAGMENT, "segments_f_1");
+	auto fCompileResult = fShader->Compile();
+
+	auto program = _shaders->GetPrograms()->GetOrCreate("segments");
+	//if (_sProgram->GetState() != ObjectState::READY)
+	//{
+	program->AttachShader(*vShader);
+	program->AttachShader(*gShader);
+	program->AttachShader(*fShader);
+	auto linkResult = program->Link();
+	//}
+
+	auto attributes = program->GetAttributesMap();
+	auto uniforms = program->GetUniformsMap();
+
+	auto aStart = attributes["aStart"];
+	auto aDirection = attributes["aDirection"];
+	auto aLength = attributes["aLength"];
+	auto aSize = attributes["aSize"];
+	auto aColor = attributes["aColor"];
+
+	auto action = new SegmentTestRenderingAction();
+	action->program = program;
+	action->view = &_view;
+	action->uProjection = uniforms["uProjection"];
+	action->uScale = uniforms["uScale"];
+	action->view = &_view;
+
+	std::vector<LineSegmentVertex> segments;
+
+	LFRL_COMMON::QuickRng rng;
+
+	for (int i = 0; i < 1000; ++i)
+	{
+		auto sizeRand = rng.NextInt32(0, 2);
+		auto size = sizeRand == 0 ? 1 : 2;
+
+		auto sx = rng.NextFloat() * 20000.0f - 10000.0f;
+		auto sy = rng.NextFloat() * 20000.0f - 10000.0f;
+
+		auto d = glm::normalize(glm::vec2(rng.NextFloat(), rng.NextFloat()));
+		auto len = rng.NextFloat() * 1800.0f + 200.0f;
+
+		auto r = rng.NextFloat() * 0.4f;
+		auto g = rng.NextFloat() * 0.4f;
+		auto b = rng.NextFloat() * 0.4f;
+
+		segments.push_back({ glm::vec3(sx, sy, 0.0f), d, len, (float)size, glm::vec4(r, g, b, 1.0f) });
+	}
+
+	action->vao.Bind();
+	action->vbo.Bind();
+	
+	action->vbo.SetData(segments);
+
+	aStart.Enable();
+	aStart.Configure(&LineSegmentVertex::start);
+	aDirection.Enable();
+	aDirection.Configure(&LineSegmentVertex::direction);
+	aLength.Enable();
+	aLength.Configure(&LineSegmentVertex::length);
+	aSize.Enable();
+	aSize.Configure(&LineSegmentVertex::size);
+	aColor.Enable();
+	aColor.Configure(&LineSegmentVertex::color);
+
+	action->vao.Unbind();
+
+	GetPipeline()->Add(action);
+}
+
 void PointTestContext::_init_points_action()
 {
 	auto vShader = _shaders->Load(ShaderObject::Type::VERTEX, "points_v_2");
@@ -305,6 +420,7 @@ void PointTestContext::OnInitializing()
 	_timer.Initialize();
 	_init_setup_action();
 	_init_grid_action();
+	_init_segments_action();
 	_init_points_action();
 }
 
