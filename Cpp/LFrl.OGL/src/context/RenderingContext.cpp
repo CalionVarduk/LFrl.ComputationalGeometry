@@ -50,6 +50,27 @@ RenderingContext::RenderingContext() noexcept
 	: _hglrc(NULL), _dc(NULL), _attributes(), _state(ObjectState::CREATED)
 {}
 
+RenderingContext::RenderingContext(RenderingContext&& other) noexcept
+	: _hglrc(NULL), _dc(NULL), _attributes(), _state(ObjectState::CREATED)
+{
+	std::swap(_hglrc, other._hglrc);
+	std::swap(_dc, other._dc);
+	std::swap(_attributes, other._attributes);
+	std::swap(_state, other._state);
+}
+
+RenderingContext& RenderingContext::operator= (RenderingContext&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_hglrc, other._hglrc);
+		std::swap(_dc, other._dc);
+		std::swap(_attributes, other._attributes);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 RenderingContext::ActionResult RenderingContext::Initialize(DeviceContext& dc, RenderingAttributes attributes)
 {
 	if (_state >= ObjectState::READY)

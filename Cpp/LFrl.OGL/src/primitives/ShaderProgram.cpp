@@ -499,6 +499,23 @@ ShaderProgram::ShaderProgram() noexcept
 	: _id(0), _state(ObjectState::CREATED)
 {}
 
+ShaderProgram::ShaderProgram(ShaderProgram&& other) noexcept
+	: _id(0), _state(ObjectState::CREATED)
+{
+	std::swap(_id, other._id);
+	std::swap(_state, other._state);
+}
+
+ShaderProgram& ShaderProgram::operator= (ShaderProgram&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_id, other._id);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 ShaderProgram::ActionResult ShaderProgram::Initialize()
 {
 	if (_state >= ObjectState::READY)
@@ -556,6 +573,19 @@ std::vector<GLuint> ShaderProgram::GetAttachedShaderIds() const
 	return result;
 }
 
+std::unordered_set<GLuint> ShaderProgram::GetAttachedShaderIdsSet() const
+{
+	auto count = GetAttachedShaderCount();
+	LFRL_COMMON::dynamic_buffer<GLuint> buffer(count);
+	GetAttachedShaderIds(LFRL_COMMON::array_ptr<GLuint>(buffer.data(), buffer.size()));
+	
+	std::unordered_set<GLuint> result;
+	for (auto id : buffer)
+		result.insert(id);
+
+	return result;
+}
+
 std::vector<ShaderProgram::Attribute> ShaderProgram::GetAttributes() const
 {
 	auto count = GetAttributeCount(_id);
@@ -572,6 +602,24 @@ std::vector<ShaderProgram::Attribute> ShaderProgram::GetAttributes() const
 	return result;
 }
 
+std::unordered_map<std::string, ShaderProgram::Attribute> ShaderProgram::GetAttributesMap() const
+{
+	auto count = GetAttributeCount(_id);
+	std::unordered_map<std::string, Attribute> result;
+
+	auto nameLength = __get_attribute_max_name_length(_id);
+	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+
+	for (GLuint i = 0; i < count; ++i)
+	{
+		Attribute attr;
+		attr._Populate(_id, i, nameBuffer);
+		result.insert({ attr.GetName(), attr });
+		nameBuffer.reset();
+	}
+	return result;
+}
+
 std::vector<ShaderProgram::Uniform> ShaderProgram::GetUniforms() const
 {
 	auto count = GetUniformCount(_id);
@@ -583,6 +631,24 @@ std::vector<ShaderProgram::Uniform> ShaderProgram::GetUniforms() const
 	for (GLuint i = 0; i < count; ++i)
 	{
 		result[i]._Populate(_id, i, nameBuffer);
+		nameBuffer.reset();
+	}
+	return result;
+}
+
+std::unordered_map<std::string, ShaderProgram::Uniform> ShaderProgram::GetUniformsMap() const
+{
+	auto count = GetUniformCount(_id);
+	std::unordered_map<std::string, Uniform> result;
+
+	auto nameLength = __get_uniform_max_name_length(_id);
+	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+
+	for (GLuint i = 0; i < count; ++i)
+	{
+		Uniform uniform;
+		uniform._Populate(_id, i, nameBuffer);
+		result.insert({ uniform.GetName(), uniform });
 		nameBuffer.reset();
 	}
 	return result;

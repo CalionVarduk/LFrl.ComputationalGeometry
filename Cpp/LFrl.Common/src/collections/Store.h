@@ -12,6 +12,7 @@ BEGIN_LFRL_COMMON_NAMESPACE
 class Store final
 {
 	Store(Store const&) = delete;
+	Store& operator=(Store const&) = delete;
 
 public:
 	enum struct ActionResult
@@ -23,11 +24,9 @@ public:
 		UNSUPPORTED_NULL = 4
 	};
 
-	Store() = default;
-	Store(Store&&) = default;
-	Store& operator=(Store const&) = delete;
-	Store& operator=(Store&&) = default;
-
+	Store();
+	Store(Store&&);
+	Store& operator=(Store&&);
 	~Store() { Clear(); }
 
 	u32 GetSize() const noexcept { return static_cast<u32>(_map.size()); }

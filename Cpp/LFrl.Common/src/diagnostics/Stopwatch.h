@@ -13,14 +13,13 @@ public:
 	typedef typename duration_calculator::duration duration;
 	typedef typename duration_calculator::time_point time_point;
 
-	StopWatch(StopWatch const&) = delete;
-	StopWatch(StopWatch&&) = delete;
-	~StopWatch() noexcept = default;
-	StopWatch& operator= (StopWatch const&) = delete;
-	StopWatch& operator= (StopWatch&&) = delete;
-
 	StopWatch() noexcept;
 	explicit StopWatch(bool start) noexcept;
+	StopWatch(StopWatch const&) = default;
+	StopWatch(StopWatch&&) noexcept;
+	StopWatch& operator= (StopWatch const&) = default;
+	StopWatch& operator= (StopWatch&&) noexcept;
+	~StopWatch() noexcept = default;
 
 	bool IsRunning() const noexcept;
 	time_point GetStartPoint() const noexcept;

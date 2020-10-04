@@ -6,6 +6,23 @@ Container::Container() noexcept
 	: _map(), _keyedMap()
 {}
 
+Container::Container(Container&& other)
+	: _map(), _keyedMap()
+{
+	std::swap(_map, other._map);
+	std::swap(_keyedMap, other._keyedMap);
+}
+
+Container& Container::operator= (Container&& other)
+{
+	if (this != &other)
+	{
+		std::swap(_map, other._map);
+		std::swap(_keyedMap, other._keyedMap);
+	}
+	return *this;
+}
+
 Container::~Container() noexcept
 {
 	_map.clear();

@@ -18,6 +18,17 @@ struct Transform
 	glm::mat4 const& Get() const noexcept { return _value; }
 	void Set(glm::mat4 const& value) noexcept { _value = value; }
 
+	glm::vec4 GetColumn(GLint index) const { return _value[index]; }
+	void SetColumn(GLint index, glm::vec4 const& value) { _value[index] = value; }
+	void SetColumn(GLint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w) { SetColumn(index, glm::vec4(x, y, z, w)); }
+	
+	glm::vec4 GetRow(GLint index) const { return glm::vec4(_value[0][index], _value[1][index], _value[2][index], _value[3][index]); }
+	void SetRow(GLint index, glm::vec4 const& value);
+	void SetRow(GLint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w) { SetRow(index, glm::vec4(x, y, z, w)); }
+	
+	GLfloat GetScalar(GLint columnIndex, GLint rowIndex) const { return _value[columnIndex][rowIndex]; }
+	void SetScalar(GLint columnIndex, GLint rowIndex, GLfloat value) { _value[columnIndex][rowIndex] = value; }
+
 	void Reset() noexcept;
 	void Translate(glm::vec3 const& translate) noexcept;
 	void Translate(GLfloat x, GLfloat y, GLfloat z) noexcept { Translate(glm::vec3(x, y, z)); }

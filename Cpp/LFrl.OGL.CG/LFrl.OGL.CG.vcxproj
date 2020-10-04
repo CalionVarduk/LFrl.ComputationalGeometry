@@ -145,9 +145,37 @@
     <ProjectReference Include="..\LFrl.OGL\LFrl.OGL.vcxproj">
       <Project>{B9BF7E59-4FC9-4480-A046-4E1609A69D29}</Project>
     </ProjectReference>
-	<ProjectReference Include="..\LFrl.CG.Core\LFrl.CG.Core.vcxproj">
+    <ProjectReference Include="..\LFrl.CG.Core\LFrl.CG.Core.vcxproj">
       <Project>{8DBF5068-5D82-471A-BEAC-E5CF9A1EB7AA}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\context\PointTestContext.h" />
+    <ClInclude Include="src\context\PointTestContextFactory.h" />
+    <ClInclude Include="src\context\PointTestEventHandler.h" />
+    <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\vertexes\GridLineVertex.h" />
+    <ClInclude Include="src\vertexes\LineSegmentVertex.h" />
+    <ClInclude Include="src\vertexes\PointVertex.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\grid_f_1.glsl" />
+    <None Include="src\shaders\grid_g_1.glsl" />
+    <None Include="src\shaders\grid_v_1.glsl" />
+    <None Include="src\shaders\grid_v_2.glsl" />
+    <None Include="src\shaders\points_f_1.glsl" />
+    <None Include="src\shaders\points_g_1.glsl" />
+    <None Include="src\shaders\points_g_2.glsl" />
+    <None Include="src\shaders\points_g_3.glsl" />
+    <None Include="src\shaders\points_v_1.glsl" />
+    <None Include="src\shaders\points_v_2.glsl" />
+    <None Include="src\shaders\segments_f_1.glsl" />
+    <None Include="src\shaders\segments_g_1.glsl" />
+    <None Include="src\shaders\segments_v_1.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\context\PointTestContext.cpp" />
+    <ClCompile Include="src\context\PointTestEventHandler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

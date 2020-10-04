@@ -8,19 +8,22 @@ BEGIN_LFRL_OGL_NAMESPACE
 
 class ShaderObjectStore : public __detail::object_store_base<ShaderObjectStore, ShaderObject>
 {
+	typedef __detail::object_store_base<ShaderObjectStore, ShaderObject> base;
 	friend class __detail::object_store_base<ShaderObjectStore, ShaderObject>;
 
 public:
 	ShaderObjectStore(ShaderObjectStore const&) = delete;
-	ShaderObjectStore(ShaderObjectStore&&) = default;
 	ShaderObjectStore& operator=(ShaderObjectStore const&) = delete;
-	ShaderObjectStore& operator=(ShaderObjectStore&&) = default;
 
-	ShaderObjectStore() noexcept;
+	ShaderObjectStore();
+	ShaderObjectStore(ShaderObjectStore&&);
+	ShaderObjectStore& operator=(ShaderObjectStore&&);
 
-	ShaderObject* Create(ShaderObject::Type type, char const* source);
-	ShaderObject* Create(ShaderObject::Type type, std::string const& source) { return Create(type, source.data()); }
-	ShaderObject* Load(ShaderObject::Type type, std::string const& filePath);
+	ShaderObject* Create(std::string const& name);
+	ShaderObject* Create(std::string const& name, ShaderObject::Type type, char const* source);
+	ShaderObject* Create(std::string const& name, ShaderObject::Type type, std::string const& source) { return Create(name, type, source.data()); }
+
+	ShaderObject* GetOrCreate(std::string const& name);
 
 private:
 	static ObjectState GetState(ShaderObject* shader) noexcept { return shader->GetState(); }

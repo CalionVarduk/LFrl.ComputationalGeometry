@@ -19,11 +19,11 @@ struct Class final
 	};
 
 	Class(Class const&) = delete;
-	Class(Class&&) = default;
 	Class& operator=(Class const&) = delete;
-	Class& operator=(Class&&) = default;
 
 	Class() noexcept;
+	Class(Class&&) noexcept;
+	Class& operator=(Class&&) noexcept;
 	~Class() { Dispose(); }
 
 	WNDCLASS const& GetParams() const noexcept { return _params; }

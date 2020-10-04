@@ -16,9 +16,10 @@ struct ShaderObject final
 		UNDEFINED_TYPE = 2,
 		NULL_SOURCE = 3,
 		SHADER_GEN_FAILURE = 4,
-		COMPILATION_FAILURE = 5,
-		ALREADY_DISPOSED = 6,
-		NOT_READY = 7
+		ALREADY_COMPILED = 5,
+		COMPILATION_FAILURE = 6,
+		ALREADY_DISPOSED = 7,
+		NOT_READY = 8
 	};
 
 	enum struct Type
@@ -39,20 +40,23 @@ struct ShaderObject final
 	static bool IsFlaggedForDeletion(GLuint id);
 
 	ShaderObject(ShaderObject const&) = delete;
-	ShaderObject(ShaderObject&&) = default;
 	ShaderObject& operator=(ShaderObject const&) = delete;
-	ShaderObject& operator=(ShaderObject&&) = default;
 
 	ShaderObject() noexcept;
+	ShaderObject(ShaderObject&&) noexcept;
+	ShaderObject& operator=(ShaderObject&&) noexcept;
 	~ShaderObject() { Dispose(); }
 
 	GLuint GetId() const noexcept { return _id; }
 	ObjectState GetState() const noexcept { return _state; }
 	Type GetType() const noexcept { return _type; }
+	bool IsCompiled() const noexcept { return _isCompiled; }
 
 	ActionResult Initialize(Type type, char const* source);
 	ActionResult Initialize(Type type, std::string const& source) { return Initialize(type, source.data()); }
 	
+	ActionResult Compile();
+
 	std::string GetSource() const { return GetSource(_id); }
 	std::string GetInfoLog() const { return GetInfoLog(_id); }
 	bool IsFlaggedForDeletion() const { return IsFlaggedForDeletion(_id); }
@@ -62,6 +66,7 @@ struct ShaderObject final
 private:
 	GLuint _id;
 	Type _type;
+	bool _isCompiled;
 	ObjectState _state;
 };
 

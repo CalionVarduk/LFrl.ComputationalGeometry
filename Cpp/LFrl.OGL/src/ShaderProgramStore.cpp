@@ -2,11 +2,21 @@
 
 BEGIN_LFRL_OGL_NAMESPACE
 
-ShaderProgramStore::ShaderProgramStore() noexcept
-	: __detail::object_store_base<ShaderProgramStore, ShaderProgram>()
+ShaderProgramStore::ShaderProgramStore()
+	: base()
 {}
 
-ShaderProgram* ShaderProgramStore::Create()
+ShaderProgramStore::ShaderProgramStore(ShaderProgramStore&& other)
+	: base(std::move(other))
+{}
+
+ShaderProgramStore& ShaderProgramStore::operator= (ShaderProgramStore&& other)
+{
+	base::operator=(std::move(other));
+	return *this;
+}
+
+ShaderProgram* ShaderProgramStore::Create(std::string const& name)
 {
 	auto program = new ShaderProgram();
 	auto initResult = program->Initialize();
@@ -16,8 +26,18 @@ ShaderProgram* ShaderProgramStore::Create()
 		delete program;
 		return nullptr;
 	}
-	Insert(program);
+	if (!Insert(name, program))
+	{
+		delete program;
+		return nullptr;
+	}
 	return program;
+}
+
+ShaderProgram* ShaderProgramStore::GetOrCreate(std::string const& name)
+{
+	auto program = Get(name);
+	return program == nullptr ? Create(name) : program;
 }
 
 END_LFRL_OGL_NAMESPACE

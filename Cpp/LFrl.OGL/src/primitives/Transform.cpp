@@ -10,6 +10,14 @@ Transform::Transform(glm::mat4 const& value) noexcept
 	: _value(value)
 {}
 
+void Transform::SetRow(GLint index, glm::vec4 const& value)
+{
+	_value[0][index] = value.x;
+	_value[1][index] = value.y;
+	_value[2][index] = value.z;
+	_value[3][index] = value.w;
+}
+
 void Transform::Reset() noexcept
 {
 	_value = glm::identity<glm::mat4>();

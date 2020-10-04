@@ -10,9 +10,7 @@ BEGIN_LFRL_OGL_NAMESPACE
 struct IRenderingAction
 {
 	IRenderingAction(IRenderingAction const&) = delete;
-	IRenderingAction(IRenderingAction&&) = default;
 	IRenderingAction& operator=(IRenderingAction const&) = delete;
-	IRenderingAction& operator=(IRenderingAction&&) = default;
 
 	virtual ~IRenderingAction() { Disable(); }
 
@@ -24,6 +22,8 @@ struct IRenderingAction
 
 protected:
 	IRenderingAction() noexcept;
+	IRenderingAction(IRenderingAction&&) noexcept;
+	IRenderingAction& operator=(IRenderingAction&&) noexcept;
 
 	virtual void OnInvoked() = 0;
 
@@ -40,8 +40,8 @@ class RenderingPipeline final
 
 public:
 	RenderingPipeline();
-	RenderingPipeline(RenderingPipeline&&) = default;
-	RenderingPipeline& operator=(RenderingPipeline&&) = default;
+	RenderingPipeline(RenderingPipeline&&);
+	RenderingPipeline& operator=(RenderingPipeline&&);
 	~RenderingPipeline() { Clear(); }
 
 	LFRL_COMMON::sz GetActionCount() const noexcept { return _actions.size(); }

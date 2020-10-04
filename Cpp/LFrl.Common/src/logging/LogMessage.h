@@ -14,8 +14,8 @@ struct LogMessage final
 	LogMessage() = default;
 	LogMessage(LogMessage const&) = default;
 	LogMessage(LogMessage&&) = default;
-	LogMessage& operator= (LogMessage const&) = delete;
-	LogMessage& operator= (LogMessage&&) = delete;
+	LogMessage& operator= (LogMessage const&) = default;
+	LogMessage& operator= (LogMessage&&) = default;
 
 	enum struct Type
 	{

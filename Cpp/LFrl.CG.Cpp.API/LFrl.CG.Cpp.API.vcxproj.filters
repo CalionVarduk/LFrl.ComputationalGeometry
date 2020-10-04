@@ -1,4 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+  <ItemGroup>
+    <ClCompile Include="src\dllmain.cpp" />
+    <ClCompile Include="src\api\point_test_api.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\store_api.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="src\api\utility_api.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="internal">
+      <UniqueIdentifier>{1b5b8c82-831a-4eb9-b8bf-d1f91fb3eaca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="api">
+      <UniqueIdentifier>{57ec9287-a4e1-4f2e-b00a-fe908fd35d65}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\internal\api_macros.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\internal\namespace_macros.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\point_test_api.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\ActionResult.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\utils.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Services.h" />
+    <ClInclude Include="src\api\store_api.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="src\api\utility_api.h">
+      <Filter>api</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

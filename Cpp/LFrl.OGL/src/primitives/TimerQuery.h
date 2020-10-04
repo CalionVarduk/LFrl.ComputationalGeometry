@@ -21,11 +21,11 @@ struct TimerQuery final
 	static bool IsAnyRunning() { return GetRunningId() != NULL; }
 
 	TimerQuery(TimerQuery const&) = delete;
-	TimerQuery(TimerQuery&&) = default;
 	TimerQuery& operator=(TimerQuery const&) = delete;
-	TimerQuery& operator=(TimerQuery&&) = default;
 
 	TimerQuery() noexcept;
+	TimerQuery(TimerQuery&&) noexcept;
+	TimerQuery& operator=(TimerQuery&&) noexcept;
 	~TimerQuery() { Dispose(); }
 
 	GLuint GetActiveId() const noexcept { return _ids[_active]; }

@@ -68,9 +68,9 @@ public:
 	typedef T* pointer;
 	typedef T& reference;
 
-	Nullable() noexcept = default;
-	Nullable(Nullable<T>&&) = default;
-	Nullable<T>& operator=(Nullable<T>&&) = default;
+	Nullable() noexcept;
+	Nullable(Nullable<T>&&) noexcept;
+	Nullable<T>& operator=(Nullable<T>&&) noexcept;
 
 	explicit Nullable(pointer ptr) noexcept;
 	explicit Nullable(WeakNullable<T> const& other) noexcept;
@@ -168,6 +168,27 @@ WeakNullable<T>& WeakNullable<T>::operator=(Null) noexcept
 }
 
 template <class T>
+Nullable<T>::Nullable() noexcept
+	: _ptr(nullptr)
+{}
+
+template <class T>
+Nullable<T>::Nullable(Nullable<T>&& other) noexcept
+	: _ptr(nullptr)
+{
+	std::swap(_ptr, other._ptr);
+}
+
+template <class T>
+Nullable<T>& Nullable<T>::operator= (Nullable<T>&& other) noexcept
+{
+	if (this != &other)
+		std::swap(_ptr, other._ptr);
+
+	return *this;
+}
+
+template <class T>
 Nullable<T>::Nullable(typename Nullable<T>::pointer ptr) noexcept
 	: _ptr(ptr)
 {}
@@ -213,9 +234,7 @@ void Nullable<T>::Set(Null)
 template <class T>
 void Nullable<T>::Swap(Nullable<T>& other) noexcept
 {
-	auto temp = _ptr;
-	_ptr = other._ptr;
-	other._ptr = temp;
+	std::swap(_ptr, other._ptr);
 }
 
 template <class T>

@@ -14,9 +14,37 @@ IRenderingAction::IRenderingAction() noexcept
 	: _isEnabled(true)
 {}
 
+IRenderingAction::IRenderingAction(IRenderingAction&& other) noexcept
+	: _isEnabled(true)
+{
+	std::swap(_isEnabled, other._isEnabled);
+}
+
+IRenderingAction& IRenderingAction::operator= (IRenderingAction&& other) noexcept
+{
+	if (this != &other)
+		std::swap(_isEnabled, other._isEnabled);
+
+	return *this;
+}
+
 RenderingPipeline::RenderingPipeline()
 	: _actions()
 {}
+
+RenderingPipeline::RenderingPipeline(RenderingPipeline&& other)
+	: _actions()
+{
+	std::swap(_actions, other._actions);
+}
+
+RenderingPipeline& RenderingPipeline::operator= (RenderingPipeline&& other)
+{
+	if (this != &other)
+		std::swap(_actions, other._actions);
+
+	return *this;
+}
 
 void RenderingPipeline::Add(IRenderingAction* action)
 {

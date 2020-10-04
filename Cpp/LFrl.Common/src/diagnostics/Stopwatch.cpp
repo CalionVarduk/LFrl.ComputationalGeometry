@@ -10,6 +10,28 @@ StopWatch::StopWatch(bool start) noexcept
 	: _duration(), _end(_duration.get_start()), _isRunning(start)
 {}
 
+StopWatch::StopWatch(StopWatch&& other) noexcept
+	: _duration(), _end(_duration.get_start()), _isRunning(other._isRunning.load())
+{
+	std::swap(_duration, other._duration);
+	std::swap(_end, other._end);
+	other._isRunning.store(false);
+}
+
+StopWatch& StopWatch::operator= (StopWatch&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_duration, other._duration);
+		std::swap(_end, other._end);
+
+		auto value = _isRunning.load();
+		_isRunning.store(other._isRunning);
+		other._isRunning.store(value);
+	}
+	return *this;
+}
+
 bool StopWatch::IsRunning() const noexcept
 {
 	return _isRunning.load();

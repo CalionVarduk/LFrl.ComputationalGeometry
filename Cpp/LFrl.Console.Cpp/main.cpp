@@ -7,8 +7,10 @@
 #include "LFrl.Common/src/utils/is_iterable.h"
 #include "LFrl.Common/src/utils/reverse.h"
 #include "LFrl.Common/src/memory/array_ptr.h"
+#include "LFrl.OGL/src/primitives/primitives.h"
 
 using namespace LFRL_COMMON;
+using namespace LFRL_OGL;
 
 u64 ans = 0;
 
@@ -50,6 +52,29 @@ private:
 	QuickRng _rng;
 };
 
+void scalingTest()
+{
+	auto Cc = glm::ivec2(1500, 314);
+	auto Ac = glm::vec2(0.78125f, 0.64798f);
+	auto Ob = glm::vec2(-200.58104, -199.60675);
+	auto Os = glm::vec2(1280.0f, 594.66669f);
+	auto S = glm::vec2(1.5f, 1.5f);
+	auto Ps = Os * S;
+	auto T = -Ob * S;
+	auto C = Os * Ac + Ob;
+	auto M = glm::identity<glm::mat4>();
+	M = glm::translate(M, glm::vec3(T, 0.0f));
+	M = glm::scale(M, glm::vec3(S, 1.0f));
+
+	auto Sn = S + glm::vec2(0.125f, 0.125f);
+	auto Tno = (Sn / S - 1.0f) * (T - Ac * Ps);
+	auto Tn = T + Tno;
+
+	auto Mn = glm::identity<glm::mat4>();
+	Mn = glm::translate(Mn, glm::vec3(Tn, 0.0f));
+	Mn = glm::scale(Mn, glm::vec3(Sn, 1.0f));
+}
+
 int main()
 {
 	std::vector<int> vvvv;
@@ -72,5 +97,10 @@ int main()
 	auto rdms = rd.get_sum();
 	auto rdns = rd.get_average();
 	//auto rdmsd = d.get_as<double, std::chrono::milliseconds::period>();
+
+
+	scalingTest();
+
+
 	return 0;
 }

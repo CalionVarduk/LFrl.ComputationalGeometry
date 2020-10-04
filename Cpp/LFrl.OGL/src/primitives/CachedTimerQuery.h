@@ -13,11 +13,11 @@ struct CachedTimerQuery final
 	static constexpr GLuint Size = size;
 
 	CachedTimerQuery(CachedTimerQuery<size> const&) = delete;
-	CachedTimerQuery(CachedTimerQuery<size>&&) = default;
 	CachedTimerQuery<size>& operator=(CachedTimerQuery<size> const&) = delete;
-	CachedTimerQuery<size>& operator=(CachedTimerQuery<size>&&) = default;
 
 	CachedTimerQuery() noexcept;
+	CachedTimerQuery(CachedTimerQuery<size>&&) noexcept;
+	CachedTimerQuery<size>& operator=(CachedTimerQuery<size>&&) noexcept;
 	~CachedTimerQuery() { Dispose(); }
 
 	TimerQuery const& GetTimer() const noexcept { return _timer; }
@@ -49,6 +49,33 @@ CachedTimerQuery<size>::CachedTimerQuery() noexcept
 	: _timer(), _length(0), _index(0), _cacheNs(), _cacheTotalNs(0)
 {
 	std::memset(_cacheNs, 0, sizeof(_cacheNs));
+}
+
+template <GLuint size>
+CachedTimerQuery<size>::CachedTimerQuery(CachedTimerQuery<size>&& other) noexcept
+	: _timer(), _length(0), _index(0), _cacheNs(), _cacheTotalNs(0)
+{
+	std::memset(_cacheNs, 0, sizeof(_cacheNs));
+
+	std::swap(_timer, other._timer);
+	std::swap(_length, other._length);
+	std::swap(_index, other._index);
+	std::swap(_cacheNs, other._cacheNs);
+	std::swap(_cacheTotalNs, other._cacheTotalNs);
+}
+
+template <GLuint size>
+CachedTimerQuery<size>& CachedTimerQuery<size>::operator= (CachedTimerQuery<size>&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_timer, other._timer);
+		std::swap(_length, other._length);
+		std::swap(_index, other._index);
+		std::swap(_cacheNs, other._cacheNs);
+		std::swap(_cacheTotalNs, other._cacheTotalNs);
+	}
+	return *this;
 }
 
 template <GLuint size>

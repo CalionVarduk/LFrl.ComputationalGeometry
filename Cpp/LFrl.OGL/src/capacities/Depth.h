@@ -10,7 +10,6 @@ else MakeWritable();
 
 BEGIN_LFRL_OGL_CAPACITIES_NAMESPACE
 
-// TODO: add Debug (might be a struct? include getting errors)
 namespace Depth
 {
 	bool IsReadonly() noexcept;

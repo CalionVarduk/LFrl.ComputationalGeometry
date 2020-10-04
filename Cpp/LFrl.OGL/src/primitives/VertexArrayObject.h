@@ -38,11 +38,11 @@ struct VertexArrayObject final
 	static void DisposeRange(std::array<VertexArrayObject*, count>& arrays);
 
 	VertexArrayObject(VertexArrayObject const&) = delete;
-	VertexArrayObject(VertexArrayObject&&) = default;
 	VertexArrayObject& operator=(VertexArrayObject const&) = delete;
-	VertexArrayObject& operator=(VertexArrayObject&&) = default;
 
 	VertexArrayObject() noexcept;
+	VertexArrayObject(VertexArrayObject&&) noexcept;
+	VertexArrayObject& operator=(VertexArrayObject&&) noexcept;
 	~VertexArrayObject() { Dispose(); }
 
 	GLuint GetId() const noexcept { return _id; }

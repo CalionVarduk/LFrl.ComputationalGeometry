@@ -2,6 +2,24 @@
 
 BEGIN_LFRL_COMMON_NAMESPACE
 
+Store::Store()
+	: _map()
+{}
+
+Store::Store(Store&& other)
+	: _map()
+{
+	std::swap(_map, other._map);
+}
+
+Store& Store::operator=(Store&& other)
+{
+	if (this != &other)
+		std::swap(_map, other._map);
+
+	return *this;
+}
+
 bool Store::Contains(uPtr address) const
 {
 	return _map.find(address) != _map.end();

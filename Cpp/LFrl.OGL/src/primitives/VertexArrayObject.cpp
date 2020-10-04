@@ -18,6 +18,23 @@ VertexArrayObject::VertexArrayObject() noexcept
 	: _id(0), _state(ObjectState::CREATED)
 {}
 
+VertexArrayObject::VertexArrayObject(VertexArrayObject&& other) noexcept
+	: _id(0), _state(ObjectState::CREATED)
+{
+	std::swap(_id, other._id);
+	std::swap(_state, other._state);
+}
+
+VertexArrayObject& VertexArrayObject::operator= (VertexArrayObject&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_id, other._id);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 VertexArrayObject::ActionResult VertexArrayObject::Initialize()
 {
 	if (_state >= ObjectState::READY)

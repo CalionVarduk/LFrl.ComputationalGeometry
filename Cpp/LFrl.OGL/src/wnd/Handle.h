@@ -3,6 +3,7 @@
 
 #include "Class.h"
 #include "LFrl.Common/src/utils/typedefs.h"
+#include "../primitives/Point.h"
 
 BEGIN_LFRL_OGL_WND_NAMESPACE
 
@@ -32,11 +33,11 @@ struct Handle final
 	};
 
 	Handle(Handle const&) = delete;
-	Handle(Handle&&) = default;
 	Handle& operator=(Handle const&) = delete;
-	Handle& operator=(Handle&&) = default;
 
 	Handle() noexcept;
+	Handle(Handle&&) noexcept;
+	Handle& operator=(Handle&&) noexcept;
 	~Handle() { Dispose(); }
 
 	HWND GetParentHwnd() const;
@@ -52,6 +53,7 @@ struct Handle final
 	RECT GetRect() const;
 	POINT GetPosition() const;
 	POINT GetSize() const;
+	PointF GetAnchorPoint(POINT point) const;
 
 	bool SetPos(RECT pos, UINT flags = 0);
 

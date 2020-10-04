@@ -18,9 +18,6 @@ class Logger
 	Logger& operator= (Logger const&) = delete;
 
 public:
-	Logger(Logger&&) = default;
-	Logger& operator= (Logger&&) = default;
-
 	struct DateTimeFormat
 	{
 		enum struct Year
@@ -117,6 +114,8 @@ public:
 	};
 
 	Logger();
+	Logger(Logger&&);
+	Logger& operator= (Logger&&);
 	virtual ~Logger();
 
 	std::vector<ILoggerListener*> const& GetListeners() const noexcept;

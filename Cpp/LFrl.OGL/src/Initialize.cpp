@@ -1,6 +1,6 @@
 #include "Initialize.h"
 
-#include "wnd/Handle.h"
+#include "context/DeviceContext.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 
@@ -8,15 +8,31 @@ struct __disposable_hdc
 {
 	HWND hwnd;
 	HDC value;
+	PIXELFORMATDESCRIPTOR pxfDescriptor;
+	int pxf;
 
-	__disposable_hdc() noexcept : hwnd(NULL), value(NULL) {}
+	__disposable_hdc() noexcept : hwnd(NULL), value(NULL), pxfDescriptor(DeviceContext::DEFAULT_PIXEL_FORMAT_DESCRIPTOR), pxf(0) {}
 	~__disposable_hdc() { destroy(); }
 
 	bool init(HWND h)
 	{
 		hwnd = h;
 		value = GetDC(hwnd);
-		return value != NULL;
+		if (value == NULL)
+			return false;
+
+		pxf = ChoosePixelFormat(value, &pxfDescriptor);
+		if (pxf == 0)
+		{
+			ReleaseDC(h, value);
+			return false;
+		}
+		if (!SetPixelFormat(value, pxf, &pxfDescriptor))
+		{
+			ReleaseDC(h, value);
+			return false;
+		}
+		return true;
 	}
 
 	bool destroy()
@@ -54,6 +70,11 @@ struct __disposable_hglrc
 	}
 };
 
+LRESULT CALLBACK __dummy_wnd_proc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	return DefWindowProc(hwnd, message, wParam, lParam);
+}
+
 InitializationResult Initialize()
 {
 	if (wglCreateContextAttribsARB != NULL)
@@ -63,6 +84,7 @@ InitializationResult Initialize()
 	std::memset(&wndCls, 0, sizeof(wndCls));
 	wndCls.style = CS_OWNDC | CS_GLOBALCLASS;
 	wndCls.lpszClassName = "__LFrl::OGL::Initialize::DUMMY_WND_CLASS";
+	wndCls.lpfnWndProc = __dummy_wnd_proc;
 
 	Wnd::Class cls;
 	auto cInitResult = cls.Initialize(wndCls);

@@ -1,14 +1,33 @@
 #include "ShaderObjectStore.h"
 
-#include <fstream>
-
 BEGIN_LFRL_OGL_NAMESPACE
 
-ShaderObjectStore::ShaderObjectStore() noexcept
-	: __detail::object_store_base<ShaderObjectStore, ShaderObject>()
+ShaderObjectStore::ShaderObjectStore()
+	: base()
 {}
 
-ShaderObject* ShaderObjectStore::Create(ShaderObject::Type type, char const* source)
+ShaderObjectStore::ShaderObjectStore(ShaderObjectStore&& other)
+	: base(std::move(other))
+{}
+
+ShaderObjectStore& ShaderObjectStore::operator= (ShaderObjectStore&& other)
+{
+	base::operator=(std::move(other));
+	return *this;
+}
+
+ShaderObject* ShaderObjectStore::Create(std::string const& name)
+{
+	auto shader = new ShaderObject();
+	if (!Insert(name, shader))
+	{
+		delete shader;
+		return nullptr;
+	}
+	return shader;
+}
+
+ShaderObject* ShaderObjectStore::Create(std::string const& name, ShaderObject::Type type, char const* source)
 {
 	auto shader = new ShaderObject();
 	auto initResult = shader->Initialize(type, source);
@@ -18,28 +37,18 @@ ShaderObject* ShaderObjectStore::Create(ShaderObject::Type type, char const* sou
 		delete shader;
 		return nullptr;
 	}
-	Insert(shader);
+	if (!Insert(name, shader))
+	{
+		delete shader;
+		return nullptr;
+	}
 	return shader;
 }
 
-ShaderObject* ShaderObjectStore::Load(ShaderObject::Type type, std::string const& filePath)
+ShaderObject* ShaderObjectStore::GetOrCreate(std::string const& name)
 {
-	auto stream = std::ifstream(filePath);
-	if (stream.fail())
-		return nullptr;
-
-	stream.seekg(0, stream.end);
-	auto length = stream.tellg();
-	stream.seekg(0, stream.beg);
-
-	if (length == 0)
-		return nullptr;
-
-	LFRL_COMMON::dynamic_buffer<char> buffer(length);
-	stream.read(buffer.data(), buffer.size());
-	stream.close();
-
-	return Create(type, buffer.data());
+	auto shader = Get(name);
+	return shader == nullptr ? Create(name) : shader;
 }
 
 END_LFRL_OGL_NAMESPACE

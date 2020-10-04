@@ -40,11 +40,11 @@ struct DeviceContext final
 	static const PIXELFORMATDESCRIPTOR DEFAULT_PIXEL_FORMAT_DESCRIPTOR;
 
 	DeviceContext(DeviceContext const&) = delete;
-	DeviceContext(DeviceContext&&) = default;
 	DeviceContext& operator=(DeviceContext const&) = delete;
-	DeviceContext& operator=(DeviceContext&&) = default;
 
 	DeviceContext() noexcept;
+	DeviceContext(DeviceContext&&) noexcept;
+	DeviceContext& operator=(DeviceContext&&) noexcept;
 	~DeviceContext() { Dispose(); }
 
 	HDC GetHdc() const noexcept { return _hdc; }

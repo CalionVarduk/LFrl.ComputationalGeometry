@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LFrl.CG.App.Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Grid.ColumnSpan="1" x:Name="host" Background="Black" />
+        <TextBlock Grid.Column="0" Grid.Row="1" x:Name="CursorText" />
+        <TextBlock Grid.Column="0" Grid.Row="2" x:Name="TranslationText" />
+        <TextBlock Grid.Column="0" Grid.Row="3" x:Name="ScaleText" />
+        <TextBlock Grid.Column="0" Grid.Row="4" x:Name="BoundsOriginText" />
+        <TextBlock Grid.Column="0" Grid.Row="5" x:Name="BoundsSizeText" />
     </Grid>
 </Window>

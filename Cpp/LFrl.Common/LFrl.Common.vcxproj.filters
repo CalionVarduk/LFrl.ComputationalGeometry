@@ -167,6 +167,15 @@
     <ClInclude Include="src\utils\reverse.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\diagnostics\diagnostics.h">
+      <Filter>diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logging\logging.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\offset_of.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\logging\logger.cpp">

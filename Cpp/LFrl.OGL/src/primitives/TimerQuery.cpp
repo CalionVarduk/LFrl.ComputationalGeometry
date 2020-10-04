@@ -15,6 +15,35 @@ TimerQuery::TimerQuery() noexcept
 	std::memset(_ids, 0, sizeof(_ids));
 }
 
+TimerQuery::TimerQuery(TimerQuery&& other) noexcept
+	: _ids(), _active(0), _inactive(1), _queryCount(0), _lastElapsedTimeNs(0), _totalElapsedTimeNs(0), _state(ObjectState::CREATED)
+{
+	std::memset(_ids, 0, sizeof(_ids));
+
+	std::swap(_ids, other._ids);
+	std::swap(_active, other._active);
+	std::swap(_inactive, other._inactive);
+	std::swap(_queryCount, other._queryCount);
+	std::swap(_lastElapsedTimeNs, other._lastElapsedTimeNs);
+	std::swap(_totalElapsedTimeNs, other._totalElapsedTimeNs);
+	std::swap(_state, other._state);
+}
+
+TimerQuery& TimerQuery::operator= (TimerQuery&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_ids, other._ids);
+		std::swap(_active, other._active);
+		std::swap(_inactive, other._inactive);
+		std::swap(_queryCount, other._queryCount);
+		std::swap(_lastElapsedTimeNs, other._lastElapsedTimeNs);
+		std::swap(_totalElapsedTimeNs, other._totalElapsedTimeNs);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 std::chrono::duration<GLuint64, std::chrono::nanoseconds::period> TimerQuery::GetLastElapsedTime() const noexcept
 {
 	return std::chrono::duration<GLuint64, std::chrono::nanoseconds::period>(_lastElapsedTimeNs);
@@ -32,7 +61,7 @@ std::chrono::duration<GLdouble, std::chrono::nanoseconds::period> TimerQuery::Ge
 
 TimerQuery::ActionResult TimerQuery::Initialize()
 {
-	if (_state >= ObjectState::CREATED)
+	if (_state >= ObjectState::READY)
 		return ActionResult::ALREADY_INITIALIZED;
 
 	GLuint ids[2] = { 0, 0 };

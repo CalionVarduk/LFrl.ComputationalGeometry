@@ -98,31 +98,31 @@ struct BufferObject final
 	static void DisposeRange(std::array<BufferObject*, count>& buffers);
 
 	template <class T, GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
-	static void SetData(Target target, std::array<T, count> const& data, Usage usage) { SetData(target, count * sizeof(T), data.data(), usage); }
+	static void SetData(Target target, std::array<T, count> const& data, Usage usage) { SetData(target, static_cast<GLuint>(count * sizeof(T)), data.data(), usage); }
 
 	template <class T>
-	static void SetData(Target target, std::vector<T> const& data, Usage usage) { SetData(target, data.size() * sizeof(T), data.data(), usage); }
+	static void SetData(Target target, std::vector<T> const& data, Usage usage) { SetData(target, static_cast<GLuint>(data.size() * sizeof(T)), data.data(), usage); }
 
 	template <class T>
-	static void SetData(Target target, T const& data, Usage usage) { SetData(target, sizeof(T), &data, usage); }
+	static void SetData(Target target, T const& data, Usage usage) { SetData(target, static_cast<GLuint>(sizeof(T)), &data, usage); }
 
 	template <class T, GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
-	static void SetSubData(Target target, GLint offset, std::array<T, count> const& data) { SetSubData(target, offset, count * sizeof(T), data.data()); }
+	static void SetSubData(Target target, GLint offset, std::array<T, count> const& data) { SetSubData(target, offset, static_cast<GLuint>(count * sizeof(T)), data.data()); }
 
 	template <class T>
-	static void SetSubData(Target target, GLint offset, std::vector<T> const& data) { SetSubData(target, offset, data.size() * sizeof(T), data.data()); }
+	static void SetSubData(Target target, GLint offset, std::vector<T> const& data) { SetSubData(target, offset, static_cast<GLuint>(data.size() * sizeof(T)), data.data()); }
 
 	template <class T>
-	static void SetSubData(Target target, GLint offset, T const& data) { SetSubData(target, offset, sizeof(T), &data); }
+	static void SetSubData(Target target, GLint offset, T const& data) { SetSubData(target, offset, static_cast<GLuint>(sizeof(T)), &data); }
 
 	BufferObject(BufferObject const&) = delete;
-	BufferObject(BufferObject&&) = default;
 	BufferObject& operator=(BufferObject const&) = delete;
-	BufferObject& operator=(BufferObject&&) = default;
 
 	BufferObject() noexcept;
 	explicit BufferObject(Target target) noexcept;
 	BufferObject(Target target, Usage usage) noexcept;
+	BufferObject(BufferObject&&) noexcept;
+	BufferObject& operator=(BufferObject&&) noexcept;
 	~BufferObject() { Dispose(); }
 
 	GLuint GetId() const noexcept { return _id; }

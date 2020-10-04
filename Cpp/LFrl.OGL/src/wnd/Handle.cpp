@@ -10,6 +10,27 @@ Handle::Handle() noexcept
 	: _hwnd(NULL), _cls(NULL), _params(), _state(ObjectState::CREATED)
 {}
 
+Handle::Handle(Handle&& other) noexcept
+	: _hwnd(NULL), _cls(NULL), _params(), _state(ObjectState::CREATED)
+{
+	std::swap(_hwnd, other._hwnd);
+	std::swap(_cls, other._cls);
+	std::swap(_params, other._params);
+	std::swap(_state, other._state);
+}
+
+Handle& Handle::operator=(Handle&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_hwnd, other._hwnd);
+		std::swap(_cls, other._cls);
+		std::swap(_params, other._params);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 HWND Handle::GetParentHwnd() const
 {
 	return ::GetParent(_hwnd);
@@ -27,7 +48,7 @@ HWND Handle::GetRootOwnerHwnd() const
 
 bool Handle::SetData(int index, LONG_PTR data)
 {
-	return SetWindowLongPtr(_hwnd, 0, data);
+	return SetWindowLongPtr(_hwnd, 0, data), true; // TODO: check if actually valid?
 }
 
 LONG_PTR Handle::GetData(int index) const
@@ -55,6 +76,15 @@ POINT Handle::GetSize() const
 {
 	auto rect = GetRect();
 	return { rect.right - rect.left, rect.bottom - rect.top };
+}
+
+PointF Handle::GetAnchorPoint(POINT point) const
+{
+	auto size = GetSize();
+	PointF result;
+	result.x = size.x == 0 ? 0.0f : static_cast<GLfloat>(point.x) / static_cast<GLfloat>(size.x);
+	result.y = size.y == 0 ? 0.0f : static_cast<GLfloat>(point.y) / static_cast<GLfloat>(size.y);
+	return result;
 }
 
 bool Handle::SetPos(RECT pos, UINT flags)

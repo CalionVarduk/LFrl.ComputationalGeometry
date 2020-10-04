@@ -13,12 +13,12 @@ BEGIN_LFRL_COMMON_NAMESPACE
 class Container final
 {
 	Container(Container const&) = delete;
-	Container(Container&&) = delete;
 	Container& operator= (Container const&) = delete;
-	Container& operator= (Container&&) = delete;
 
 public:
 	Container() noexcept;
+	Container(Container&&);
+	Container& operator= (Container&&);
 	~Container() noexcept;
 
 	template <class T>

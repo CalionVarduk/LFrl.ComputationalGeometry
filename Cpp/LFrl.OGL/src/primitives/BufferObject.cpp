@@ -67,6 +67,27 @@ BufferObject::BufferObject(BufferObject::Target target, BufferObject::Usage usag
 	: INITIALIZE(target, usage)
 {}
 
+BufferObject::BufferObject(BufferObject&& other) noexcept
+	: INITIALIZE(Target::ARRAY_BUFFER, Usage::STATIC_DRAW)
+{
+	std::swap(_id, other._id);
+	std::swap(_target, other._target);
+	std::swap(_usage, other._usage);
+	std::swap(_state, other._state);
+}
+
+BufferObject& BufferObject::operator= (BufferObject&& other) noexcept
+{
+	if (this != &other)
+	{
+		std::swap(_id, other._id);
+		std::swap(_target, other._target);
+		std::swap(_usage, other._usage);
+		std::swap(_state, other._state);
+	}
+	return *this;
+}
+
 BufferObject::ActionResult BufferObject::Initialize()
 {
 	if (_state >= ObjectState::READY)
