@@ -4,13 +4,13 @@
 #include <type_traits>
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 struct is_process_32bit
 {
 	static constexpr bool value = sizeof(char*) * CHAR_BIT == 32;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

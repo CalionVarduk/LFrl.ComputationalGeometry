@@ -3,7 +3,7 @@
 
 #include "typedefs.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <u32 i, class T, class... Ts>
 struct param_pack_type
@@ -18,6 +18,6 @@ struct param_pack_type<0, T, Ts...>
 	typedef T type;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

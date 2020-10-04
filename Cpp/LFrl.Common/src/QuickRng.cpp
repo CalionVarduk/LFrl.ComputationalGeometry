@@ -1,6 +1,6 @@
 #include "QuickRng.h"
 
-using namespace LFRL_COMMON;
+BEGIN_LFRL_NAMESPACE
 
 QuickRng::QuickRng() noexcept
 	: _seed(0)
@@ -145,3 +145,5 @@ u32 QuickRng::_Next() noexcept
 	_seed ^= _seed << 5;
 	return _seed;
 }
+
+END_LFRL_NAMESPACE

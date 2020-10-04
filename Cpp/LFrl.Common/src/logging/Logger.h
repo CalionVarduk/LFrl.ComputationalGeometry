@@ -8,7 +8,7 @@
 #include "LogMessage.h"
 #include "../diagnostics/Stopwatch.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 struct ILoggerListener;
 
@@ -212,6 +212,6 @@ private:
 	void _Log(LogMessage::Type type, std::string&& message) const;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

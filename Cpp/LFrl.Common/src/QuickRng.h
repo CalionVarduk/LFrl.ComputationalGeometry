@@ -5,7 +5,7 @@
 #include <limits>
 #include "memory/array_ptr.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 class QuickRng
 {
@@ -52,6 +52,6 @@ private:
 	u32 _Next() noexcept;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

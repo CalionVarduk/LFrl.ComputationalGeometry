@@ -4,7 +4,7 @@
 #include <utility>
 #include "../utils/typedefs.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class T> class Nullable;
 
@@ -276,6 +276,6 @@ Nullable<T> MakeNullable(typename Nullable<T>::pointer ptr) noexcept
 	return Nullable<T>(ptr);
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

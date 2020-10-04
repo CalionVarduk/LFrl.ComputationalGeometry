@@ -116,7 +116,7 @@ LRESULT PointTestEventHandler::Handle(UINT message, WPARAM wParam, LPARAM lParam
 
 			if (dx != 0 || dy != 0)
 			{
-				_transformation.Translate(dx, dy);
+				_transformation.Translate(static_cast<GLfloat>(dx), static_cast<GLfloat>(dy));
 				GetCanvas()->Draw();
 			}
 		}

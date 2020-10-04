@@ -8,17 +8,17 @@ typedef LFRL_CG_API::ActionResult ACTION_RESULT;
 
 BEGIN_LFRL_CG_API_NAMESPACE
 
-inline ActionResult GetActionResult(Common::Store::ActionResult result) noexcept
+inline ActionResult GetActionResult(Store::ActionResult result) noexcept
 {
 	return static_cast<ActionResult>(result);
 }
 
-inline Common::u32 CombineResult(ActionResult result, Common::u16 internalResult) noexcept
+inline u32 CombineResult(ActionResult result, u16 internalResult) noexcept
 {
-	return static_cast<Common::u32>(result) | (static_cast<Common::u32>(internalResult) << 16);
+	return static_cast<u32>(result) | (static_cast<u32>(internalResult) << 16);
 }
 
-inline Common::u32 GetOtherFailureResult(Common::u16 internalResult) noexcept
+inline u32 GetOtherFailureResult(u16 internalResult) noexcept
 {
 	return CombineResult(ActionResult::OTHER_FAILURE, internalResult);
 }
@@ -26,7 +26,7 @@ inline Common::u32 GetOtherFailureResult(Common::u16 internalResult) noexcept
 template <class T>
 ActionResult TrySafeCast(void* pThis, T*& result)
 {
-	auto storeResult = sStore->Get<T>(reinterpret_cast<Common::uPtr>(pThis));
+	auto storeResult = sStore->Get<T>(reinterpret_cast<uPtr>(pThis));
 	auto actionResult = GetActionResult(storeResult.first);
 	result = storeResult.second;
 	return actionResult;
@@ -35,7 +35,7 @@ ActionResult TrySafeCast(void* pThis, T*& result)
 template <class T>
 ActionResult TrySafeCast(void const* pThis, T const*& result)
 {
-	auto storeResult = sStore->Get<const T>(reinterpret_cast<Common::uPtr>(pThis));
+	auto storeResult = sStore->Get<const T>(reinterpret_cast<uPtr>(pThis));
 	auto actionResult = GetActionResult(storeResult.first);
 	result = storeResult.second;
 	return actionResult;

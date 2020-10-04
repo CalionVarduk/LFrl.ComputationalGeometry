@@ -3,7 +3,7 @@
 
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 enum struct pass_by_mode
 {
@@ -11,6 +11,6 @@ enum struct pass_by_mode
     cref = 1
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

@@ -10,7 +10,7 @@
 #define LFRL_COMMON_PASSING_PARAMS_BY_CONST_REF_THRESHOLD 3
 #endif
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class T>
 struct is_passed_by_const_ref
@@ -33,10 +33,10 @@ struct is_passed_by_const_ref
 #endif
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #define LFRL_COMMON_SPECIALIZE_PASSING_BY_CONST_REF(TYPE, ...)\
-template <> struct LFRL_COMMON::is_passed_by_const_ref<TYPE> {\
+template <> struct LFRL::is_passed_by_const_ref<TYPE> {\
 typedef TYPE type;\
 static constexpr bool value = ( __VA_ARGS__ );\
 static constexpr pass_by_mode mode = value ? pass_by_mode::cref : pass_by_mode::value;\

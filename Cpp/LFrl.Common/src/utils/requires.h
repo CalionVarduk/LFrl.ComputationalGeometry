@@ -5,7 +5,7 @@
 #include "any_traits.h"
 #include "not_trait.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 namespace __detail
 {
@@ -30,6 +30,6 @@ using requires_all_traits = typename std::enable_if<all_traits<Traits...>::value
 template <typename... Traits>
 using requires_any_traits = typename std::enable_if<any_traits<Traits...>::value, __detail::enabling_type>::type;
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

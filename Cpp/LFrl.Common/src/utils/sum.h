@@ -3,7 +3,7 @@
 
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class T, T... vs> struct sum;
 
@@ -25,6 +25,6 @@ struct sum<T>
 	static constexpr T value = static_cast<T>(0);
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

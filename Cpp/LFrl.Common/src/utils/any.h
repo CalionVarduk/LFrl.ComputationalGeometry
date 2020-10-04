@@ -4,7 +4,7 @@
 #include <type_traits>
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <bool... tests> struct any;
 
@@ -26,6 +26,6 @@ struct any<>
 	static constexpr bool value = false;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

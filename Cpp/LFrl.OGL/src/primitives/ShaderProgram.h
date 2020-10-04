@@ -199,10 +199,10 @@ struct ShaderProgram final
 		void Configure(GLuint offset = 0) { Configure(static_cast<GLuint>(sizeof(T)), offset); }
 
 		template <class T, class MType>
-		void ConfigureAt(GLuint index, MType T::* mPtr) { ConfigureAt(index, static_cast<GLuint>(sizeof(T)), static_cast<GLuint>(LFRL_COMMON::offset_of(mPtr))); }
+		void ConfigureAt(GLuint index, MType T::* mPtr) { ConfigureAt(index, static_cast<GLuint>(sizeof(T)), static_cast<GLuint>(LFRL::offset_of(mPtr))); }
 
 		template <class T, class MType>
-		void Configure(MType T::* mPtr) { Configure(static_cast<GLuint>(sizeof(T)), static_cast<GLuint>(LFRL_COMMON::offset_of(mPtr))); }
+		void Configure(MType T::* mPtr) { Configure(static_cast<GLuint>(sizeof(T)), static_cast<GLuint>(LFRL::offset_of(mPtr))); }
 
 	private:
 		GLuint _programId;
@@ -212,7 +212,7 @@ struct ShaderProgram final
 		Type _type;
 		std::string _name;
 
-		void _Populate(GLuint programId, GLuint index, LFRL_COMMON::dynamic_buffer<char> const& nameBuffer);
+		void _Populate(GLuint programId, GLuint index, LFRL::dynamic_buffer<char> const& nameBuffer);
 	};
 
 	struct Uniform final
@@ -397,7 +397,7 @@ struct ShaderProgram final
 		Type _type;
 		std::string _name;
 
-		void _Populate(GLuint programId, GLuint index, LFRL_COMMON::dynamic_buffer<char> const& nameBuffer);
+		void _Populate(GLuint programId, GLuint index, LFRL::dynamic_buffer<char> const& nameBuffer);
 	};
 
 	static void Use(GLuint id);
@@ -411,13 +411,13 @@ struct ShaderProgram final
 	static bool DetachShader(GLuint id, GLuint shaderId);
 	static ActionResult Link(GLuint id);
 	static GLuint GetAttachedShaderCount(GLuint id);
-	static GLuint GetAttachedShaderIds(GLuint id, LFRL_COMMON::array_ptr<GLuint> buffer);
+	static GLuint GetAttachedShaderIds(GLuint id, LFRL::array_ptr<GLuint> buffer);
 	static GLuint GetAttributeCount(GLuint id);
-	static GLuint GetAttributes(GLuint id, LFRL_COMMON::array_ptr<Attribute> buffer);
+	static GLuint GetAttributes(GLuint id, LFRL::array_ptr<Attribute> buffer);
 	static void BindAttributeLocation(GLuint id, GLuint location, char const* name);
 	static void BindAttributeLocation(GLuint id, GLuint location, std::string const& name) { BindAttributeLocation(id, location, name.data()); }
 	static GLuint GetUniformCount(GLuint id);
-	static GLuint GetUniforms(GLuint id, LFRL_COMMON::array_ptr<Uniform> buffer);
+	static GLuint GetUniforms(GLuint id, LFRL::array_ptr<Uniform> buffer);
 
 	ShaderProgram(ShaderProgram const&) = delete;
 	ShaderProgram& operator=(ShaderProgram const&) = delete;
@@ -444,17 +444,17 @@ struct ShaderProgram final
 	GLuint GetAttachedShaderCount() const { return GetAttachedShaderCount(_id); }
 	std::vector<GLuint> GetAttachedShaderIds() const;
 	std::unordered_set<GLuint> GetAttachedShaderIdsSet() const;
-	GLuint GetAttachedShaderIds(LFRL_COMMON::array_ptr<GLuint> buffer) const { return GetAttachedShaderIds(_id, buffer); }
+	GLuint GetAttachedShaderIds(LFRL::array_ptr<GLuint> buffer) const { return GetAttachedShaderIds(_id, buffer); }
 	
 	GLuint GetAttributeCount() const { return GetAttributeCount(_id); }
 	std::vector<Attribute> GetAttributes() const;
 	std::unordered_map<std::string, Attribute> GetAttributesMap() const;
-	GLuint GetAttributes(LFRL_COMMON::array_ptr<Attribute> buffer) const { return GetAttributes(_id, buffer); }
+	GLuint GetAttributes(LFRL::array_ptr<Attribute> buffer) const { return GetAttributes(_id, buffer); }
 
 	GLuint GetUniformCount() const { return GetUniformCount(_id); }
 	std::vector<Uniform> GetUniforms() const;
 	std::unordered_map<std::string, Uniform> GetUniformsMap() const;
-	GLuint GetUniforms(LFRL_COMMON::array_ptr<Uniform> buffer) const { return GetUniforms(_id, buffer); }
+	GLuint GetUniforms(LFRL::array_ptr<Uniform> buffer) const { return GetUniforms(_id, buffer); }
 
 	void Use() { Use(_id); }
 	bool IsInUse() const { return IsInUse(_id); }

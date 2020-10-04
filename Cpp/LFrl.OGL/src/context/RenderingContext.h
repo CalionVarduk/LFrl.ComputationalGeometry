@@ -7,10 +7,10 @@ BEGIN_LFRL_OGL_NAMESPACE
 
 struct RenderingAttributes final
 {
-	LFRL_COMMON::u32 majorVersion;
-	LFRL_COMMON::u32 minorVersion;
-	LFRL_COMMON::u32 layerPlane;
-	LFRL_COMMON::u32 flags;
+	LFRL::u32 majorVersion;
+	LFRL::u32 minorVersion;
+	LFRL::u32 layerPlane;
+	LFRL::u32 flags;
 
 	RenderingAttributes() noexcept;
 

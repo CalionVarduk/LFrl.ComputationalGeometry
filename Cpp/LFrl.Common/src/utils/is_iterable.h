@@ -8,7 +8,7 @@
 #define __BEGIN(TYPE) std::begin(__DECLVAL(TYPE))
 #define __END(TYPE) std::end(__DECLVAL(TYPE))
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 namespace __detail
 {
@@ -46,7 +46,7 @@ struct is_iterable_of
 	static constexpr bool value = is_iterable<T>::value && std::is_same<decltype(*__BEGIN(T)), V&>::value;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #undef __DECLVAL
 #undef __BEGIN

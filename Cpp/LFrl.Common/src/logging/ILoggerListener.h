@@ -3,7 +3,7 @@
 
 #include "LogMessage.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 class Logger;
 
@@ -33,6 +33,6 @@ private:
 	Logger const* _logger;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

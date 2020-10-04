@@ -9,7 +9,7 @@
 #include "LFrl.Common/src/memory/array_ptr.h"
 #include "LFrl.OGL/src/primitives/primitives.h"
 
-using namespace LFRL_COMMON;
+using namespace LFRL;
 using namespace LFRL_OGL;
 
 u64 ans = 0;

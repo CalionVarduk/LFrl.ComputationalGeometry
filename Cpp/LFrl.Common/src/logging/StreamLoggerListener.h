@@ -4,7 +4,7 @@
 #include <ostream>
 #include "ILoggerListener.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 class StreamLoggerListener : public ILoggerListener
 {
@@ -23,6 +23,6 @@ public:
 	virtual void Invoke(LogMessage const& message) override;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

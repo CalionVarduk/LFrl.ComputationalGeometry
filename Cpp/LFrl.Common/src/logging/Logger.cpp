@@ -2,7 +2,7 @@
 
 #include "ILoggerListener.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 void __begin_buffer(char* buffer)
 {
@@ -767,4 +767,4 @@ void Logger::_Log(LogMessage::Type type, std::string&& message) const
 			listener->Invoke(msg);
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE

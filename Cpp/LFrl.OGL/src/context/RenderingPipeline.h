@@ -44,9 +44,9 @@ public:
 	RenderingPipeline& operator=(RenderingPipeline&&);
 	~RenderingPipeline() { Clear(); }
 
-	LFRL_COMMON::sz GetActionCount() const noexcept { return _actions.size(); }
-	IRenderingAction* GetActionAt(LFRL_COMMON::u32 index) { return _actions[index]; }
-	IRenderingAction const* GetActionAt(LFRL_COMMON::u32 index) const { return _actions[index]; }
+	LFRL::sz GetActionCount() const noexcept { return _actions.size(); }
+	IRenderingAction* GetActionAt(LFRL::u32 index) { return _actions[index]; }
+	IRenderingAction const* GetActionAt(LFRL::u32 index) const { return _actions[index]; }
 
 	void Add(IRenderingAction* action);
 	bool Remove(IRenderingAction const* action);

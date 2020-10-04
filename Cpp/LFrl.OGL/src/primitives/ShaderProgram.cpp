@@ -42,7 +42,7 @@ ShaderProgram::Attribute::LoadResult ShaderProgram::Attribute::Load(GLuint progr
 		return LoadResult::INVALID_INDEX;
 
 	auto nameLength = __get_attribute_max_name_length(programId);
-	LFRL_COMMON::dynamic_buffer<char> buffer(nameLength);
+	LFRL::dynamic_buffer<char> buffer(nameLength);
 
 	_Populate(programId, index, buffer);
 	return LoadResult::OK;
@@ -173,7 +173,7 @@ void ShaderProgram::Attribute::Configure(GLuint size, ShaderProgram::Attribute::
 		ConfigureAt(i, size, type, stride, offset, normalized);
 }
 
-void ShaderProgram::Attribute::_Populate(GLuint programId, GLuint index, LFRL_COMMON::dynamic_buffer<char> const& nameBuffer)
+void ShaderProgram::Attribute::_Populate(GLuint programId, GLuint index, LFRL::dynamic_buffer<char> const& nameBuffer)
 {
 	GLint size;
 	GLenum type;
@@ -203,7 +203,7 @@ ShaderProgram::Uniform::LoadResult ShaderProgram::Uniform::Load(GLuint programId
 		return LoadResult::INVALID_INDEX;
 
 	auto nameLength = __get_uniform_max_name_length(programId);
-	LFRL_COMMON::dynamic_buffer<char> buffer(nameLength);
+	LFRL::dynamic_buffer<char> buffer(nameLength);
 
 	_Populate(programId, index, buffer);
 	return LoadResult::OK;
@@ -334,7 +334,7 @@ void ShaderProgram::Uniform::SetMat4x3(glm::mat4x3 const& value, bool transpose)
 	glUniformMatrix4x3fv(_location, 1, transpose, glm::value_ptr(value));
 }
 
-void ShaderProgram::Uniform::_Populate(GLuint programId, GLuint index, LFRL_COMMON::dynamic_buffer<char> const& nameBuffer)
+void ShaderProgram::Uniform::_Populate(GLuint programId, GLuint index, LFRL::dynamic_buffer<char> const& nameBuffer)
 {
 	GLint size;
 	GLenum type;
@@ -372,7 +372,7 @@ std::string ShaderProgram::GetInfoLog(GLuint id)
 	if (length <= 0)
 		return "";
 
-	LFRL_COMMON::dynamic_buffer<char> buffer(length);
+	LFRL::dynamic_buffer<char> buffer(length);
 	glGetProgramInfoLog(id, length, NULL, buffer.data());
 	return buffer.data();
 }
@@ -428,7 +428,7 @@ GLuint ShaderProgram::GetAttachedShaderCount(GLuint id)
 	return static_cast<GLuint>(result);
 }
 
-GLuint ShaderProgram::GetAttachedShaderIds(GLuint id, LFRL_COMMON::array_ptr<GLuint> buffer)
+GLuint ShaderProgram::GetAttachedShaderIds(GLuint id, LFRL::array_ptr<GLuint> buffer)
 {
 	if (buffer.size() == 0)
 		return 0;
@@ -445,7 +445,7 @@ GLuint ShaderProgram::GetAttributeCount(GLuint id)
 	return static_cast<GLuint>(result);
 }
 
-GLuint ShaderProgram::GetAttributes(GLuint id, LFRL_COMMON::array_ptr<ShaderProgram::Attribute> buffer)
+GLuint ShaderProgram::GetAttributes(GLuint id, LFRL::array_ptr<ShaderProgram::Attribute> buffer)
 {
 	if (buffer.size())
 		return 0;
@@ -454,7 +454,7 @@ GLuint ShaderProgram::GetAttributes(GLuint id, LFRL_COMMON::array_ptr<ShaderProg
 	auto read = count > buffer.size() ? static_cast<GLuint>(buffer.size()) : count;
 
 	auto nameLength = __get_attribute_max_name_length(id);
-	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+	LFRL::dynamic_buffer<char> nameBuffer(nameLength);
 
 	for (GLuint i = 0; i < read; ++i)
 	{
@@ -476,7 +476,7 @@ GLuint ShaderProgram::GetUniformCount(GLuint id)
 	return static_cast<GLuint>(result);
 }
 
-GLuint ShaderProgram::GetUniforms(GLuint id, LFRL_COMMON::array_ptr<ShaderProgram::Uniform> buffer)
+GLuint ShaderProgram::GetUniforms(GLuint id, LFRL::array_ptr<ShaderProgram::Uniform> buffer)
 {
 	if (buffer.size())
 		return 0;
@@ -485,7 +485,7 @@ GLuint ShaderProgram::GetUniforms(GLuint id, LFRL_COMMON::array_ptr<ShaderProgra
 	auto read = count > buffer.size() ? static_cast<GLuint>(buffer.size()) : count;
 
 	auto nameLength = __get_uniform_max_name_length(id);
-	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+	LFRL::dynamic_buffer<char> nameBuffer(nameLength);
 
 	for (GLuint i = 0; i < read; ++i)
 	{
@@ -569,15 +569,15 @@ std::vector<GLuint> ShaderProgram::GetAttachedShaderIds() const
 {
 	auto count = GetAttachedShaderCount();
 	std::vector<GLuint> result(count, 0);
-	GetAttachedShaderIds(LFRL_COMMON::array_ptr<GLuint>(result.data(), result.size()));
+	GetAttachedShaderIds(LFRL::array_ptr<GLuint>(result.data(), result.size()));
 	return result;
 }
 
 std::unordered_set<GLuint> ShaderProgram::GetAttachedShaderIdsSet() const
 {
 	auto count = GetAttachedShaderCount();
-	LFRL_COMMON::dynamic_buffer<GLuint> buffer(count);
-	GetAttachedShaderIds(LFRL_COMMON::array_ptr<GLuint>(buffer.data(), buffer.size()));
+	LFRL::dynamic_buffer<GLuint> buffer(count);
+	GetAttachedShaderIds(LFRL::array_ptr<GLuint>(buffer.data(), buffer.size()));
 	
 	std::unordered_set<GLuint> result;
 	for (auto id : buffer)
@@ -592,7 +592,7 @@ std::vector<ShaderProgram::Attribute> ShaderProgram::GetAttributes() const
 	std::vector<Attribute> result(count, Attribute());
 
 	auto nameLength = __get_attribute_max_name_length(_id);
-	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+	LFRL::dynamic_buffer<char> nameBuffer(nameLength);
 
 	for (GLuint i = 0; i < count; ++i)
 	{
@@ -608,7 +608,7 @@ std::unordered_map<std::string, ShaderProgram::Attribute> ShaderProgram::GetAttr
 	std::unordered_map<std::string, Attribute> result;
 
 	auto nameLength = __get_attribute_max_name_length(_id);
-	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+	LFRL::dynamic_buffer<char> nameBuffer(nameLength);
 
 	for (GLuint i = 0; i < count; ++i)
 	{
@@ -626,7 +626,7 @@ std::vector<ShaderProgram::Uniform> ShaderProgram::GetUniforms() const
 	std::vector<Uniform> result(count, Uniform());
 
 	auto nameLength = __get_uniform_max_name_length(_id);
-	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+	LFRL::dynamic_buffer<char> nameBuffer(nameLength);
 
 	for (GLuint i = 0; i < count; ++i)
 	{
@@ -642,7 +642,7 @@ std::unordered_map<std::string, ShaderProgram::Uniform> ShaderProgram::GetUnifor
 	std::unordered_map<std::string, Uniform> result;
 
 	auto nameLength = __get_uniform_max_name_length(_id);
-	LFRL_COMMON::dynamic_buffer<char> nameBuffer(nameLength);
+	LFRL::dynamic_buffer<char> nameBuffer(nameLength);
 
 	for (GLuint i = 0; i < count; ++i)
 	{

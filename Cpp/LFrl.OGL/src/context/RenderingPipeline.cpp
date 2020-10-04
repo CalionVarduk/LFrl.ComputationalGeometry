@@ -57,7 +57,7 @@ void RenderingPipeline::Add(IRenderingAction* action)
 bool RenderingPipeline::Remove(IRenderingAction const* action)
 {
 	auto size = GetActionCount();
-	for (LFRL_COMMON::sz i = 0; i < size; ++i)
+	for (LFRL::sz i = 0; i < size; ++i)
 	{
 		if (_actions[i] == action)
 		{

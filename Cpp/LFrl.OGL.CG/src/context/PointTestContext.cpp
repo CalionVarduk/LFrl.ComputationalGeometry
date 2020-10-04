@@ -69,9 +69,9 @@ protected:
 		auto scale = view->GetScale();
 
 		if (zoomLevel >= 0)
-			lineOffset /= glm::pow(2, (zoomLevel + 8) >> 4);
+			lineOffset /= glm::pow(2.0f, (zoomLevel + 8) >> 4);
 		else
-			lineOffset /= glm::pow(2, (zoomLevel + 3) >> 3);
+			lineOffset /= glm::pow(2.0f, (zoomLevel + 3) >> 3);
 
 		vbo.Bind();
 		GridLineVertex gt[2];
@@ -303,7 +303,7 @@ void PointTestContext::_init_segments_action()
 
 	std::vector<LineSegmentVertex> segments;
 
-	LFRL_COMMON::QuickRng rng;
+	LFRL::QuickRng rng;
 
 	for (int i = 0; i < 1000; ++i)
 	{
@@ -380,7 +380,7 @@ void PointTestContext::_init_points_action()
 
 	std::vector<PointVertex> points;
 
-	LFRL_COMMON::QuickRng rng;
+	LFRL::QuickRng rng;
 
 	for (int i = 0; i < 10000; ++i)
 	{

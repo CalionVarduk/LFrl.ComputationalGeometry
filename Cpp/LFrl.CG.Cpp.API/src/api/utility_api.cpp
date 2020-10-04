@@ -8,7 +8,7 @@ INT lfrl_cg_api_utility_setup_gl()
 		sServices->Add(new LFRL_OGL::ShaderStore());
 		return static_cast<INT>(ACTION_RESULT::OK);
 	}
-	auto apiResult = LFRL_CG_API::GetOtherFailureResult(static_cast<LFRL_COMMON::u16>(result));
+	auto apiResult = LFRL_CG_API::GetOtherFailureResult(static_cast<LFRL::u16>(result));
 	return static_cast<INT>(apiResult);
 }
 
@@ -18,7 +18,7 @@ INT lfrl_cg_api_utility_setup_winapi()
 	if (result == LFRL_OGL_WND::Class::ActionResult::OK)
 		return static_cast<INT>(ACTION_RESULT::OK);
 	
-	auto apiResult = LFRL_CG_API::GetOtherFailureResult(static_cast<LFRL_COMMON::u16>(result));
+	auto apiResult = LFRL_CG_API::GetOtherFailureResult(static_cast<LFRL::u16>(result));
 	return static_cast<INT>(apiResult);
 }
 
@@ -28,6 +28,6 @@ INT lfrl_cg_api_utility_dispose_winapi()
 	if (result == LFRL_OGL_WND::Class::ActionResult::OK)
 		return static_cast<INT>(ACTION_RESULT::OK);
 
-	auto apiResult = LFRL_CG_API::GetOtherFailureResult(static_cast<LFRL_COMMON::u16>(result));
+	auto apiResult = LFRL_CG_API::GetOtherFailureResult(static_cast<LFRL::u16>(result));
 	return static_cast<INT>(apiResult);
 }

@@ -9,15 +9,15 @@ BEGIN_LFRL_CG_API_NAMESPACE
 
 namespace Services
 {
-	inline Common::Store* GetObjectStore()
+	inline Store* GetObjectStore()
 	{
-		static Common::Store store;
+		static Store store;
 		return &store;
 	}
 
-	inline Common::Container* GetContainer()
+	inline Container* GetContainer()
 	{
-		static Common::Container container;
+		static Container container;
 		return &container;
 	}
 }

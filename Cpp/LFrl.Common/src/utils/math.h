@@ -9,7 +9,7 @@
 #include "requires.h"
 #include <math.h>
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class T, requires<std::is_floating_point<T>::value> = 0>
 constexpr T pi() noexcept
@@ -209,6 +209,6 @@ constexpr T rad_to_deg(param<T> rad)
 	return rad * static_cast<T>(c180_by_pi<double>());
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

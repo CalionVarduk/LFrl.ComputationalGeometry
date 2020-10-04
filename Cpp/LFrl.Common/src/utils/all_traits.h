@@ -3,7 +3,7 @@
 
 #include "all.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class... Traits>
 struct all_traits
@@ -11,6 +11,6 @@ struct all_traits
 	static constexpr bool value = all<(Traits::value)...>::value;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

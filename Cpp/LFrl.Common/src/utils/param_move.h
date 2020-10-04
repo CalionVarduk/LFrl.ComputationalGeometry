@@ -4,7 +4,7 @@
 #include <type_traits>
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class T>
 constexpr typename std::conditional<std::is_const<typename std::remove_reference<T>::type>::value,
@@ -17,6 +17,6 @@ typename std::remove_reference<T>::type&&>::type
 		typename std::remove_reference<T>::type&&>::type>(x);
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

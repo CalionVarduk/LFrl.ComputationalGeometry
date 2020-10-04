@@ -3,7 +3,7 @@
 
 #include "any_traits.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class T>
 struct is_any_char
@@ -14,6 +14,6 @@ struct is_any_char
 		std::is_same<T, wchar_t>, std::is_same<T, char16_t>, std::is_same<T, char32_t>>::value;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

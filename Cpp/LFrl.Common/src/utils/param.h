@@ -4,7 +4,7 @@
 #include "is_passed_by_const_ref.h"
 #include "param_move.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class T>
 struct param_type
@@ -16,6 +16,6 @@ struct param_type
 template <class T>
 using param = typename param_type<T>::type;
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

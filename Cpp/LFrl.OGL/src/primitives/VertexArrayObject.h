@@ -25,16 +25,16 @@ struct VertexArrayObject final
 	static GLuint GetBoundId();
 	static bool IsAnyBound() { return GetBoundId() != NULL; }
 
-	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexArrayObject*>::value> = 0>
+	template <class TIterable, LFRL::requires<LFRL::is_iterable_of<TIterable, VertexArrayObject*>::value> = 0>
 	static void InitializeRange(TIterable const& iterable);
 
-	template <GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
+	template <GLuint count, LFRL::requires<!(count <= 0)> = 0>
 	static void InitializeRange(std::array<VertexArrayObject*, count>& arrays);
 
-	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexArrayObject*>::value> = 0>
+	template <class TIterable, LFRL::requires<LFRL::is_iterable_of<TIterable, VertexArrayObject*>::value> = 0>
 	static void DisposeRange(TIterable const& iterable);
 
-	template <GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
+	template <GLuint count, LFRL::requires<!(count <= 0)> = 0>
 	static void DisposeRange(std::array<VertexArrayObject*, count>& arrays);
 
 	VertexArrayObject(VertexArrayObject const&) = delete;
@@ -60,7 +60,7 @@ private:
 	ObjectState _state;
 };
 
-template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexArrayObject*>::value>>
+template <class TIterable, LFRL::requires<LFRL::is_iterable_of<TIterable, VertexArrayObject*>::value>>
 void VertexArrayObject::InitializeRange(TIterable const& iterable)
 {
 	auto count = 0;
@@ -70,7 +70,7 @@ void VertexArrayObject::InitializeRange(TIterable const& iterable)
 	if (count <= 0)
 		return;
 
-	LFRL_COMMON::dynamic_buffer<GLuint> ids(count);
+	LFRL::dynamic_buffer<GLuint> ids(count);
 	glGenVertexArrays(count, ids.data());
 
 	count = 0;
@@ -81,7 +81,7 @@ void VertexArrayObject::InitializeRange(TIterable const& iterable)
 	}
 }
 
-template <GLuint count, LFRL_COMMON::requires<!(count <= 0)>>
+template <GLuint count, LFRL::requires<!(count <= 0)>>
 void VertexArrayObject::InitializeRange(std::array<VertexArrayObject*, count>& arrays)
 {
 	std::array<GLuint, count> ids;
@@ -94,7 +94,7 @@ void VertexArrayObject::InitializeRange(std::array<VertexArrayObject*, count>& a
 	}
 }
 
-template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, VertexArrayObject*>::value>>
+template <class TIterable, LFRL::requires<LFRL::is_iterable_of<TIterable, VertexArrayObject*>::value>>
 void VertexArrayObject::DisposeRange(TIterable const& iterable)
 {
 	auto count = 0;
@@ -104,7 +104,7 @@ void VertexArrayObject::DisposeRange(TIterable const& iterable)
 	if (count <= 0)
 		return;
 
-	LFRL_COMMON::dynamic_buffer<GLuint> ids(count);
+	LFRL::dynamic_buffer<GLuint> ids(count);
 
 	count = 0;
 	for (auto current = iterable.begin(); current != iterable.end(); ++current, ++count)
@@ -116,7 +116,7 @@ void VertexArrayObject::DisposeRange(TIterable const& iterable)
 	glDeleteVertexArrays(ids.size(), ids.data());
 }
 
-template <GLuint count, LFRL_COMMON::requires<!(count <= 0)>>
+template <GLuint count, LFRL::requires<!(count <= 0)>>
 void VertexArrayObject::DisposeRange(std::array<VertexArrayObject*, count>& arrays)
 {
 	std::array<GLuint, count> ids;
