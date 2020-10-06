@@ -152,6 +152,8 @@
     <ClInclude Include="src\math\vector1.h" />
     <ClInclude Include="src\math\vector2.h" />
     <ClInclude Include="src\math\vector3.h" />
+    <ClInclude Include="src\math\vector_cast.h" />
+    <ClInclude Include="src\math\vector_typedefs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

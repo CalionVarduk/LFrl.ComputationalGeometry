@@ -8,7 +8,7 @@
 #include "LFrl.Common/src/utils/reverse.h"
 #include "LFrl.Common/src/memory/array_ptr.h"
 #include "LFrl.OGL/src/primitives/primitives.h"
-#include "LFrl.CG.Core/src/math/vector3.h"
+#include "LFrl.CG.Core/src/math/vector_typedefs.h"
 
 using namespace LFRL;
 using namespace LFRL_OGL;
@@ -77,11 +77,13 @@ int main()
 	auto rdns = rd.get_average();
 	//auto rdmsd = d.get_as<double, std::chrono::milliseconds::period>();
 
-	Vector<float, 2> v2;
+	Vec2F v2;
 	Vector<float, 4> v4;
 
 	v4.Add(7);
 	v2.Sub(3);
+
+	auto v3 = vector_type_cast<double>(v2);
 
 	return 0;
 }

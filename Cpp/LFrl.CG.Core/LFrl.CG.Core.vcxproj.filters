@@ -30,5 +30,11 @@
     <ClInclude Include="src\math\vector3.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="src\math\vector_cast.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vector_typedefs.h">
+      <Filter>math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
