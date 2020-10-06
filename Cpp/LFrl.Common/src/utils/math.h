@@ -197,6 +197,30 @@ T atan2(param<T> y, param<T> x)
 	return static_cast<T>(atan2<double>(static_cast<double>(y), static_cast<double>(x)));
 }
 
+template <class T>
+T mod(param<T> a, param<T> b)
+{
+	return a % b;
+}
+
+template <>
+float mod<float>(float a, float b)
+{
+	return ::fmodf(a, b);
+}
+
+template <>
+double mod<double>(double a, double b)
+{
+	return ::fmod(a, b);
+}
+
+template <>
+long double mod<long double>(long double a, long double b)
+{
+	return ::fmodl(a, b);
+}
+
 template <class T, requires<std::is_convertible<double, T>::value> = 0>
 constexpr T deg_to_rad(param<T> deg)
 {

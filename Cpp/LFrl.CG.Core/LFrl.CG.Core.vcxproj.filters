@@ -3,4 +3,29 @@
   <ItemGroup>
     <ClCompile Include="stump.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="math">
+      <UniqueIdentifier>{40a45b30-cc7d-435c-9c24-00aa8eeb3126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="algorithms">
+      <UniqueIdentifier>{acfaf2e3-2501-427d-832f-04f293d023d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="internal">
+      <UniqueIdentifier>{df2a95b4-2ca2-4b3b-ba11-164195881949}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\math\vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\internal\namespace_macros.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vector2.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vector1.h">
+      <Filter>math</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
