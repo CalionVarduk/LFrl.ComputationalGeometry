@@ -143,7 +143,7 @@ Vector<T, 2>::Vector(Vector<T, 2>&& vec)
 
 template <class T>
 Vector<T, 2>::Vector(LFRL::param<T> value)
-	: x(value), y()
+	: x(value), y(value)
 {}
 
 template <class T>

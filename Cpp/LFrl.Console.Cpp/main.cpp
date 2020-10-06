@@ -8,7 +8,7 @@
 #include "LFrl.Common/src/utils/reverse.h"
 #include "LFrl.Common/src/memory/array_ptr.h"
 #include "LFrl.OGL/src/primitives/primitives.h"
-#include "LFrl.CG.Core/src/math/vector2.h"
+#include "LFrl.CG.Core/src/math/vector3.h"
 
 using namespace LFRL;
 using namespace LFRL_OGL;
