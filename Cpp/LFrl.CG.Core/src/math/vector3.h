@@ -77,6 +77,12 @@ struct Vector<T, 3>
 	T GetMagnitudeSq() const { return x * x + y * y + z * z; }
 	T GetMagnitude() const { return LFRL::sqrt(GetMagnitudeSq()); }
 
+	template <class Q = T, LFRL::requires<std::is_convertible<i32, Q>::value> = 0>
+	Vector<T, 3>& SetMagnitudeSq(LFRL::param<T> value);
+
+	template <class Q = T, LFRL::requires<std::is_convertible<i32, Q>::value> = 0>
+	Vector<T, 3>& SetMagnitude(LFRL::param<T> value);
+
 	Vector<T, 3>& SetScalar(u32 index, LFRL::param<T> value);
 
 	Vector<T, 3>& Set(Vector<T, 3> const& vec);
@@ -88,6 +94,8 @@ struct Vector<T, 3>
 
 	template <class Q = T, LFRL::requires<std::is_convertible<i32, Q>::value> = 0>
 	Vector<T, 3>& Normalize();
+
+	Vector<T, 3> Cross(Vector<T, 3> const& vec) const { return Vector<T, 3>(y * vec.z - z * vec.y, z * vec.x - x * vec.z, x * vec.y - y * vec.x); }
 
 	Vector<T, 3>& Negate();
 	Vector<T, 3>& Incr();
@@ -226,6 +234,48 @@ T const& Vector<T, 3>::GetScalar(u32 index) const
 		return z;
 	}
 	return x;
+}
+
+template <class T> template <class Q, LFRL::requires<std::is_convertible<i32, Q>::value>>
+Vector<T, 3>& Vector<T, 3>::SetMagnitudeSq(LFRL::param<T> value)
+{
+	if (value <= static_cast<T>(0))
+		x = y = z = static_cast<T>(0);
+	else
+	{
+		auto magnitudeSq = GetMagnitudeSq();
+		if (magnitudeSq == static_cast<T>(0))
+			x = LFRL::sqrt(value);
+		else
+		{
+			auto scale = value / magnitudeSq;
+			x *= scale;
+			y *= scale;
+			z *= scale;
+		}
+	}
+	return *this;
+}
+
+template <class T> template <class Q, LFRL::requires<std::is_convertible<i32, Q>::value>>
+Vector<T, 3>& Vector<T, 3>::SetMagnitude(LFRL::param<T> value)
+{
+	if (value <= static_cast<T>(0))
+		x = y = z = static_cast<T>(0);
+	else
+	{
+		auto magnitudeSq = GetMagnitudeSq();
+		if (magnitudeSq == static_cast<T>(0))
+			x = value;
+		else
+		{
+			auto scale = value / LFRL::sqrt(magnitudeSq);
+			x *= scale;
+			y *= scale;
+			z *= scale;
+		}
+	}
+	return *this;
 }
 
 template <class T>

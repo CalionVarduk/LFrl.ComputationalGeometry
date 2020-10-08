@@ -46,6 +46,11 @@ struct Vector<T, 2>
 	static Vector<T, 2> Mod(Vector<T, 2> const& vec, Vector<T, 1> const& vec1) { return Vector<T, 2>(vec).Mod(vec1); }
 	static Vector<T, 2> Mod(Vector<T, 1> const& vec1, Vector<T, 2> const& vec) { return Vector<T, 2>(vec1).Mod(vec); }
 
+	static Vector<T, 2> RotateCw(Vector<T, 2> const& vec, LFRL::param<T> radians) { return Vector<T, 2>(vec).RotateCw(radians); }
+	static Vector<T, 2> RotateCcw(Vector<T, 2> const& vec, LFRL::param<T> radians) { return Vector<T, 2>(vec).RotateCcw(radians); }
+	static Vector<T, 2> RotateCwHalfPi(Vector<T, 2> const& vec) { return Vector<T, 2>(vec).RotateCwHalfPi(); }
+	static Vector<T, 2> RotateCcwHalfPi(Vector<T, 2> const& vec) { return Vector<T, 2>(vec).RotateCcwHalfPi(); }
+
 	T x;
 	T y;
 
@@ -63,6 +68,12 @@ struct Vector<T, 2>
 	T GetMagnitudeSq() const { return x * x + y * y; }
 	T GetMagnitude() const { return LFRL::sqrt(GetMagnitudeSq()); }
 
+	template <class Q = T, LFRL::requires<std::is_convertible<i32, Q>::value> = 0>
+	Vector<T, 2>& SetMagnitudeSq(LFRL::param<T> value);
+
+	template <class Q = T, LFRL::requires<std::is_convertible<i32, Q>::value> = 0>
+	Vector<T, 2>& SetMagnitude(LFRL::param<T> value);
+
 	Vector<T, 2>& SetScalar(u32 index, LFRL::param<T> value);
 
 	Vector<T, 2>& Set(Vector<T, 2> const& vec);
@@ -73,6 +84,17 @@ struct Vector<T, 2>
 
 	template <class Q = T, LFRL::requires<std::is_convertible<i32, Q>::value> = 0>
 	Vector<T, 2>& Normalize();
+
+	Vector<T, 2>& RotateCw(LFRL::param<T> radians);
+	Vector<T, 2>& RotateCcw(LFRL::param<T> radians);
+	Vector<T, 2>& RotateCwHalfPi();
+	Vector<T, 2>& RotateCcwHalfPi();
+	T Cross(Vector<T, 2> const& vec) const { return x * vec.y - y * vec.x; }
+
+	T GetAngle() const { return LFRL::atan2(y, x); }
+
+	template <class Q = T, LFRL::requires<std::is_convertible<i32, Q>::value> = 0>
+	Vector<T, 2>& SetAngle(LFRL::param<T> radians);
 
 	Vector<T, 2>& Negate();
 	Vector<T, 2>& Incr();
@@ -185,6 +207,46 @@ T const& Vector<T, 2>::GetScalar(u32 index) const
 	return x;
 }
 
+template <class T> template <class Q, LFRL::requires<std::is_convertible<i32, Q>::value>>
+Vector<T, 2>& Vector<T, 2>::SetMagnitudeSq(LFRL::param<T> value)
+{
+	if (value <= static_cast<T>(0))
+		x = y = static_cast<T>(0);
+	else
+	{
+		auto magnitudeSq = GetMagnitudeSq();
+		if (magnitudeSq == static_cast<T>(0))
+			x = LFRL::sqrt(value);
+		else
+		{
+			auto scale = value / magnitudeSq;
+			x *= scale;
+			y *= scale;
+		}
+	}
+	return *this;
+}
+
+template <class T> template <class Q, LFRL::requires<std::is_convertible<i32, Q>::value>>
+Vector<T, 2>& Vector<T, 2>::SetMagnitude(LFRL::param<T> value)
+{
+	if (value <= static_cast<T>(0))
+		x = y = static_cast<T>(0);
+	else
+	{
+		auto magnitudeSq = GetMagnitudeSq();
+		if (magnitudeSq == static_cast<T>(0))
+			x = value;
+		else
+		{
+			auto scale = value / LFRL::sqrt(magnitudeSq);
+			x *= scale;
+			y *= scale;
+		}
+	}
+	return *this;
+}
+
 template <class T>
 Vector<T, 2>& Vector<T, 2>::SetScalar(u32 index, LFRL::param<T> value)
 {
@@ -244,6 +306,59 @@ Vector<T, 2>& Vector<T, 2>::Normalize()
 		auto magnitude = LFRL::sqrt(magnitudeSq);
 		x /= magnitude;
 		y /= magnitude;
+	}
+	return *this;
+}
+
+template <class T>
+Vector<T, 2>& Vector<T, 2>::RotateCw(LFRL::param<T> radians)
+{
+	auto t = -x;
+	auto sin = LFRL::sin(radians);
+	auto cos = LFRL::cos(radians);
+	x = x * cos + y * sin;
+	y = t * sin + y * cos;
+	return *this;
+}
+
+template <class T>
+Vector<T, 2>& Vector<T, 2>::RotateCcw(LFRL::param<T> radians)
+{
+	auto t = x;
+	auto sin = LFRL::sin(radians);
+	auto cos = LFRL::cos(radians);
+	x = x * cos - y * sin;
+	y = t * sin + y * cos;
+	return *this;
+}
+
+template <class T>
+Vector<T, 2>& Vector<T, 2>::RotateCwHalfPi()
+{
+	auto t = -x;
+	x = std::move(y);
+	y = std::move(t);
+	return *this;
+}
+
+template <class T>
+Vector<T, 2>& Vector<T, 2>::RotateCcwHalfPi()
+{
+	auto t = -y;
+	y = std::move(x);
+	x = std::move(t);
+	return *this;
+}
+
+template <class T> template <class Q, LFRL::requires<std::is_convertible<i32, Q>::value>>
+Vector<T, 2>& Vector<T, 2>::SetAngle(LFRL::param<T> radians)
+{
+	auto magnitudeSq = GetMagnitudeSq();
+	if (magnitudeSq > static_cast<T>(0))
+	{
+		auto magnitude = LFRL::sqrt(magnitudeSq);
+		x = LFRL::cos(radians) * magnitude;
+		y = LFRL::sin(radians) * magnitude;
 	}
 	return *this;
 }
