@@ -15,25 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\math\vector.h">
-      <Filter>math</Filter>
-    </ClInclude>
     <ClInclude Include="src\internal\namespace_macros.h">
       <Filter>internal</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\vector2.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\vector1.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\vector3.h">
-      <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="src\math\vector_cast.h">
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="src\math\vector_typedefs.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector1.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector2.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector3.h">
       <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>
