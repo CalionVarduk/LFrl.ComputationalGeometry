@@ -11,7 +11,7 @@ struct Vector<T, 3>
 	typedef T type;
 	typedef LFRL::param<T> param_type;
 
-	static constexpr u32 GetSize() noexcept { return 3; }
+	static constexpr u32 GetDimensions() noexcept { return 3; }
 
 	template <class Q = T, LFRL::requires<std::is_convertible<i32, Q>::value> = 0>
 	static Vector<T, 3> Normalize(Vector<T, 3> const& vec) { return Vector<T, 3>(vec).Normalize(); }
@@ -211,7 +211,7 @@ Vector<T, 3>::Vector(Vector<T, 2> const& vec, LFRL::param<T> z)
 template <class T>
 T& Vector<T, 3>::GetScalar(u32 index)
 {
-	assert(index < GetSize());
+	assert(index < GetDimensions());
 	switch (index)
 	{
 	case 1:
@@ -225,7 +225,7 @@ T& Vector<T, 3>::GetScalar(u32 index)
 template <class T>
 T const& Vector<T, 3>::GetScalar(u32 index) const
 {
-	assert(index < GetSize());
+	assert(index < GetDimensions());
 	switch (index)
 	{
 	case 1:
@@ -281,7 +281,7 @@ Vector<T, 3>& Vector<T, 3>::SetMagnitude(LFRL::param<T> value)
 template <class T>
 Vector<T, 3>& Vector<T, 3>::SetScalar(u32 index, LFRL::param<T> value)
 {
-	assert(index < GetSize());
+	assert(index < GetDimensions());
 	switch (index)
 	{
 	case 0:

@@ -36,5 +36,8 @@
     <ClInclude Include="src\math\Vector3.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="src\math\LineSegment.h">
+      <Filter>math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

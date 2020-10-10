@@ -42,41 +42,41 @@ typedef Vector<LFRL::LongDouble, 1> Vec1LD;
 typedef Vector<LFRL::LongDouble, 2> Vec2LD;
 typedef Vector<LFRL::LongDouble, 3> Vec3LD;
 
-template <LFRL::u32 size>
-using VecB = Vector<bool, size>;
+template <LFRL::u32 dimensions>
+using VecB = Vector<bool, dimensions>;
 
-template <LFRL::u32 size>
-using VecUC = Vector<LFRL::u8, size>;
+template <LFRL::u32 dimensions>
+using VecUC = Vector<LFRL::u8, dimensions>;
 
-template <LFRL::u32 size>
-using VecC = Vector<LFRL::i8, size>;
+template <LFRL::u32 dimensions>
+using VecC = Vector<LFRL::i8, dimensions>;
 
-template <LFRL::u32 size>
-using VecUS = Vector<LFRL::u16, size>;
+template <LFRL::u32 dimensions>
+using VecUS = Vector<LFRL::u16, dimensions>;
 
-template <LFRL::u32 size>
-using VecS = Vector<LFRL::i16, size>;
+template <LFRL::u32 dimensions>
+using VecS = Vector<LFRL::i16, dimensions>;
 
-template <LFRL::u32 size>
-using VecUI = Vector<LFRL::u32, size>;
+template <LFRL::u32 dimensions>
+using VecUI = Vector<LFRL::u32, dimensions>;
 
-template <LFRL::u32 size>
-using VecI = Vector<LFRL::i32, size>;
+template <LFRL::u32 dimensions>
+using VecI = Vector<LFRL::i32, dimensions>;
 
-template <LFRL::u32 size>
-using VecUL = Vector<LFRL::u64, size>;
+template <LFRL::u32 dimensions>
+using VecUL = Vector<LFRL::u64, dimensions>;
 
-template <LFRL::u32 size>
-using VecL = Vector<LFRL::i64, size>;
+template <LFRL::u32 dimensions>
+using VecL = Vector<LFRL::i64, dimensions>;
 
-template <LFRL::u32 size>
-using VecF = Vector<LFRL::f32, size>;
+template <LFRL::u32 dimensions>
+using VecF = Vector<LFRL::f32, dimensions>;
 
-template <LFRL::u32 size>
-using VecD = Vector<LFRL::f64, size>;
+template <LFRL::u32 dimensions>
+using VecD = Vector<LFRL::f64, dimensions>;
 
-template <LFRL::u32 size>
-using VecLD = Vector<LFRL::LongDouble, size>;
+template <LFRL::u32 dimensions>
+using VecLD = Vector<LFRL::LongDouble, dimensions>;
 
 END_LFRL_CG_NAMESPACE
 
