@@ -78,6 +78,9 @@ struct LineSegment
 	template <u32 dim, LFRL::requires<dim < dimensions> = 0>
 	static LineSegment<T, dimensions> Mod(LineSegment<T, dimensions> const& seg, Vector<T, dim> const& vec) { return LineSegment<T, dimensions>(seg).Mod<dim>(vec); }
 
+	Vector<T, dimensions> start;
+	Vector<T, dimensions> end;
+
 	LineSegment();
 	LineSegment(LineSegment<T, dimensions> const& seg) = default;
 	LineSegment(LineSegment<T, dimensions>&& seg);
@@ -89,9 +92,6 @@ struct LineSegment
 	template <u32 dim, LFRL::requires<dim < dimensions> = 0>
 	LineSegment(Vector<T, dim> const& start, Vector<T, dim> const& end);
 
-	Vector<T, dimensions> start;
-	Vector<T, dimensions> end;
-
 	Vector<T, dimensions> GetDirection() const { return end - start; }
 	T GetLengthSq() const { return GetDirection().GetMagnitudeSq(); }
 	T GetLength() const { return GetDirection().GetMagnitude(); }
@@ -101,6 +101,8 @@ struct LineSegment
 
 	template <class Q = T, LFRL::requires<std::is_convertible<i32, Q>::value> = 0>
 	LineSegment<T, dimensions>& SetLength(LFRL::param<T> value);
+
+	Vector<T, dimensions> GetPointAt(LFRL::param<T> anchor) const;
 
 	LineSegment<T, dimensions>& Set(LineSegment<T, dimensions> const& seg);
 	LineSegment<T, dimensions>& Set(Vector<T, dimensions> const& start, Vector<T, dimensions> const& end);
@@ -257,6 +259,14 @@ LineSegment<T, dimensions>& LineSegment<T, dimensions>::SetLength(LFRL::param<T>
 	direction.SetMagnitude(value);
 	end = start + direction;
 	return *this;
+}
+
+template <class T, u32 dimensions>
+Vector<T, dimensions> LineSegment<T, dimensions>::GetPointAt(LFRL::param<T> anchor) const
+{
+	auto direction = GetDirection();
+	direction.Mult(anchor);
+	return start + direction;
 }
 
 template <class T, u32 dimensions>
