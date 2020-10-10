@@ -9,7 +9,7 @@
 #include "LFrl.Common/src/memory/array_ptr.h"
 #include "LFrl.OGL/src/primitives/primitives.h"
 #include "LFrl.CG.Core/src/math/vector_typedefs.h"
-#include "LFrl.CG.Core/src/math/LineSegment1.h"
+#include "LFrl.CG.Core/src/math/LineSegment2.h"
 
 using namespace LFRL;
 using namespace LFRL_OGL;

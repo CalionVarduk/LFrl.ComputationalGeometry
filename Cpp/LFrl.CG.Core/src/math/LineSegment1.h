@@ -298,8 +298,8 @@ LineSegment<T, 1>& LineSegment<T, 1>::operator=(LineSegment<T, 1>&& seg)
 {
 	if (this != &seg)
 	{
-	std::swap(start, seg.start);
-	std::swap(end, seg.end);
+		std::swap(start, seg.start);
+		std::swap(end, seg.end);
 	}
 	return *this;
 }
