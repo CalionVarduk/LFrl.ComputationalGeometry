@@ -8,9 +8,7 @@
 #include "LFrl.Common/src/utils/reverse.h"
 #include "LFrl.Common/src/memory/array_ptr.h"
 #include "LFrl.OGL/src/primitives/primitives.h"
-#include "LFrl.CG.Core/src/math/vector_typedefs.h"
-#include "LFrl.CG.Core/src/math/line_segment_typedefs.h"
-#include "LFrl.CG.Core/src/math/bounding_rectangle_typedefs.h"
+#include "LFrl.CG.Core/src/algorithms/Utility.h"
 
 using namespace LFRL;
 using namespace LFRL_OGL;

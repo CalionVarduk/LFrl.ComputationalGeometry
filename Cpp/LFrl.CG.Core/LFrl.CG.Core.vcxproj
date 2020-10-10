@@ -147,6 +147,7 @@
     <ClCompile Include="stump.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\algorithms\Utility.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />
     <ClInclude Include="src\math\BoundingRectangle.h" />
     <ClInclude Include="src\math\bounding_rectangle_cast.h" />

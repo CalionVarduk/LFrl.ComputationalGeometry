@@ -63,5 +63,8 @@
     <ClInclude Include="src\math\bounding_rectangle_typedefs.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="src\algorithms\Utility.h">
+      <Filter>algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
