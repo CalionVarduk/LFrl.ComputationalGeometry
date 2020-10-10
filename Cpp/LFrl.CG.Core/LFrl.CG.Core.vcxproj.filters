@@ -45,5 +45,8 @@
     <ClInclude Include="src\math\LineSegment2.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="src\math\LineSegment3.h">
+      <Filter>math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
