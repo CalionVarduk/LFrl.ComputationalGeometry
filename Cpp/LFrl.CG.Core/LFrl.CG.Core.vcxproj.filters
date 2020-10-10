@@ -51,5 +51,17 @@
     <ClInclude Include="src\math\line_segment_cast.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="src\math\line_segment_typedefs.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\BoundingRectangle.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\bounding_rectangle_cast.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\bounding_rectangle_typedefs.h">
+      <Filter>math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

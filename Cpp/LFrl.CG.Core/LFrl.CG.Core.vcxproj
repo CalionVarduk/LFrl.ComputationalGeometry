@@ -148,11 +148,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\math\BoundingRectangle.h" />
+    <ClInclude Include="src\math\bounding_rectangle_cast.h" />
+    <ClInclude Include="src\math\bounding_rectangle_typedefs.h" />
     <ClInclude Include="src\math\LineSegment.h" />
     <ClInclude Include="src\math\LineSegment1.h" />
     <ClInclude Include="src\math\LineSegment2.h" />
     <ClInclude Include="src\math\LineSegment3.h" />
     <ClInclude Include="src\math\line_segment_cast.h" />
+    <ClInclude Include="src\math\line_segment_typedefs.h" />
     <ClInclude Include="src\math\Vector.h" />
     <ClInclude Include="src\math\Vector1.h" />
     <ClInclude Include="src\math\Vector2.h" />

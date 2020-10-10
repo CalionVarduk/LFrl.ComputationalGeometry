@@ -9,7 +9,8 @@
 #include "LFrl.Common/src/memory/array_ptr.h"
 #include "LFrl.OGL/src/primitives/primitives.h"
 #include "LFrl.CG.Core/src/math/vector_typedefs.h"
-#include "LFrl.CG.Core/src/math/line_segment_cast.h"
+#include "LFrl.CG.Core/src/math/line_segment_typedefs.h"
+#include "LFrl.CG.Core/src/math/bounding_rectangle_typedefs.h"
 
 using namespace LFRL;
 using namespace LFRL_OGL;
@@ -85,6 +86,9 @@ int main()
 	v2.Sub(3);
 
 	auto v3 = vector_type_cast<double>(v2);
+
+	Seg2F s2;
+	auto s3 = line_segment_type_cast<double>(s2);
 
 	return 0;
 }
