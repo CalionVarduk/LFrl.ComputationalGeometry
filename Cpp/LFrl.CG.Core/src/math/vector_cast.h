@@ -1,7 +1,7 @@
 #ifndef __LFRL_CG_CORE_VECTOR_CAST_GUARD__
 #define __LFRL_CG_CORE_VECTOR_CAST_GUARD__
 
-#include "vector3.h"
+#include "Vector3.h"
 
 BEGIN_LFRL_CG_NAMESPACE
 

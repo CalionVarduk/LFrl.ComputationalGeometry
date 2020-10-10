@@ -152,6 +152,7 @@
     <ClInclude Include="src\math\LineSegment1.h" />
     <ClInclude Include="src\math\LineSegment2.h" />
     <ClInclude Include="src\math\LineSegment3.h" />
+    <ClInclude Include="src\math\line_segment_cast.h" />
     <ClInclude Include="src\math\Vector.h" />
     <ClInclude Include="src\math\Vector1.h" />
     <ClInclude Include="src\math\Vector2.h" />
