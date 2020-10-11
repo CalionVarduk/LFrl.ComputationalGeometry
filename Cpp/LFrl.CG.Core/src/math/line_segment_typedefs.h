@@ -78,6 +78,15 @@ using SegD = LineSegment<LFRL::f64, dimensions>;
 template <LFRL::u32 dimensions>
 using SegLD = LineSegment<LFRL::LongDouble, dimensions>;
 
+template <class T>
+using Seg1 = LineSegment<T, 1>;
+
+template <class T>
+using Seg2 = LineSegment<T, 2>;
+
+template <class T>
+using Seg3 = LineSegment<T, 3>;
+
 END_LFRL_CG_NAMESPACE
 
 #endif

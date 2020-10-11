@@ -78,6 +78,15 @@ using VecD = Vector<LFRL::f64, dimensions>;
 template <LFRL::u32 dimensions>
 using VecLD = Vector<LFRL::LongDouble, dimensions>;
 
+template <class T>
+using Vec1 = Vector<T, 1>;
+
+template <class T>
+using Vec2 = Vector<T, 2>;
+
+template <class T>
+using Vec3 = Vector<T, 3>;
+
 END_LFRL_CG_NAMESPACE
 
 #endif

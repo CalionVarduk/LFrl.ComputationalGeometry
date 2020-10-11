@@ -1,7 +1,7 @@
 #ifndef __LFRL_CG_CORE_UTILITY_GUARD__
 #define __LFRL_CG_CORE_UTILITY_GUARD__
 
-#include "../math/vector_typedefs.h"
+#include "../math/vector_comparers.h"
 #include "../math/line_segment_typedefs.h"
 #include "../math/bounding_rectangle_typedefs.h"
 
