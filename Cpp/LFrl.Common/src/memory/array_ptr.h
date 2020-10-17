@@ -59,6 +59,9 @@ struct array_ptr final
 	reference back() { return *(_end - 1); }
 	const_reference back() const { return *(_end - 1); }
 
+	array_ptr<T> subrange(size_type start) const;
+	array_ptr<T> subrange(size_type start, size_type length) const;
+
 	reference operator[] (size_type i) { return _begin[i]; }
 	const_reference operator[] (size_type i) const { return _begin[i]; }
 
@@ -93,6 +96,21 @@ typename array_ptr<T>::const_reference array_ptr<T>::at(typename array_ptr<T>::s
 		throw std::out_of_range("index is out of range");
 
 	return _begin[i];
+}
+
+template <class T>
+array_ptr<T> array_ptr<T>::subrange(typename array_ptr<T>::size_type start) const
+{
+	auto begin = std::min(_begin + start, _end);
+	return array_ptr<T>(begin, _end);
+}
+
+template <class T>
+array_ptr<T> array_ptr<T>::subrange(typename array_ptr<T>::size_type start, typename array_ptr<T>::size_type length) const
+{
+	auto begin = std::min(_begin + start, _end);
+	auto end = std::min(begin + length, _end);
+	return array_ptr<T>(begin, end);
 }
 
 template <class T>
