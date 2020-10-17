@@ -78,5 +78,8 @@
     <ClInclude Include="src\math\vector_comparers.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullGraham.h">
+      <Filter>algorithms\convex_hull</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
