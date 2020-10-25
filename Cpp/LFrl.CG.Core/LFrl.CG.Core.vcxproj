@@ -148,7 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\algorithms\convex_hull\ConvexHullGraham.h" />
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullJarvis.h" />
     <ClInclude Include="src\algorithms\convex_hull\ConvexHullNaive.h" />
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullQuick.h" />
     <ClInclude Include="src\algorithms\convex_hull\IConvexHull.h" />
     <ClInclude Include="src\algorithms\Utility.h" />
     <ClInclude Include="src\internal\namespace_macros.h" />

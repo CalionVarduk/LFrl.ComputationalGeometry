@@ -96,7 +96,7 @@ struct vector2_compare_polar_same_half
 	typedef T type;
 	typedef Vec2<T> vector_type;
 
-	const Vec2<T> origin;
+	Vec2<T> origin;
 
 	vector2_compare_polar_same_half() : origin() {}
 	vector2_compare_polar_same_half(Vec2<T> const& origin) : origin(origin) {}
@@ -111,7 +111,7 @@ struct vector2_compare_polar
 	typedef T type;
 	typedef Vec2<T> vector_type;
 
-	const Vec2<T> origin;
+	Vec2<T> origin;
 
 	vector2_compare_polar() : origin() {}
 	vector2_compare_polar(Vec2<T> const& origin) : origin(origin) {}

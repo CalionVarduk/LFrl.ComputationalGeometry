@@ -81,5 +81,11 @@
     <ClInclude Include="src\algorithms\convex_hull\ConvexHullGraham.h">
       <Filter>algorithms\convex_hull</Filter>
     </ClInclude>
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullJarvis.h">
+      <Filter>algorithms\convex_hull</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullQuick.h">
+      <Filter>algorithms\convex_hull</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

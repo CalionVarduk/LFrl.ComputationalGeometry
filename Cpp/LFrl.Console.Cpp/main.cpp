@@ -7,8 +7,13 @@
 #include "LFrl.Common/src/utils/is_iterable.h"
 #include "LFrl.Common/src/utils/reverse.h"
 #include "LFrl.Common/src/memory/array_ptr.h"
+#include "LFrl.Common/src/collections/filtered.h"
 #include "LFrl.OGL/src/primitives/primitives.h"
 #include "LFrl.CG.Core/src/algorithms/Utility.h"
+#include "LFrl.CG.Core/src/algorithms/convex_hull/ConvexHullGraham.h"
+#include "LFrl.CG.Core/src/algorithms/convex_hull/ConvexHullJarvis.h"
+#include "LFrl.CG.Core/src/algorithms/convex_hull/ConvexHullNaive.h"
+#include "LFrl.CG.Core/src/algorithms/convex_hull/ConvexHullQuick.h"
 
 using namespace LFRL;
 using namespace LFRL_OGL;
@@ -56,7 +61,59 @@ private:
 
 int main()
 {
-	std::vector<int> vvvv;
+	auto lamb = [](Vec2I const& a) -> bool { return a.x > 8; };
+	std::vector<Vec2I> vvvv = { {1,1}, {2,2}, {3,3}, {5,5}, {8,8}, {13,13}, {21,21}, {14,14}, {9,9}, {6,6}, {4,4}, {3,3}, {2,2}, {0,0} };
+	auto vvvvf = filter(vvvv, lamb);
+	auto x = vvvvf.begin();
+	const auto vvvvit = filter(vvvv.begin(), vvvv.end(), lamb);
+	auto dist = std::distance(vvvvit, vvvvit.filter_end());
+
+	for (auto iiit = vvvvit; iiit != vvvv.end(); ++iiit)
+		std::cout << iiit->x << ' ' << iiit->y << std::endl;
+
+	for (auto& iiit : vvvvf)
+		std::cout << iiit.x << ' ' << iiit.y << std::endl;
+
+	const auto vvvvitrev = filter(vvvv.rbegin(), vvvv.rend(), lamb);
+	auto dist2 = std::distance(vvvvitrev, vvvv.rend());
+
+	for (auto iiit = vvvvitrev; iiit != vvvv.rend(); ++iiit)
+		std::cout << iiit->x << ' ' << iiit->y << std::endl;
+
+	auto yit = filter(&vvvv.front(), &vvvv.back() + 1, lamb);
+	auto ydist = std::distance(yit, yit.filter_end());
+
+	for (auto iiit = yit; iiit != yit.end(); ++iiit)
+		std::cout << iiit->x << ' ' << iiit->y << std::endl;
+
+	std::vector<Vec2F> points = { { -1.0f, -1.0f }, { 0.5f, -0.5f }, { 1.0f, -1.0f }, { 0.0f, 0.0f }, { -1.0f, 1.0f }, { 1.0f, 1.0f } };
+	ConvexHullGraham<float> graham;
+	ConvexHullJarvis<float> jarvis;
+	ConvexHullNaive<float> naive;
+	auto arrayP = array_ptr<Vec2F>(&points.front(), &points.back() + 1);
+
+	auto grahamResult = graham.Run(arrayP);
+	auto jarvisResult = jarvis.Run(arrayP);
+	auto naiveResult = naive.Run(arrayP);
+
+	ConvexHullQuick<float> quick;
+	std::vector<Vec2F> pointsQ = {
+		{ -46.0f, -123.0f }, //A
+		{ -99.0f, -70.0f }, //B
+		{ -67.0f, -92.0f }, //C
+		{ -102.0f, -65.0f }, //D
+		{ -91.0f, -114.0f }, //E
+		{ -106.0f, 0.0f }, //F
+		{ 70.0f, -120.0f }, //H
+		{ 82.0f, -112.0f }, //J
+		{ 56.0f, -124.0f }, //K
+		{ -2.0f, -68.0f }, //L
+		{ 10.0f, -128.0f }, //M
+		{ 45.0f, -39.0f }, //N
+		{ 113.0f, 3.0f } // W
+	};
+
+	auto quickResult = quick.Run(array_ptr<Vec2F>(&pointsQ.front(), &pointsQ.back() + 1));
 
 	auto iter = is_iterable<std::vector<int>>::value;
 	auto iter_of = is_iterable_of<std::vector<int>, int>::value;
