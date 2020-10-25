@@ -23,7 +23,7 @@ void QuickRng::SetSeed(u32 v) noexcept
 {
 	if (v == 0)
 	{
-		auto t = time(nullptr);
+		auto t = static_cast<u64>(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 		_seed = static_cast<u32>(t * reinterpret_cast<u64>(this - 1) * reinterpret_cast<u64>(&v - 1) * reinterpret_cast<u64>(&t - 1));
 		if (_seed == 0)
 			_seed = static_cast<u32>(t);
@@ -107,9 +107,29 @@ f32 QuickRng::NextFloat() noexcept
 	return static_cast<f32>(_Next()) / std::numeric_limits<u32>::max();
 }
 
+f32 QuickRng::NextFloat(f32 max) noexcept
+{
+	return NextFloat() * max;
+}
+
+f32 QuickRng::NextFloat(f32 min, f32 max) noexcept
+{
+	return NextFloat() * (max - min) + min;
+}
+
 f64 QuickRng::NextDouble() noexcept
 {
 	return static_cast<f64>(_Next()) / std::numeric_limits<u32>::max();
+}
+
+f64 QuickRng::NextDouble(f64 max) noexcept
+{
+	return NextDouble() * max;
+}
+
+f64 QuickRng::NextDouble(f64 min, f64 max) noexcept
+{
+	return NextDouble() * (max - min) + min;
 }
 
 void QuickRng::NextByteRange(array_ptr<u8> buffer)

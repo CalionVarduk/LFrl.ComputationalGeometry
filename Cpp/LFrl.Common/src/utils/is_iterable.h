@@ -21,7 +21,7 @@ namespace __detail
 		void(),
 		++__DECLVAL(decltype(__BEGIN(T))),
 		void(*__BEGIN(T)),
-		std::declval<typename std::conditional<std::is_same<decltype(__BEGIN(T)), decltype(__END(T))>::value, __true_t, __false_t>::type>());
+		std::declval<__true_t>());
 
 	template <class T>
 	__false_t __is_iterable_check(...);
