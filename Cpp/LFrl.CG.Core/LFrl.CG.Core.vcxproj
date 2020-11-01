@@ -144,7 +144,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stump.cpp" />
+    <ClCompile Include="stub.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\algorithms\convex_hull\ConvexHullGraham.h" />

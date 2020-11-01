@@ -82,6 +82,7 @@ struct BufferObject final
 	static bool CopySubData(Target source, Target destination, GLint readOffset, GLint writeOffset, GLuint size);
 	static void* Map(Target target, AccessType access);
 	static void* MapRange(Target target, GLint offset, GLuint size, GLbitfield access);
+	static void* MapRange(Target target, GLint offset, GLuint size, AccessFlag access) { return MapRange(target, offset, size, static_cast<GLbitfield>(access)); }
 	static void FlushMappedRange(Target target, GLint offset, GLuint size);
 	static bool Unmap(Target target);
 	
@@ -146,6 +147,7 @@ struct BufferObject final
 	bool CopySubData(BufferObject const& source, GLint readOffset, GLint writeOffset, GLuint size) { return CopySubData(source._target, _target, readOffset, writeOffset, size); }
 	void* Map(AccessType access) { return Map(_target, access); }
 	void* MapRange(GLint offset, GLuint size, GLbitfield access) { return MapRange(_target, offset, size, access); }
+	void* MapRange(GLint offset, GLuint size, AccessFlag access) { return MapRange(_target, offset, size, access); }
 	void FlushMappedRange(GLint offset, GLuint size) { FlushMappedRange(_target, offset, size); }
 	bool Unmap() { return Unmap(_target); }
 

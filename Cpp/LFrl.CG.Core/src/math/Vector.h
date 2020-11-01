@@ -2,11 +2,11 @@
 #define __LFRL_CG_CORE_VECTOR_GUARD__
 
 #include <cassert>
-#include "../internal/namespace_macros.h"
 #include "LFrl.Common/src/utils/math.h"
 #include "LFrl.Common/src/utils/param.h"
 #include "LFrl.Common/src/utils/requires.h"
 #include "LFrl.Common/src/utils/typedefs.h"
+#include "../internal/namespace_macros.h"
 
 BEGIN_LFRL_CG_NAMESPACE
 
