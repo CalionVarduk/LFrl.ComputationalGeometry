@@ -2,13 +2,13 @@
 #define __LFRL_OGL_BUFFER_OBJECT_GUARD__
 
 #include <array>
-#include <vector>
-#include "AccessType.h"
-#include "AccessFlag.h"
-#include "../ObjectState.h"
+#include "LFrl.Common/src/memory/array_ptr.h"
 #include "LFrl.Common/src/utils/requires.h"
 #include "LFrl.Common/src/utils/is_iterable.h"
 #include "LFrl.Common/src/utils/dynamic_buffer.h"
+#include "AccessType.h"
+#include "AccessFlag.h"
+#include "../ObjectState.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 
@@ -98,23 +98,23 @@ struct BufferObject final
 	template <GLuint count, LFRL::requires<!(count <= 0)> = 0>
 	static void DisposeRange(std::array<BufferObject*, count>& buffers);
 
-	template <class T, GLuint count, LFRL::requires<!(count <= 0)> = 0>
-	static void SetData(Target target, std::array<T, count> const& data, Usage usage) { SetData(target, static_cast<GLuint>(count * sizeof(T)), data.data(), usage); }
+	template <class T>
+	static void SetData(Target target, array_ptr<const T> data, Usage usage) { SetData(target, static_cast<GLuint>(data.size() * sizeof(T)), data.begin(), usage); }
 
 	template <class T>
-	static void SetData(Target target, std::vector<T> const& data, Usage usage) { SetData(target, static_cast<GLuint>(data.size() * sizeof(T)), data.data(), usage); }
+	static void SetData(Target target, array_ptr<T> data, Usage usage) { SetData(target, data.to_const(), usage); }
 
 	template <class T>
 	static void SetData(Target target, T const& data, Usage usage) { SetData(target, static_cast<GLuint>(sizeof(T)), &data, usage); }
 
-	template <class T, GLuint count, LFRL::requires<!(count <= 0)> = 0>
-	static void SetSubData(Target target, GLint offset, std::array<T, count> const& data) { SetSubData(target, offset, static_cast<GLuint>(count * sizeof(T)), data.data()); }
+	template <class T>
+	static void SetSubData(Target target, GLint index, array_ptr<const T> data) { SetSubData(target, static_cast<GLint>(index * sizeof(T)), static_cast<GLuint>(data.size() * sizeof(T)), data.begin()); }
 
 	template <class T>
-	static void SetSubData(Target target, GLint offset, std::vector<T> const& data) { SetSubData(target, offset, static_cast<GLuint>(data.size() * sizeof(T)), data.data()); }
+	static void SetSubData(Target target, GLint index, array_ptr<T> data) { SetSubData(target, index, data.to_const()); }
 
 	template <class T>
-	static void SetSubData(Target target, GLint offset, T const& data) { SetSubData(target, offset, static_cast<GLuint>(sizeof(T)), &data); }
+	static void SetSubData(Target target, GLint index, T const& data) { SetSubData(target, static_cast<GLint>(index * sizeof(T)), static_cast<GLuint>(sizeof(T)), &data); }
 
 	BufferObject(BufferObject const&) = delete;
 	BufferObject& operator=(BufferObject const&) = delete;
@@ -151,23 +151,23 @@ struct BufferObject final
 	void FlushMappedRange(GLint offset, GLuint size) { FlushMappedRange(_target, offset, size); }
 	bool Unmap() { return Unmap(_target); }
 
-	template <class T, GLuint count, LFRL::requires<!(count <= 0)> = 0>
-	void SetData(std::array<T, count> const& data) { SetData<T, count>(_target, data, _usage); }
+	template <class T>
+	void SetData(array_ptr<const T> data) { SetData<T>(_target, data, _usage); }
 
 	template <class T>
-	void SetData(std::vector<T> const& data) { SetData<T>(_target, data, _usage); }
+	void SetData(array_ptr<T> data) { SetData<T>(_target, data, _usage); }
 
 	template <class T>
 	void SetData(T const& data) { SetData<T>(_target, data, _usage); }
 
-	template <class T, GLuint count, LFRL::requires<!(count <= 0)> = 0>
-	void SetSubData(GLint offset, std::array<T, count> const& data) { SetSubData<T, count>(_target, offset, data); }
+	template <class T>
+	void SetSubData(GLint index, array_ptr<const T> data) { SetSubData<T>(_target, index, data); }
 
 	template <class T>
-	void SetSubData(GLint offset, std::vector<T> const& data) { SetSubData<T>(_target, offset, data); }
+	void SetSubData(GLint index, array_ptr<T> data) { SetSubData<T>(_target, index, data); }
 
 	template <class T>
-	void SetSubData(GLint offset, T const& data) { SetSubData<T>(_target, offset, data); }
+	void SetSubData(GLint index, T const& data) { SetSubData<T>(_target, index, data); }
 
 	ActionResult Dispose();
 

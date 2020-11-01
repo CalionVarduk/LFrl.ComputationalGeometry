@@ -1,10 +1,17 @@
 #ifndef __LFRL_OGL_DYNAMIC_BUFFER_OBJECT_GUARD__
 #define __LFRL_OGL_DYNAMIC_BUFFER_OBJECT_GUARD__
 
-#include "LFrl.Common/src/memory/array_ptr.h"
 #include "BufferObject.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
+
+enum struct DynamicBufferObjectActionResult
+{
+	OK = 0,
+	RESIZE_BUFFER_INITIALIZATION_FAILURE = 1,
+	RESIZE_TRIVIAL_DATA_COPY_FAILURE = 2,
+	RESIZE_CRITICAL_DATA_COPY_FAILURE = 3
+};
 
 template <class T>
 struct DynamicBufferObject final
@@ -37,26 +44,23 @@ struct DynamicBufferObject final
 	void Bind() { _bo.Bind(); }
 	void Unbind() { _bo.Unbind(); }
 
-	bool Push(T const& obj);
-	GLuint PushRange(array_ptr<const T> objs);
-	GLuint PushRange(array_ptr<T> objs) { return PushRange(objs.to_const()); }
-
-	template <sz size>
-	GLuint PushRange(std::array<T, size> const& objs) { return PushRange(make_array_ptr(objs.data(), size)); }
+	DynamicBufferObjectActionResult Push(T const& obj);
+	DynamicBufferObjectActionResult PushRange(array_ptr<const T> objs);
+	DynamicBufferObjectActionResult PushRange(array_ptr<T> objs) { return PushRange(objs.to_const()); }
 
 	GLuint Pop(GLuint count = 1);
 
 	void Replace(GLuint index, T const& obj);
 	GLuint ReplaceRange(GLuint index, array_ptr<const T> objs);
 	GLuint ReplaceRange(GLuint index, array_ptr<T> objs) { return ReplaceRange(index, objs.to_const()); }
-	
-	template <sz size>
-	GLuint ReplaceRange(GLuint index, std::array<T, size> const& objs) { return ReplaceRange(index, make_array_ptr(objs.data(), size)); }
 
-	void Swap(GLuint index1, GLuint index2);
+	bool Swap(GLuint index1, GLuint index2);
 
 	void Clear();
-	bool Reserve(GLuint minCapacity);
+	void Set(array_ptr<const T> objs);
+	void Set(array_ptr<T> objs) { Set(objs.to_const()); }
+	DynamicBufferObjectActionResult Reserve(GLuint minCapacity);
+	DynamicBufferObjectActionResult ShrinkToFit();
 
 	BufferObject::ActionResult Dispose();
 
@@ -65,7 +69,7 @@ private:
 	GLuint _capacity;
 	BufferObject _bo;
 
-	bool _Resize(GLuint capacity);
+	DynamicBufferObjectActionResult _Resize(GLuint capacity);
 };
 
 template <class T>
@@ -117,30 +121,28 @@ BufferObject::ActionResult DynamicBufferObject<T>::Initalize()
 }
 
 template <class T>
-bool DynamicBufferObject<T>::Push(T const& obj)
+DynamicBufferObjectActionResult DynamicBufferObject<T>::Push(T const& obj)
 {
 	if (_size == _capacity)
 	{
-		auto target = _bo.GetTarget();
 		auto result = _Resize(_capacity * GROWTH_COEFFICIENT);
 
-		if (result)
-			_bo.SetSubData(OBJECT_SIZE * _size++, obj);
+		if (result == DynamicBufferObjectActionResult::OK)
+			_bo.SetSubData(_size++, obj);
 
 		_bo.Unbind();
-		_bo.SetTarget(target);
 		return result;
 	}
 
-	_bo.SetSubData(OBJECT_SIZE * _size++, obj);
-	return true;
+	_bo.SetSubData(_size++, obj);
+	return DynamicBufferObjectActionResult::OK;
 }
 
 template <class T>
-GLuint DynamicBufferObject<T>::PushRange(array_ptr<const T> objs)
+DynamicBufferObjectActionResult DynamicBufferObject<T>::PushRange(array_ptr<const T> objs)
 {
 	if (objs.size() == 0)
-		return 0;
+		return DynamicBufferObjectActionResult::OK;
 
 	auto newSize = _size + objs.size();
 	if (newSize > _capacity)
@@ -149,22 +151,20 @@ GLuint DynamicBufferObject<T>::PushRange(array_ptr<const T> objs)
 		while (newSize > capacity)
 			capacity *= GROWTH_COEFFICIENT;
 
-		auto target = _bo.GetTarget();
 		auto result = _Resize(capacity);
 
-		if (result)
+		if (result == DynamicBufferObjectActionResult::OK)
 		{
-			_bo.SetSubData(OBJECT_SIZE * _size, OBJECT_SIZE * objs.size(), static_cast<void*>(objs.begin()));
+			_bo.SetSubData(_size, objs);
 			_size = newSize;
 		}
 		_bo.Unbind();
-		_bo.SetTarget(target);
-		return result ? objs.size() : 0;
+		return result;
 	}
 
-	_bo.SetSubData(OBJECT_SIZE * _size, OBJECT_SIZE * objs.size(), static_cast<void*>(objs.begin()));
+	_bo.SetSubData(_size, objs);
 	_size = newSize;
-	return objs.size();
+	return DynamicBufferObjectActionResult::OK;
 }
 
 template <class T>
@@ -181,8 +181,7 @@ template <class T>
 void DynamicBufferObject<T>::Replace(GLuint index, T const& obj)
 {
 	assert(index < _size);
-	auto offset = OBJECT_SIZE * index;
-	_bo.SetSubData(offset, obj);
+	_bo.SetSubData(index, obj);
 }
 
 template <class T>
@@ -196,13 +195,13 @@ GLuint DynamicBufferObject<T>::ReplaceRange(GLuint index, array_ptr<const T> obj
 
 	auto replaceCount = endIndex - index;
 	if (replaceCount > 0)
-		_bo.SetSubData(OBJECT_SIZE * index, OBJECT_SIZE * replaceCount, static_cast<void*>(objs.begin()));
+		_bo.SetSubData(index, objs);
 
 	return replaceCount;
 }
 
 template <class T>
-void DynamicBufferObject<T>::Swap(GLuint index1, GLuint index2)
+bool DynamicBufferObject<T>::Swap(GLuint index1, GLuint index2)
 {
 	assert(index1 < _size);
 	assert(index2 < _size);
@@ -212,12 +211,23 @@ void DynamicBufferObject<T>::Swap(GLuint index1, GLuint index2)
 	auto offset1 = OBJECT_SIZE * index1;
 	auto offset2 = OBJECT_SIZE * index2;
 
+	auto ptr = _bo.MapRange(offset1, OBJECT_SIZE, AccessFlag::READ);
+	if (ptr == nullptr)
+		return false;
+
 	char buffer[OBJECT_SIZE];
-	memcpy(buffer, _bo.MapRange(offset1, OBJECT_SIZE, AccessFlag::READ), OBJECT_SIZE);
+	memcpy(buffer, ptr, OBJECT_SIZE);
 	_bo.Unmap();
-	_bo.SetSubData(offset1, OBJECT_SIZE, _bo.MapRange(offset2, OBJECT_SIZE, AccessFlag::READ));
+
+	ptr = _bo.MapRange(offset2, OBJECT_SIZE, AccessFlag::READ);
+	if (ptr == nullptr)
+		return false;
+
+	_bo.SetSubData(offset1, OBJECT_SIZE, ptr);
 	_bo.Unmap();
+
 	_bo.SetSubData(offset2, OBJECT_SIZE, static_cast<void*>(buffer));
+	return true;
 }
 
 template <class T>
@@ -229,26 +239,63 @@ void DynamicBufferObject<T>::Clear()
 }
 
 template <class T>
-bool DynamicBufferObject<T>::Reserve(GLuint minCapacity)
+void DynamicBufferObject<T>::Set(array_ptr<const T> objs)
+{
+	_size = objs.size();
+	if (_size == 0)
+		return;
+
+	if (_size > _capacity)
+	{
+		auto capacity = _capacity;
+		while (_size > capacity)
+			capacity *= GROWTH_COEFFICIENT;
+
+		_capacity = capacity;
+		_bo.Reserve(_capacity);
+	}
+	_bo.SetSubData(0, objs);
+}
+
+template <class T>
+DynamicBufferObjectActionResult DynamicBufferObject<T>::Reserve(GLuint minCapacity)
 {
 	auto capacity = MIN_CAPACITY;
 	while (minCapacity > capacity)
 		capacity *= GROWTH_COEFFICIENT;
 
 	if (_capacity >= capacity)
-		return true;
+		return DynamicBufferObjectActionResult::OK;
 
 	if (_size == 0)
 	{
 		_capacity = capacity;
 		_bo.Reserve(_capacity);
-		return true;
+		return DynamicBufferObjectActionResult::OK;
 	}
 
-	auto target = _bo.GetTarget();
 	auto result = _Resize(capacity);
 	_bo.Unbind();
-	_bo.SetTarget(target);
+	return result;
+}
+
+template <class T>
+DynamicBufferObjectActionResult DynamicBufferObject<T>::ShrinkToFit()
+{
+	auto capacity = _capacity;
+	auto minCapacity = std::max(_size, MIN_CAPACITY);
+
+	while (capacity > minCapacity)
+		capacity /= GROWTH_COEFFICIENT;
+
+	if (capacity < _size)
+		capacity *= GROWTH_COEFFICIENT;
+
+	if (capacity == _capacity)
+		return DynamicBufferObjectActionResult::OK;
+
+	auto result = _Resize(capacity);
+	_bo.Unbind();
 	return result;
 }
 
@@ -265,37 +312,36 @@ BufferObject::ActionResult DynamicBufferObject<T>::Dispose()
 }
 
 template <class T>
-bool DynamicBufferObject<T>::_Resize(GLuint capacity)
+DynamicBufferObjectActionResult DynamicBufferObject<T>::_Resize(GLuint capacity)
 {
 	BufferObject tempBo(BufferObject::Target::COPY_WRITE_BUFFER, _bo.GetUsage());
 	if (tempBo.Initialize() != BufferObject::ActionResult::OK)
-		return false;
+		return DynamicBufferObjectActionResult::RESIZE_BUFFER_INITIALIZATION_FAILURE;
 
 	auto usedCapacity = OBJECT_SIZE * _size;
 
-	_bo.SetTarget(BufferObject::Target::COPY_READ_BUFFER);
 	tempBo.Bind();
-	_bo.Bind();
+	BufferObject::Bind(BufferObject::Target::COPY_READ_BUFFER, _bo.GetId());
 
 	tempBo.Reserve(usedCapacity);
 	if (!tempBo.CopySubData(_bo, 0, 0, usedCapacity))
 	{
 		tempBo.Unbind();
-		return false;
+		return DynamicBufferObjectActionResult::RESIZE_TRIVIAL_DATA_COPY_FAILURE;
 	}
 
 	tempBo.SetTarget(BufferObject::Target::COPY_READ_BUFFER);
-	_bo.SetTarget(BufferObject::Target::COPY_WRITE_BUFFER);
 
 	tempBo.Bind();
-	_bo.Bind();
+	BufferObject::Bind(BufferObject::Target::COPY_WRITE_BUFFER, _bo.GetId());
 
 	_capacity = capacity;
 	_bo.Reserve(_capacity);
 
-	auto result = _bo.CopySubData(tempBo, 0, 0, usedCapacity);
-	// false result here is really bad, since we've already reserved a new memory block
-	// there is no easy way to fix this, it might be possible to move tempBo into _bo, although it's capacity is potentially incorrect
+	auto result = _bo.CopySubData(tempBo, 0, 0, usedCapacity) ?
+		DynamicBufferObjectActionResult::OK :
+		DynamicBufferObjectActionResult::RESIZE_CRITICAL_DATA_COPY_FAILURE;
+
 	tempBo.Unbind();
 	return result;
 }
