@@ -114,25 +114,25 @@ array_ptr<T> array_ptr<T>::subrange(typename array_ptr<T>::size_type start, type
 }
 
 template <class T>
-array_ptr<T> make_array_ptr(typename array_ptr<T>::pointer begin, typename array_ptr<T>::pointer end) noexcept
+array_ptr<T> make_array_ptr(T* begin, T* end) noexcept
 {
 	return array_ptr<T>(begin, end);
 }
 
 template <class T>
-array_ptr<T> make_array_ptr(typename array_ptr<T>::pointer begin, typename array_ptr<T>::size_type size) noexcept
+array_ptr<T> make_array_ptr(T* begin, sz size) noexcept
 {
 	return array_ptr<T>(begin, size);
 }
 
 template <class T>
-array_ptr<const T> make_const_array_ptr(typename array_ptr<const T>::pointer begin, typename array_ptr<const T>::pointer end) noexcept
+array_ptr<const T> make_const_array_ptr(T const* begin, T const* end) noexcept
 {
 	return array_ptr<const T>(begin, end);
 }
 
 template <class T>
-array_ptr<const T> make_const_array_ptr(typename array_ptr<const T>::pointer begin, typename array_ptr<const T>::size_type size) noexcept
+array_ptr<const T> make_const_array_ptr(T const* begin, sz size) noexcept
 {
 	return array_ptr<const T>(begin, size);
 }

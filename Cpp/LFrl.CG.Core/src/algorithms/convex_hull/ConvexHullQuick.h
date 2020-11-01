@@ -11,41 +11,47 @@ namespace detail
 	template <class T>
 	struct _ch_quick_partition_predicate final
 	{
-		Vec2<T> const* start;
-		Vec2<T> const* end;
-		_ch_quick_partition_predicate(Vec2<T> const* start, Vec2<T> const* end) : start(start), end(end) {}
+		Vec2<T> const* pole;
+		Vec2<T> const* antipole;
+		_ch_quick_partition_predicate(Vec2<T> const* pole, Vec2<T> const* antipole) : pole(pole), antipole(antipole) {}
 		bool operator()(Vec2<T> const& p)
 		{
-			auto orientation = Orientation(p, *start, *end);
+			auto orientation = Orientation(p, *pole, *antipole);
 			return orientation.IsRight();
 		}
 	};
 
 	template <class T>
-	std::pair<Vec2<T>*, Vec2<T>*> _ch_quick_find_initial_points(array_ptr<Vec2<T>> points)
+	std::pair<Vec2<T>*, Vec2<T>*> _ch_quick_find_start_vertexes(array_ptr<Vec2<T>> points)
 	{
 		return std::minmax_element(points.begin(), points.end(), vector2_comparer_xy<T>());
 	}
 
 	template <class T>
-	void _ch_quick_position_initial_points(array_ptr<Vec2<T>> points, Vec2<T>* left, Vec2<T>* right)
+	std::pair<Vec2<T>*, Vec2<T>*> _ch_quick_emplace_start_vertexes(array_ptr<Vec2<T>> points)
 	{
+		auto initial = _ch_quick_find_start_vertexes(points);
+		auto pole = initial.first;
+		auto antipole = initial.second;
+
 		auto first = points.begin();
 		auto last = points.end() - 1;
 
-		std::iter_swap(first, left);
-		std::iter_swap(last, right == first ? left : right);
+		std::iter_swap(first, pole);
+		std::iter_swap(last, antipole == first ? pole : antipole);
+
+		return std::make_pair(first, last);
 	}
 
 	template <class T>
-	Vec2<T>* _ch_quick_find_most_distant_point(array_ptr<Vec2<T>> points, Vec2<T> const* left, Vec2<T> const* right)
+	Vec2<T>* _ch_quick_find_most_distant_point(array_ptr<Vec2<T>> candidates, Vec2<T> const* pole, Vec2<T> const* antipole)
 	{
-		auto result = points.begin();
-		auto maxOrientation = Orientation(*result, *left, *right);
+		auto result = candidates.begin();
+		auto maxOrientation = Orientation(*result, *pole, *antipole);
 
-		for (auto p = points.begin() + 1; p < points.end(); ++p)
+		for (auto p = candidates.begin() + 1; p < candidates.end(); ++p)
 		{
-			auto orientation = Orientation(*p, *left, *right);
+			auto orientation = Orientation(*p, *pole, *antipole);
 			if (orientation.value < maxOrientation.value)
 			{
 				result = p;
@@ -56,29 +62,32 @@ namespace detail
 	}
 
 	template <class T>
-	Vec2<T>* _ch_quick_recur_step(array_ptr<Vec2<T>> points, Vec2<T> const* left, Vec2<T> const* right, Vec2<T>* target)
+	Vec2<T>* _ch_quick_recur_step(array_ptr<Vec2<T>> points, Vec2<T> const* pole, Vec2<T> const* antipole, Vec2<T>* hullEnd)
 	{
 		if (points.size() == 0)
-			return target;
+			return hullEnd;
 
 		if (points.size() == 1)
 		{
-			std::iter_swap(points.begin(), target);
-			return target + 1;
+			std::iter_swap(points.begin(), hullEnd);
+			return hullEnd + 1;
 		}
 
-		auto pivot = _ch_quick_find_most_distant_point(points, left, right);
+		auto hullVertex = _ch_quick_find_most_distant_point(points, pole, antipole);
 		auto last = points.end() - 1;
-		std::iter_swap(pivot, last);
+		std::iter_swap(hullVertex, last);
+		hullVertex = last;
 
-		pivot = std::partition(points.begin(), last, _ch_quick_partition_predicate<T>(left, last));
-		std::iter_swap(pivot, last);
+		auto polePartitionPivot = std::partition(points.begin(), last, _ch_quick_partition_predicate<T>(pole, hullVertex));
+		std::iter_swap(hullVertex, polePartitionPivot);
+		hullVertex = polePartitionPivot;
 
-		target = _ch_quick_recur_step(array_ptr<Vec2<T>>(points.begin(), pivot), left, pivot, target);
-		auto nextPivot = std::partition(pivot + 1, points.end(), _ch_quick_partition_predicate<T>(pivot, right));
-		std::iter_swap(pivot, target);
+		hullEnd = _ch_quick_recur_step(make_array_ptr(points.begin(), polePartitionPivot), pole, hullVertex, hullEnd);
+		auto antipolePartitionPivot = std::partition(polePartitionPivot + 1, points.end(), _ch_quick_partition_predicate<T>(hullVertex, antipole));
+		std::iter_swap(hullVertex, hullEnd);
+		hullVertex = hullEnd;
 
-		return _ch_quick_recur_step(array_ptr<Vec2<T>>(pivot + 1, nextPivot), target, right, target + 1);
+		return _ch_quick_recur_step(make_array_ptr(polePartitionPivot + 1, antipolePartitionPivot), hullVertex, antipole, hullEnd + 1);
 	}
 }
 
@@ -93,45 +102,40 @@ struct ConvexHullQuick : public IConvexHull<T>
 
 	~ConvexHullQuick() = default;
 
-	virtual std::vector<Vec2<T>> Run(array_ptr<Vec2<T>> points) override;
+	virtual array_ptr<Vec2<T>> Run(array_ptr<Vec2<T>> points) override;
 
 private:
-	void _Run(std::vector<Vec2<T>>& result, array_ptr<Vec2<T>> points);
+	Vec2<T>* _Run(array_ptr<Vec2<T>> points);
 };
 
 template <class T>
-std::vector<Vec2<T>> ConvexHullQuick<T>::Run(array_ptr<Vec2<T>> points)
+array_ptr<Vec2<T>> ConvexHullQuick<T>::Run(array_ptr<Vec2<T>> points)
 {
-	std::vector<Vec2<T>> result;
 	if (points.size() < 3)
-		result.insert(result.end(), points.begin(), points.end());
-	else
-		_Run(result, points);
-	return result;
+		return points;
+
+	auto hullEnd = _Run(points);
+	return make_array_ptr(points.begin(), hullEnd);
 }
 
 template <class T>
-void ConvexHullQuick<T>::_Run(std::vector<Vec2<T>>& result, array_ptr<Vec2<T>> points)
+Vec2<T>* ConvexHullQuick<T>::_Run(array_ptr<Vec2<T>> points)
 {
-	auto initialPoints = detail::_ch_quick_find_initial_points(points);
-	auto left = initialPoints.first;
-	auto right = initialPoints.second;
-	detail::_ch_quick_position_initial_points(points, left, right);
-	auto first = points.begin() + 1;
-	auto last = points.end() - 1;
+	auto initial = detail::_ch_quick_emplace_start_vertexes(points);
+	auto pole = initial.first;
+	auto antipole = initial.second;
+	auto hullEnd = pole + 1;
 
-	//TODO: think about making the points and swaps more readable
-	auto pivot = std::partition(first, last, detail::_ch_quick_partition_predicate<T>(points.begin(), last));
-	std::iter_swap(pivot, last);
+	auto polePartitionPivot = std::partition(hullEnd, antipole, detail::_ch_quick_partition_predicate<T>(pole, antipole));
+	std::iter_swap(polePartitionPivot, antipole);
+	antipole = polePartitionPivot;
 
-	auto target = detail::_ch_quick_recur_step(array_ptr<Vec2<T>>(first, pivot), points.begin(), pivot, first);
-	std::iter_swap(pivot, target);
+	hullEnd = detail::_ch_quick_recur_step(make_array_ptr(hullEnd, polePartitionPivot), pole, antipole, hullEnd);
+	std::iter_swap(antipole, hullEnd);
+	antipole = hullEnd;
 
-	auto nextPivot = std::partition(pivot + 1, points.end(), detail::_ch_quick_partition_predicate<T>(target, points.begin()));
-	target = detail::_ch_quick_recur_step(array_ptr<Vec2<T>>(pivot + 1, nextPivot), target, points.begin(), target + 1);
-
-	// TODO: just return begin -> target array_ptr
-	result.insert(result.end(), points.begin(), target);
+	auto antipolePartitionPivot = std::partition(polePartitionPivot + 1, points.end(), detail::_ch_quick_partition_predicate<T>(antipole, pole));
+	return detail::_ch_quick_recur_step(make_array_ptr(polePartitionPivot + 1, antipolePartitionPivot), antipole, pole, hullEnd + 1);
 }
 
 END_LFRL_CG_NAMESPACE

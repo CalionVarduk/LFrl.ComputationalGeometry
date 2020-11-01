@@ -16,16 +16,17 @@ namespace detail
 	}
 
 	template <class T>
-	void _ch_graham_pop_invalid_vertexes(std::vector<Vec2<T>>& result, Vec2<T> const* current)
+	Vec2<T>* _ch_graham_pop_invalid_vertexes(Vec2<T>* hullBegin, Vec2<T>* hullEnd, Vec2<T> const* current)
 	{
-		while (result.size() > 1)
+		while (hullEnd - hullBegin > 1)
 		{
-			auto orientation = Orientation(*(result.end() - 2), *(result.end() - 1), *current);
+			auto orientation = Orientation(*(hullEnd - 2), *(hullEnd - 1), *current);
 			if (orientation.IsLeft()) // TODO: this doesn't require checking collinear points, interesting observation due to sorting?
 				break;
 
-			result.pop_back();
+			--hullEnd;
 		}
+		return hullEnd;
 	}
 }
 
@@ -40,37 +41,34 @@ struct ConvexHullGraham : public IConvexHull<T>
 
 	~ConvexHullGraham() = default;
 
-	virtual std::vector<Vec2<T>> Run(array_ptr<Vec2<T>> points) override;
+	virtual array_ptr<Vec2<T>> Run(array_ptr<Vec2<T>> points) override;
 
 private:
-	void _Run(std::vector<Vec2<T>>& result, array_ptr<Vec2<T>> points);
+	Vec2<T>* _Run(array_ptr<Vec2<T>> points);
 };
 
 template <class T>
-std::vector<Vec2<T>> ConvexHullGraham<T>::Run(array_ptr<Vec2<T>> points)
+array_ptr<Vec2<T>> ConvexHullGraham<T>::Run(array_ptr<Vec2<T>> points)
 {
-	std::vector<Vec2<T>> result;
 	if (points.size() < 3)
-		result.insert(result.end(), points.begin(), points.end());
-	else
-		_Run(result, points);
-	return result;
+		return points;
+
+	auto hullEnd = _Run(points);
+	return make_array_ptr(points.begin(), hullEnd);
 }
 
 template <class T>
-void ConvexHullGraham<T>::_Run(std::vector<Vec2<T>>& result, array_ptr<Vec2<T>> points)
+Vec2<T>* ConvexHullGraham<T>::_Run(array_ptr<Vec2<T>> points)
 {
 	detail::_ch_graham_sort_points(points);
+	auto hullEnd = points.begin() + 3;
 
-	result.insert(result.end(), points.begin(), points.begin() + 3);
-
-	// TODO: think about how to handle stack operations inside beginning of points
-	// there exists an algorithm that does exactly that
-	for (auto p = points.begin() + 3; p < points.end(); ++p)
+	for (auto p = hullEnd; p < points.end(); ++p)
 	{
-		detail::_ch_graham_pop_invalid_vertexes(result, p);
-		result.push_back(*p);
+		hullEnd = detail::_ch_graham_pop_invalid_vertexes(points.begin(), hullEnd, p);
+		std::iter_swap(hullEnd++, p);
 	}
+	return hullEnd;
 }
 
 END_LFRL_CG_NAMESPACE

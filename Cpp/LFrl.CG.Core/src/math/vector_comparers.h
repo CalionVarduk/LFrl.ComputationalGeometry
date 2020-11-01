@@ -67,6 +67,17 @@ bool compare_polar_same_half(Vec2<T> const& a, Vec2<T> const& b, Vec2<T> const& 
 }
 
 template <class T>
+bool compare_polar_same_half_inverse_magnitude(Vec2<T> const& a, Vec2<T> const& b, Vec2<T> const& origin)
+{
+	auto orientation = Orientation(a, origin, b);
+	if (orientation.IsRight())
+		return true;
+	if (orientation.IsLeft())
+		return false;
+	return (a - origin).GetMagnitudeSq() > (b - origin).GetMagnitudeSq();
+}
+
+template <class T>
 bool compare_polar(Vec2<T> const& a, Vec2<T> const& b, Vec2<T> const& origin)
 {
 	return a.y >= origin.y ?
@@ -103,6 +114,21 @@ struct vector2_compare_polar_same_half
 	vector2_compare_polar_same_half(Vec2<T>&& origin) : origin(std::move(origin)) {}
 
 	bool operator()(Vec2<T> const& a, Vec2<T> const& b) const { return compare_polar_same_half(a, b, origin); }
+};
+
+template <class T>
+struct vector2_compare_polar_same_half_inverse_magnitude
+{
+	typedef T type;
+	typedef Vec2<T> vector_type;
+
+	Vec2<T> origin;
+
+	vector2_compare_polar_same_half_inverse_magnitude() : origin() {}
+	vector2_compare_polar_same_half_inverse_magnitude(Vec2<T> const& origin) : origin(origin) {}
+	vector2_compare_polar_same_half_inverse_magnitude(Vec2<T>&& origin) : origin(std::move(origin)) {}
+
+	bool operator()(Vec2<T> const& a, Vec2<T> const& b) const { return compare_polar_same_half_inverse_magnitude(a, b, origin); }
 };
 
 template <class T>

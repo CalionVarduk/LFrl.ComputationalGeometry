@@ -10,114 +10,101 @@ BEGIN_LFRL_CG_NAMESPACE
 namespace detail
 {
 	template <class T>
-	struct __ch_jarvis_above_origin_predicate final
+	struct _ch_jarvis_above_origin_predicate final
 	{
 		Vec2<T> const* origin;
-		__ch_jarvis_above_origin_predicate(Vec2<T> const* origin) : origin(origin) {}
+		_ch_jarvis_above_origin_predicate(Vec2<T> const* origin) : origin(origin) {}
 		bool operator()(Vec2<T> const& p) const { return is_y_greater(p, *origin); }
 	};
 
 	template <class T>
-	struct __ch_jarvis_below_origin_predicate final
+	struct _ch_jarvis_below_origin_predicate final
 	{
 		Vec2<T> const* origin;
-		__ch_jarvis_below_origin_predicate(Vec2<T> const* origin) : origin(origin) {}
+		_ch_jarvis_below_origin_predicate(Vec2<T> const* origin) : origin(origin) {}
 		bool operator()(Vec2<T> const& p) const { return is_y_less(p, *origin); }
 	};
 
 	template <class T>
-	std::pair<Vec2<T>*, Vec2<T>*> _ch_jarvis_find_initial_points(array_ptr<Vec2<T>> points)
+	std::pair<Vec2<T>*, Vec2<T>*> _ch_jarvis_find_initial_vertexes(array_ptr<Vec2<T>> points)
 	{
 		return std::minmax_element(points.begin(), points.end(), vector2_comparer_yx<T>());
 	}
 
 	template <class T>
-	Vec2<T> const* _ch_jarvis_find_next_on_right_chain(array_ptr<Vec2<T>> points, Vec2<T> const* current)
+	std::pair<Vec2<T>*, Vec2<T>*> _ch_jarvis_emplace_initial_vertexes(array_ptr<Vec2<T>> points)
 	{
-		auto pointsAboveCurrent = filter(points.begin(), points.end(), __ch_jarvis_above_origin_predicate<T>(current));
-		// TODO: replace min_element with custom iteration
-		return std::min_element(pointsAboveCurrent, pointsAboveCurrent.filter_end(), vector2_compare_polar_same_half<T>(*current)).current();
+		auto initial = _ch_jarvis_find_initial_vertexes(points);
+		auto bottom = initial.first;
+		auto top = initial.second;
 
-		//auto next = points.begin();
-		//while (!is_y_greater(*next, *current))
-		//	++next;
+		auto first = points.begin();
+		auto last = points.end() - 1;
 
-		//for (auto p = next + 1; p < points.end(); ++p)
-		//{
-		//	if (p->y < current->y)
-		//		continue;
+		std::iter_swap(first, bottom);
+		std::iter_swap(last, top == first ? bottom : top);
 
-		//	if (p->y == current->y)
-		//	{
-		//		if (p->x <= current->x || (next->y == current->y && p->x <= next->x))
-		//			continue;
-		//	}
-		//	else
-		//	{
-		//		auto orientation = Orientation(*p, *current, *next);
-		//		if (orientation.IsLeft() || (orientation.IsCollinear() && (*p - *current).GetMagnitudeSq() <= (*next - *current).GetMagnitudeSq()))
-		//			continue;
-		//	}
-		//	next = p;
-		//}
-		//return next;
+		return std::make_pair(first, last);
 	}
 
-	template <class T>
-	Vec2<T> const* _ch_jarvis_find_next_on_left_chain(array_ptr<Vec2<T>> points, Vec2<T> const* current)
+	template <class T, class TPred>
+	Vec2<T>* _ch_jarvis_find_next_vertex_on_chain(array_ptr<Vec2<T>> candidates, Vec2<T> const* lastHullVertex, TPred predicate)
 	{
-		auto pointsBelowCurrent = filter(points.begin(), points.end(), __ch_jarvis_below_origin_predicate<T>(current));
-		return std::min_element(pointsBelowCurrent, pointsBelowCurrent.filter_end(), vector2_compare_polar_same_half<T>(*current)).current();
+		auto candidatesIterator = filter(candidates.begin(), candidates.end(), predicate);
+		auto result = candidatesIterator.current();
+		++candidatesIterator;
 
-		//auto next = points.begin();
-		//while (!is_y_less(*next, *current))
-		//	++next;
-
-		//for (auto p = next + 1; p < points.end(); ++p)
-		//{
-		//	if (p->y > current->y)
-		//		continue;
-
-		//	if (p->y == current->y)
-		//	{
-		//		if (p->x >= current->x || (next->y == current->y && p->x >= next->x))
-		//			continue;
-		//	}
-		//	else
-		//	{
-		//		auto orientation = Orientation(*p, *current, *next);
-		//		if (orientation.IsLeft() || (orientation.IsCollinear() && (*p - *current).GetMagnitudeSq() <= (*next - *current).GetMagnitudeSq()))
-		//			continue;
-		//	}
-		//	next = p;
-		//}
-		//return next;
-	}
-
-	template <class T>
-	void _ch_jarvis_add_right_chain(array_ptr<Vec2<T>> points, Vec2<T> const* top, Vec2<T> const* bottom, std::vector<Vec2<T>>& result)
-	{
-		auto current = bottom;
-
-		while (current != top)
+		while (candidatesIterator != candidatesIterator.end())
 		{
-			// TODO: think about doing this in-place, by pushing hull points to the beginning of points
-			// will it break comaprison between current and top/bottom?
-			current = _ch_jarvis_find_next_on_right_chain(points, current);
-			result.push_back(*current);
+			if (compare_polar_same_half_inverse_magnitude(*candidatesIterator.current(), *result, *lastHullVertex))
+				result = candidatesIterator.current();
+
+			++candidatesIterator;
 		}
+		return result;
 	}
 
 	template <class T>
-	void _ch_jarvis_add_left_chain(array_ptr<Vec2<T>> points, Vec2<T> const* top, Vec2<T> const* bottom, std::vector<Vec2<T>>& result)
+	Vec2<T>* _ch_jarvis_find_next_vertex_on_right_chain(array_ptr<Vec2<T>> candidates, Vec2<T> const* lastHullVertex)
 	{
-		auto current = top;
+		return _ch_jarvis_find_next_vertex_on_chain(candidates, lastHullVertex, _ch_jarvis_above_origin_predicate<T>(lastHullVertex));
+	}
 
-		while (current != bottom)
+	template <class T>
+	Vec2<T>* _ch_jarvis_find_next_vertex_on_left_chain(array_ptr<Vec2<T>> candidates, Vec2<T> const* lastHullVertex)
+	{
+		return _ch_jarvis_find_next_vertex_on_chain(candidates, lastHullVertex, _ch_jarvis_below_origin_predicate<T>(lastHullVertex));
+	}
+
+	template <class T>
+	Vec2<T>* _ch_jarvis_emplace_right_chain(array_ptr<Vec2<T>> points, Vec2<T> const* top, Vec2<T>* hullEnd)
+	{
+		while (true)
 		{
-			current = _ch_jarvis_find_next_on_left_chain(points, current);
-			result.push_back(*current);
+			auto candidateVertex = _ch_jarvis_find_next_vertex_on_right_chain(make_array_ptr(hullEnd, points.end()), hullEnd - 1);
+			std::iter_swap(candidateVertex, hullEnd++);
+
+			if (candidateVertex == top)
+				break;
 		}
+		return hullEnd;
+	}
+
+	template <class T>
+	Vec2<T>* _ch_jarvis_emplace_left_chain(array_ptr<Vec2<T>> points, Vec2<T> const* bottom, Vec2<T>* hullEnd)
+	{
+		while (true)
+		{
+			auto candidateVertex = _ch_jarvis_find_next_vertex_on_left_chain(make_array_ptr(hullEnd, points.end()), hullEnd - 1);
+			if (candidateVertex == points.end())
+				break;
+
+			if (compare_polar_same_half_inverse_magnitude(*bottom, *candidateVertex, *(hullEnd - 1)))
+				break;
+
+			std::iter_swap(candidateVertex, hullEnd++);
+		}
+		return hullEnd;
 	}
 }
 
@@ -132,32 +119,32 @@ struct ConvexHullJarvis : public IConvexHull<T>
 
 	~ConvexHullJarvis() = default;
 
-	virtual std::vector<Vec2<T>> Run(array_ptr<Vec2<T>> points) override;
+	virtual array_ptr<Vec2<T>> Run(array_ptr<Vec2<T>> points) override;
 
 private:
-	void _Run(std::vector<Vec2<T>>& result, array_ptr<Vec2<T>> points);
+	Vec2<T>* _Run(array_ptr<Vec2<T>> points);
 };
 
 template <class T>
-std::vector<Vec2<T>> ConvexHullJarvis<T>::Run(array_ptr<Vec2<T>> points)
+array_ptr<Vec2<T>> ConvexHullJarvis<T>::Run(array_ptr<Vec2<T>> points)
 {
-	std::vector<Vec2<T>> result;
 	if (points.size() < 3)
-		result.insert(result.end(), points.begin(), points.end());
-	else
-		_Run(result, points);
-	return result;
+		return points;
+	
+	auto hullEnd = _Run(points);
+	return make_array_ptr(points.begin(), hullEnd);
 }
 
 template <class T>
-void ConvexHullJarvis<T>::_Run(std::vector<Vec2<T>>& result, array_ptr<Vec2<T>> points)
+Vec2<T>* ConvexHullJarvis<T>::_Run(array_ptr<Vec2<T>> points)
 {
-	auto initialPoints = detail::_ch_jarvis_find_initial_points(points);
-	auto bottom = initialPoints.first;
-	auto top = initialPoints.second;
+	auto initial = detail::_ch_jarvis_emplace_initial_vertexes(points);
+	auto bottom = initial.first;
+	auto top = initial.second;
+	auto hullEnd = bottom + 1;
 
-	detail::_ch_jarvis_add_right_chain(points, top, bottom, result);
-	detail::_ch_jarvis_add_left_chain(points, top, bottom, result);
+	hullEnd = detail::_ch_jarvis_emplace_right_chain(points, top, hullEnd);
+	return detail::_ch_jarvis_emplace_left_chain(points, bottom, hullEnd);
 }
 
 END_LFRL_CG_NAMESPACE

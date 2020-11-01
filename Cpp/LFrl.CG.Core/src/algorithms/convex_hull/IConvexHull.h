@@ -17,7 +17,7 @@ struct IConvexHull
 
 	virtual ~IConvexHull() = default;
 
-	virtual std::vector<Vec2<T>> Run(array_ptr<Vec2<T>> points) = 0; // TODO: replace result with array_ptr
+	virtual array_ptr<Vec2<T>> Run(array_ptr<Vec2<T>> points) = 0;
 
 protected:
 	IConvexHull() = default;

@@ -69,22 +69,22 @@
     <ClInclude Include="src\algorithms\Utility.h">
       <Filter>algorithms</Filter>
     </ClInclude>
+    <ClInclude Include="src\math\vector_comparers.h">
+      <Filter>math</Filter>
+    </ClInclude>
     <ClInclude Include="src\algorithms\convex_hull\IConvexHull.h">
+      <Filter>algorithms\convex_hull</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullQuick.h">
       <Filter>algorithms\convex_hull</Filter>
     </ClInclude>
     <ClInclude Include="src\algorithms\convex_hull\ConvexHullNaive.h">
       <Filter>algorithms\convex_hull</Filter>
     </ClInclude>
-    <ClInclude Include="src\math\vector_comparers.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\algorithms\convex_hull\ConvexHullGraham.h">
-      <Filter>algorithms\convex_hull</Filter>
-    </ClInclude>
     <ClInclude Include="src\algorithms\convex_hull\ConvexHullJarvis.h">
       <Filter>algorithms\convex_hull</Filter>
     </ClInclude>
-    <ClInclude Include="src\algorithms\convex_hull\ConvexHullQuick.h">
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullGraham.h">
       <Filter>algorithms\convex_hull</Filter>
     </ClInclude>
   </ItemGroup>
