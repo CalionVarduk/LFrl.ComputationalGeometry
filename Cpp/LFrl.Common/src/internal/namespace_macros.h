@@ -5,8 +5,4 @@
 #define END_LFRL_NAMESPACE }
 #define LFRL ::LFrl
 
-#define BEGIN_LFRL_COMMON_NAMESPACE BEGIN_LFRL_NAMESPACE namespace Common {
-#define END_LFRL_COMMON_NAMESPACE }END_LFRL_NAMESPACE
-#define LFRL_COMMON LFRL::Common
-
 #endif

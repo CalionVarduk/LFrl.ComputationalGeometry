@@ -2,7 +2,7 @@
 
 #include "Stopwatch.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 measurement_aggregation_result __aggregate_results(std::vector<measurement_result> const& results)
 {
@@ -119,4 +119,4 @@ IRepeatMeasurable& IRepeatMeasurable::operator=(IRepeatMeasurable&& other) noexc
 	return *this;
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE

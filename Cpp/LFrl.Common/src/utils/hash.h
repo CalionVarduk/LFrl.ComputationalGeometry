@@ -16,7 +16,7 @@ namespace std
 	};
 }
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class T>
 struct ptr_hash
@@ -27,6 +27,6 @@ struct ptr_hash
 	}
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

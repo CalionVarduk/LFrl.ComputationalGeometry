@@ -4,20 +4,20 @@
 
 BEGIN_LFRL_OGL_NAMESPACE
 
-LFRL_COMMON::dynamic_buffer<char> __read_file_into_buffer(std::string const& filePath)
+LFRL::dynamic_buffer<char> __read_file_into_buffer(std::string const& filePath)
 {
 	auto stream = std::ifstream(filePath);
 	if (stream.fail())
-		return LFRL_COMMON::dynamic_buffer<char>();
+		return LFRL::dynamic_buffer<char>();
 
 	stream.seekg(0, stream.end);
 	auto length = stream.tellg();
 	stream.seekg(0, stream.beg);
 
 	if (length == 0)
-		return LFRL_COMMON::dynamic_buffer<char>();
+		return LFRL::dynamic_buffer<char>();
 
-	LFRL_COMMON::dynamic_buffer<char> buffer(length);
+	LFRL::dynamic_buffer<char> buffer(length);
 	stream.read(buffer.data(), buffer.size());
 	stream.close();
 
@@ -64,7 +64,7 @@ ShaderObject* ShaderStore::Load(ShaderObject::Type type, std::string const& file
 		return shader->GetType() == type ? shader : nullptr;
 
 	auto filePath = _shaderDirectory + "/" + fileName + "." + _shaderExtension;
-	LFRL_COMMON::dynamic_buffer<char> buffer(__read_file_into_buffer(filePath));
+	LFRL::dynamic_buffer<char> buffer(__read_file_into_buffer(filePath));
 	if (buffer.size() == 0)
 		return nullptr;
 

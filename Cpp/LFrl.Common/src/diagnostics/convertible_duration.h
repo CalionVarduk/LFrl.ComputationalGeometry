@@ -4,7 +4,7 @@
 #include <chrono>
 #include "../utils/typedefs.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 struct convertible_duration final
 {
@@ -49,6 +49,6 @@ Rep convertible_duration::get_as() const
 	return convert<Rep, Period>().count();
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

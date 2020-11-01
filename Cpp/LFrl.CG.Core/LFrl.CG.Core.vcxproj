@@ -146,6 +146,31 @@
   <ItemGroup>
     <ClCompile Include="stump.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullGraham.h" />
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullJarvis.h" />
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullNaive.h" />
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullQuick.h" />
+    <ClInclude Include="src\algorithms\convex_hull\IConvexHull.h" />
+    <ClInclude Include="src\algorithms\Utility.h" />
+    <ClInclude Include="src\internal\namespace_macros.h" />
+    <ClInclude Include="src\math\BoundingRectangle.h" />
+    <ClInclude Include="src\math\bounding_rectangle_cast.h" />
+    <ClInclude Include="src\math\bounding_rectangle_typedefs.h" />
+    <ClInclude Include="src\math\LineSegment.h" />
+    <ClInclude Include="src\math\LineSegment1.h" />
+    <ClInclude Include="src\math\LineSegment2.h" />
+    <ClInclude Include="src\math\LineSegment3.h" />
+    <ClInclude Include="src\math\line_segment_cast.h" />
+    <ClInclude Include="src\math\line_segment_typedefs.h" />
+    <ClInclude Include="src\math\Vector.h" />
+    <ClInclude Include="src\math\Vector1.h" />
+    <ClInclude Include="src\math\Vector2.h" />
+    <ClInclude Include="src\math\Vector3.h" />
+    <ClInclude Include="src\math\vector_cast.h" />
+    <ClInclude Include="src\math\vector_comparers.h" />
+    <ClInclude Include="src\math\vector_typedefs.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

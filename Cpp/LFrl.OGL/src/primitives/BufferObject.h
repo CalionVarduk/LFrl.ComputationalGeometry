@@ -85,19 +85,19 @@ struct BufferObject final
 	static void FlushMappedRange(Target target, GLint offset, GLuint size);
 	static bool Unmap(Target target);
 	
-	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, BufferObject*>::value> = 0>
+	template <class TIterable, LFRL::requires<LFRL::is_iterable_of<TIterable, BufferObject*>::value> = 0>
 	static void InitializeRange(TIterable const& iterable);
 
-	template <GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
+	template <GLuint count, LFRL::requires<!(count <= 0)> = 0>
 	static void InitializeRange(std::array<BufferObject*, count>& buffers);
 
-	template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, BufferObject*>::value> = 0>
+	template <class TIterable, LFRL::requires<LFRL::is_iterable_of<TIterable, BufferObject*>::value> = 0>
 	static void DisposeRange(TIterable const& iterable);
 
-	template <GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
+	template <GLuint count, LFRL::requires<!(count <= 0)> = 0>
 	static void DisposeRange(std::array<BufferObject*, count>& buffers);
 
-	template <class T, GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
+	template <class T, GLuint count, LFRL::requires<!(count <= 0)> = 0>
 	static void SetData(Target target, std::array<T, count> const& data, Usage usage) { SetData(target, static_cast<GLuint>(count * sizeof(T)), data.data(), usage); }
 
 	template <class T>
@@ -106,7 +106,7 @@ struct BufferObject final
 	template <class T>
 	static void SetData(Target target, T const& data, Usage usage) { SetData(target, static_cast<GLuint>(sizeof(T)), &data, usage); }
 
-	template <class T, GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
+	template <class T, GLuint count, LFRL::requires<!(count <= 0)> = 0>
 	static void SetSubData(Target target, GLint offset, std::array<T, count> const& data) { SetSubData(target, offset, static_cast<GLuint>(count * sizeof(T)), data.data()); }
 
 	template <class T>
@@ -149,7 +149,7 @@ struct BufferObject final
 	void FlushMappedRange(GLint offset, GLuint size) { FlushMappedRange(_target, offset, size); }
 	bool Unmap() { return Unmap(_target); }
 
-	template <class T, GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
+	template <class T, GLuint count, LFRL::requires<!(count <= 0)> = 0>
 	void SetData(std::array<T, count> const& data) { SetData<T, count>(_target, data, _usage); }
 
 	template <class T>
@@ -158,7 +158,7 @@ struct BufferObject final
 	template <class T>
 	void SetData(T const& data) { SetData<T>(_target, data, _usage); }
 
-	template <class T, GLuint count, LFRL_COMMON::requires<!(count <= 0)> = 0>
+	template <class T, GLuint count, LFRL::requires<!(count <= 0)> = 0>
 	void SetSubData(GLint offset, std::array<T, count> const& data) { SetSubData<T, count>(_target, offset, data); }
 
 	template <class T>
@@ -176,7 +176,7 @@ private:
 	ObjectState _state;
 };
 
-template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, BufferObject*>::value>>
+template <class TIterable, LFRL::requires<LFRL::is_iterable_of<TIterable, BufferObject*>::value>>
 void BufferObject::InitializeRange(TIterable const& iterable)
 {
 	auto count = 0;
@@ -186,7 +186,7 @@ void BufferObject::InitializeRange(TIterable const& iterable)
 	if (count <= 0)
 		return;
 
-	LFRL_COMMON::dynamic_buffer<GLuint> ids(count);
+	LFRL::dynamic_buffer<GLuint> ids(count);
 	glGenBuffers(count, ids.data());
 
 	count = 0;
@@ -197,7 +197,7 @@ void BufferObject::InitializeRange(TIterable const& iterable)
 	}
 }
 
-template <GLuint count, LFRL_COMMON::requires<!(count <= 0)>>
+template <GLuint count, LFRL::requires<!(count <= 0)>>
 void BufferObject::InitializeRange(std::array<BufferObject*, count>& buffers)
 {
 	std::array<GLuint, count> ids;
@@ -210,7 +210,7 @@ void BufferObject::InitializeRange(std::array<BufferObject*, count>& buffers)
 	}
 }
 
-template <class TIterable, LFRL_COMMON::requires<LFRL_COMMON::is_iterable_of<TIterable, BufferObject*>::value>>
+template <class TIterable, LFRL::requires<LFRL::is_iterable_of<TIterable, BufferObject*>::value>>
 void BufferObject::DisposeRange(TIterable const& iterable)
 {
 	auto count = 0;
@@ -220,7 +220,7 @@ void BufferObject::DisposeRange(TIterable const& iterable)
 	if (count <= 0)
 		return;
 
-	LFRL_COMMON::dynamic_buffer<GLuint> ids(count);
+	LFRL::dynamic_buffer<GLuint> ids(count);
 
 	count = 0;
 	for (auto current = iterable.begin(); current != iterable.end(); ++current, ++count)
@@ -232,7 +232,7 @@ void BufferObject::DisposeRange(TIterable const& iterable)
 	glDeleteBuffers(ids.size(), ids.data());
 }
 
-template <GLuint count, LFRL_COMMON::requires<!(count <= 0)>>
+template <GLuint count, LFRL::requires<!(count <= 0)>>
 void BufferObject::DisposeRange(std::array<BufferObject*, count>& buffers)
 {
 	std::array<GLuint, count> ids;

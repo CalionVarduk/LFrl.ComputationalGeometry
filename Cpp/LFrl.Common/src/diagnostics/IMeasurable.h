@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include "convertible_duration.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 struct IMeasurable
 {
@@ -28,6 +28,6 @@ private:
 	std::atomic_bool _isRunning;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

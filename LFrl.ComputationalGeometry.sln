@@ -28,11 +28,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LFrl.CG.App.Desktop", "NET\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LFrl.OGL.CG", "Cpp\LFrl.OGL.CG\LFrl.OGL.CG.vcxproj", "{C3D174A9-8E7C-49B4-978C-D51BE4AD3C4A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "include", "include", "{26039671-9D7E-47F2-83FE-967775CD4104}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{26039671-9D7E-47F2-83FE-967775CD4104}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glm", "Cpp\include\glm\glm.vcxproj", "{4F87C130-9E47-4E77-8148-5E7CFD5EF5FF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glm", "Cpp\vendor\glm\glm.vcxproj", "{4F87C130-9E47-4E77-8148-5E7CFD5EF5FF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glew", "Cpp\include\glew\glew.vcxproj", "{8D153FA0-0206-4346-B975-BDAFBCA580F4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glew", "Cpp\vendor\glew\glew.vcxproj", "{8D153FA0-0206-4346-B975-BDAFBCA580F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

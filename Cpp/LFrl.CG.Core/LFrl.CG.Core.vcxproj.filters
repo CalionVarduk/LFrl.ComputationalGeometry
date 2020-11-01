@@ -3,4 +3,89 @@
   <ItemGroup>
     <ClCompile Include="stump.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="math">
+      <UniqueIdentifier>{40a45b30-cc7d-435c-9c24-00aa8eeb3126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="algorithms">
+      <UniqueIdentifier>{acfaf2e3-2501-427d-832f-04f293d023d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="internal">
+      <UniqueIdentifier>{df2a95b4-2ca2-4b3b-ba11-164195881949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="algorithms\convex_hull">
+      <UniqueIdentifier>{ee6dbcbb-f2b4-4ff3-8412-6f675dd583de}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\internal\namespace_macros.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vector_cast.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vector_typedefs.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector1.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector2.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\Vector3.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\LineSegment.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\LineSegment1.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\LineSegment2.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\LineSegment3.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\line_segment_cast.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\line_segment_typedefs.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\BoundingRectangle.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\bounding_rectangle_cast.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\bounding_rectangle_typedefs.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\Utility.h">
+      <Filter>algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vector_comparers.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\convex_hull\IConvexHull.h">
+      <Filter>algorithms\convex_hull</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullQuick.h">
+      <Filter>algorithms\convex_hull</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullNaive.h">
+      <Filter>algorithms\convex_hull</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullJarvis.h">
+      <Filter>algorithms\convex_hull</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\convex_hull\ConvexHullGraham.h">
+      <Filter>algorithms\convex_hull</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

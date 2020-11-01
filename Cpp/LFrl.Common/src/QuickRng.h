@@ -1,11 +1,11 @@
 #ifndef __LFRL_COMMON_QUICK_RNG_GUARD__
 #define __LFRL_COMMON_QUICK_RNG_GUARD__
 
-#include <ctime>
+#include <chrono>
 #include <limits>
 #include "memory/array_ptr.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 class QuickRng
 {
@@ -42,7 +42,12 @@ public:
 	bool NextBool() noexcept;
 
 	f32 NextFloat() noexcept;
+	f32 NextFloat(f32 max) noexcept;
+	f32 NextFloat(f32 min, f32 max) noexcept;
+
 	f64 NextDouble() noexcept;
+	f64 NextDouble(f64 max) noexcept;
+	f64 NextDouble(f64 min, f64 max) noexcept;
 
 	void NextByteRange(array_ptr<u8> buffer);
 	void NextByteRange(u8* buffer, sz count);
@@ -52,6 +57,6 @@ private:
 	u32 _Next() noexcept;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

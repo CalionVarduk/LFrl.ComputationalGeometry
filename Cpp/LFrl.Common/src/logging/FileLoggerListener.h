@@ -5,7 +5,7 @@
 #include <fstream>
 #include "ILoggerListener.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 class FileLoggerListener : public ILoggerListener
 {
@@ -36,6 +36,6 @@ private:
 	bool _isOk;
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

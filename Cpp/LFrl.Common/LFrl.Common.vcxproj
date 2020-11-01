@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\collections\filtered.h" />
     <ClInclude Include="src\collections\Store.h" />
     <ClInclude Include="src\Container.h" />
     <ClInclude Include="src\diagnostics\diagnostics.h" />

@@ -23,7 +23,7 @@ std::string ShaderObject::GetSource(GLuint id)
 	if (length <= 0)
 		return "";
 
-	LFRL_COMMON::dynamic_buffer<char> buffer(length);
+	LFRL::dynamic_buffer<char> buffer(length);
 	glGetShaderSource(id, length, NULL, buffer.data());
 	return buffer.data();
 }
@@ -39,7 +39,7 @@ std::string ShaderObject::GetInfoLog(GLuint id)
 	if (length <= 0)
 		return "";
 
-	LFRL_COMMON::dynamic_buffer<char> buffer(length);
+	LFRL::dynamic_buffer<char> buffer(length);
 	glGetShaderInfoLog(id, length, NULL, buffer.data());
 	return buffer.data();
 }

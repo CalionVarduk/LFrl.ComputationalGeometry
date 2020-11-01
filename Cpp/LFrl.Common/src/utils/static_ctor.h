@@ -3,7 +3,7 @@
 
 #include "../internal/namespace_macros.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <void(*ctor)()>
 struct static_ctor
@@ -19,6 +19,6 @@ struct static_ctor
 template <void(*ctor)()>
 typename static_ctor<ctor>::__ctor_impl static_ctor<ctor>::setup;
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

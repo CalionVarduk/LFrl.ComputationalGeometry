@@ -1,6 +1,6 @@
 #include "duration_snapshot.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 duration_snapshot duration_snapshot::zero()
 {
@@ -39,4 +39,4 @@ u64 duration_snapshot::get_elapsed_ns() const
 	return _calculator.get_elapsed_ns(_end);
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE

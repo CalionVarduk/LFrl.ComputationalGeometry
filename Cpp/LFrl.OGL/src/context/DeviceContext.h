@@ -11,11 +11,11 @@ struct PixelFormatAttributes final
 {
 	bool drawToWindow;
 	bool doubleBuffer;
-	LFRL_COMMON::u32 sampleCount;
-	LFRL_COMMON::u32 pixelType;
-	LFRL_COMMON::u32 colorBits;
-	LFRL_COMMON::u32 depthBits;
-	LFRL_COMMON::u32 stencilBits;
+	LFRL::u32 sampleCount;
+	LFRL::u32 pixelType;
+	LFRL::u32 colorBits;
+	LFRL::u32 depthBits;
+	LFRL::u32 stencilBits;
 
 	PixelFormatAttributes() noexcept;
 
@@ -52,7 +52,7 @@ struct DeviceContext final
 	Wnd::Handle const* GetHandle() const noexcept { return _handle; }
 	PIXELFORMATDESCRIPTOR const& GetPixelFormatDescriptor() const noexcept { return _pxfDescriptor; }
 	PixelFormatAttributes const& GetPixelFormatAttributes() const noexcept { return _pxfAttributes; }
-	LFRL_COMMON::i32 GetPixelFormat() const noexcept { return _pxf; }
+	LFRL::i32 GetPixelFormat() const noexcept { return _pxf; }
 	ObjectState GetState() const noexcept { return _state; }
 
 	ActionResult Initialize(Wnd::Handle& handle, PixelFormatAttributes attributes, PIXELFORMATDESCRIPTOR descriptor);
@@ -69,7 +69,7 @@ private:
 	Wnd::Handle* _handle;
 	PIXELFORMATDESCRIPTOR _pxfDescriptor;
 	PixelFormatAttributes _pxfAttributes;
-	LFRL_COMMON::i32 _pxf;
+	LFRL::i32 _pxf;
 	ObjectState _state;
 };
 

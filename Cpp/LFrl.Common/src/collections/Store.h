@@ -7,7 +7,7 @@
 #include <vector>
 #include "../utils/typedefs.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 class Store final
 {
@@ -100,6 +100,6 @@ T* Store::Create(TArgs&&... args)
 	return obj;
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

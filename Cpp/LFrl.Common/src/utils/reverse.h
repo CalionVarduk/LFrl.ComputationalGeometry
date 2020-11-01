@@ -4,7 +4,7 @@
 #include <iterator>
 #include "is_iterable.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 template <class TIterable>
 struct reverse final
@@ -27,6 +27,6 @@ struct reverse final
 	const_reverse_iterator end() const { return const_reverse_iterator(iterable.begin()); }
 };
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif

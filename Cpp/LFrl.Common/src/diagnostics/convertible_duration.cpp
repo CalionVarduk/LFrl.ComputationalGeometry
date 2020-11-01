@@ -1,6 +1,6 @@
 #include "convertible_duration.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 convertible_duration convertible_duration::zero()
 {
@@ -31,4 +31,4 @@ u64 convertible_duration::get_ns() const
 	return get_as<u64, std::nano>();
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE

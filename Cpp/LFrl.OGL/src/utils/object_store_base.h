@@ -22,7 +22,7 @@ namespace __detail
 
 		~object_store_base() { Clear(); }
 
-		LFRL_COMMON::sz Size() const noexcept { return _map.size(); }
+		LFRL::sz Size() const noexcept { return _map.size(); }
 		bool IsEmpty() const noexcept { return Size() == 0; }
 		bool Contains(GLuint id) const { return Get(id) != nullptr; }
 		bool Contains(std::string const& name) const { return Get(name) != nullptr; }

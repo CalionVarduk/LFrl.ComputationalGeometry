@@ -10,10 +10,10 @@ BEGIN_LFRL_OGL_WND_NAMESPACE
 struct HandleParams final
 {
 	DWORD style;
-	LFRL_COMMON::i32 x;
-	LFRL_COMMON::i32 y;
-	LFRL_COMMON::i32 width;
-	LFRL_COMMON::i32 height;
+	LFRL::i32 x;
+	LFRL::i32 y;
+	LFRL::i32 width;
+	LFRL::i32 height;
 	HWND parent;
 
 	HandleParams() noexcept;

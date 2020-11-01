@@ -1,6 +1,6 @@
 #include "Store.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 Store::Store()
 	: _map()
@@ -50,4 +50,4 @@ void Store::Clear()
 	_map.clear();
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE

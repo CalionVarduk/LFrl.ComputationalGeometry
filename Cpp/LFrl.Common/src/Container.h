@@ -8,7 +8,7 @@
 #include "utils/typedefs.h"
 #include "utils/hash.h"
 
-BEGIN_LFRL_COMMON_NAMESPACE
+BEGIN_LFRL_NAMESPACE
 
 class Container final
 {
@@ -108,6 +108,6 @@ bool Container::AddKeyedAs(u32 key, U* service)
 		false;
 }
 
-END_LFRL_COMMON_NAMESPACE
+END_LFRL_NAMESPACE
 
 #endif
