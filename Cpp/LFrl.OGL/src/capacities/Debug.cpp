@@ -47,9 +47,15 @@ void Debug::MessageControl(Debug::MessageSource source, Debug::MessageType type,
 	glDebugMessageControl(static_cast<GLenum>(source), static_cast<GLenum>(type), static_cast<GLenum>(severity), count, ids, enabled);
 }
 
+void Debug::ClearErrors() noexcept
+{
+	while (GetError() != Debug::ErrorType::NONE)
+		;
+}
+
 Debug::ErrorType Debug::GetError() noexcept
 {
-	return (Debug::ErrorType)glGetError();
+	return static_cast<Debug::ErrorType>(glGetError());
 }
 
 Debug::Snapshot Debug::Snapshot::Load() noexcept

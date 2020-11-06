@@ -69,17 +69,18 @@ private:
 	GLuint _capacity;
 	BufferObject _bo;
 
-	DynamicBufferObjectActionResult _Resize(GLuint capacity);
+	DynamicBufferObjectActionResult _ResizeBegin(GLuint capacity);
+	void _ResizeEnd();
 };
 
 template <class T>
 DynamicBufferObject<T>::DynamicBufferObject() noexcept
-	: _size(0), _capacity(0), _bo()
+	: _size(0), _capacity(0), _bo(BufferObject::Target::ARRAY_BUFFER, BufferObject::Usage::DYNAMIC_DRAW)
 {}
 
 template <class T>
 DynamicBufferObject<T>::DynamicBufferObject(BufferObject::Target target) noexcept
-	: _size(0), _capacity(0), _bo(target)
+	: _size(0), _capacity(0), _bo(target, BufferObject::Usage::DYNAMIC_DRAW)
 {}
 
 template <class T>
@@ -125,12 +126,12 @@ DynamicBufferObjectActionResult DynamicBufferObject<T>::Push(T const& obj)
 {
 	if (_size == _capacity)
 	{
-		auto result = _Resize(_capacity * GROWTH_COEFFICIENT);
+		auto result = _ResizeBegin(_capacity * GROWTH_COEFFICIENT);
 
 		if (result == DynamicBufferObjectActionResult::OK)
 			_bo.SetSubData(_size++, obj);
 
-		_bo.Unbind();
+		_ResizeEnd();
 		return result;
 	}
 
@@ -151,14 +152,14 @@ DynamicBufferObjectActionResult DynamicBufferObject<T>::PushRange(array_ptr<cons
 		while (newSize > capacity)
 			capacity *= GROWTH_COEFFICIENT;
 
-		auto result = _Resize(capacity);
+		auto result = _ResizeBegin(capacity);
 
 		if (result == DynamicBufferObjectActionResult::OK)
 		{
 			_bo.SetSubData(_size, objs);
 			_size = newSize;
 		}
-		_bo.Unbind();
+		_ResizeEnd();
 		return result;
 	}
 
@@ -274,8 +275,8 @@ DynamicBufferObjectActionResult DynamicBufferObject<T>::Reserve(GLuint minCapaci
 		return DynamicBufferObjectActionResult::OK;
 	}
 
-	auto result = _Resize(capacity);
-	_bo.Unbind();
+	auto result = _ResizeBegin(capacity);
+	_ResizeEnd();
 	return result;
 }
 
@@ -294,8 +295,8 @@ DynamicBufferObjectActionResult DynamicBufferObject<T>::ShrinkToFit()
 	if (capacity == _capacity)
 		return DynamicBufferObjectActionResult::OK;
 
-	auto result = _Resize(capacity);
-	_bo.Unbind();
+	auto result = _ResizeBegin(capacity);
+	_ResizeEnd();
 	return result;
 }
 
@@ -312,9 +313,9 @@ BufferObject::ActionResult DynamicBufferObject<T>::Dispose()
 }
 
 template <class T>
-DynamicBufferObjectActionResult DynamicBufferObject<T>::_Resize(GLuint capacity)
+DynamicBufferObjectActionResult DynamicBufferObject<T>::_ResizeBegin(GLuint capacity)
 {
-	BufferObject tempBo(BufferObject::Target::COPY_WRITE_BUFFER, _bo.GetUsage());
+	BufferObject tempBo(BufferObject::Target::COPY_WRITE_BUFFER, BufferObject::Usage::STATIC_COPY);
 	if (tempBo.Initialize() != BufferObject::ActionResult::OK)
 		return DynamicBufferObjectActionResult::RESIZE_BUFFER_INITIALIZATION_FAILURE;
 
@@ -344,6 +345,12 @@ DynamicBufferObjectActionResult DynamicBufferObject<T>::_Resize(GLuint capacity)
 
 	tempBo.Unbind();
 	return result;
+}
+
+template <class T>
+void DynamicBufferObject<T>::_ResizeEnd()
+{
+	BufferObject::Unbind(BufferObject::Target::COPY_WRITE_BUFFER);
 }
 
 END_LFRL_OGL_NAMESPACE
