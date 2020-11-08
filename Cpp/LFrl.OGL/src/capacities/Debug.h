@@ -71,6 +71,7 @@ namespace Debug
 	void DisableMessages(MessageSource source, MessageType type, MessageSeverity severity, GLuint count, GLuint const* ids);
 	void MessageControl(MessageSource source, MessageType type, MessageSeverity severity, GLuint count, GLuint const* ids, bool enabled);
 
+	void ClearErrors() noexcept;
 	ErrorType GetError() noexcept;
 
 	LFRL_OGL_DECLARE_COMPLEX_CAPACITY_SNAPSHOT_STRUCT(

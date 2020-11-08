@@ -167,6 +167,9 @@
     <ClInclude Include="src\primitives\Point.h">
       <Filter>primitives</Filter>
     </ClInclude>
+    <ClInclude Include="src\primitives\DynamicBufferObject.h">
+      <Filter>primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\context\DeviceContext.cpp">

@@ -2,8 +2,8 @@
 #define __LFRL_OGL_SHADER_OBJECT_GUARD__
 
 #include <string>
-#include "../ObjectState.h"
 #include "LFrl.Common/src/utils/dynamic_buffer.h"
+#include "../ObjectState.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 

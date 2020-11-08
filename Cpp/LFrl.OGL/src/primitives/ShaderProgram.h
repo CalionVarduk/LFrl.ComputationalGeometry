@@ -4,10 +4,10 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
-#include "BufferObject.h"
-#include "ShaderObject.h"
 #include "LFrl.Common/src/memory/array_ptr.h"
 #include "LFrl.Common/src/utils/offset_of.h"
+#include "BufferObject.h"
+#include "ShaderObject.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 

@@ -2,10 +2,10 @@
 #define __LFRL_OGL_VERTEX_ARRAY_OBJECT_GUARD__
 
 #include <array>
-#include "../ObjectState.h"
 #include "LFrl.Common/src/utils/requires.h"
 #include "LFrl.Common/src/utils/is_iterable.h"
 #include "LFrl.Common/src/utils/dynamic_buffer.h"
+#include "../ObjectState.h"
 
 BEGIN_LFRL_OGL_NAMESPACE
 
